@@ -1,0 +1,94 @@
+---BANCO DE SANGRA BD---------
+
+--------MODULO DONANTE------------
+CREATE TABLE vamOcupaci (
+    vocucodocu SMALLINT PRIMARY KEY,
+    vocudescri VARCHAR(50)
+);
+CREATE TABLE vamGradIns (
+    vgraCodGra SMALLINT PRIMARY KEY,
+    vgraDescrn VARCHAR(50)
+);
+CREATE TABLE vamLugNaci (
+    vlugCodLug SMALLINT PRIMARY KEY,
+    vlugPaisna VARCHAR(20),
+    vlugCiudad VARCHAR(20),
+    vlugProvin VARCHAR(20)
+);
+CREATE TABLE vamClubDon (
+    vcluCodClu SMALLINT PRIMARY KEY,
+    vcluDescri VARCHAR(50),
+    vcluDirecc VARCHAR(50),
+    vcluTelefo CHAR(8),
+    vcluRepRes VARCHAR(50)
+);
+CREATE TABLE vamZonaDir (
+    vzonCodZon SMALLINT PRIMARY KEY,
+    vlugCodLug SMALLINT,
+    vzonDescr VARCHAR(50),
+    CONSTRAINT fk_zona_lug FOREIGN KEY (vlugCodLug) REFERENCES vamLugNaci(vlugCodLug)
+);
+CREATE TABLE vamTipoDid (
+    vtidCodTid SMALLINT PRIMARY KEY,
+    vtidDescr VARCHAR(50)
+);
+CREATE TABLE vamDonante (
+    vdonCodDon INT PRIMARY KEY,
+    vdonPatern VARCHAR(50),
+    vdonMatern VARCHAR(50),
+    vdonNombre VARCHAR(50),
+    vzonCodZon SMALLINT,
+    vdonDirecc VARCHAR(150),
+    vdonDesDir VARCHAR(350),
+    vtidCodTid SMALLINT,
+    vdonDocide VARCHAR(15),
+    vdonFecNac DATE,
+    vdonEdadDo SMALLINT,
+    vdonEstCiv CHAR(1),
+    vdonSexoDn CHAR(1),
+    vdonTelOfi CHAR(8),
+    vdonTelCel CHAR(8),
+    vdonEmail VARCHAR(150),
+    vdonEmail2 VARCHAR(150),
+    vdonDirTra VARCHAR(150),
+    vdonCarneT BOOLEAN,
+    vocuCodOcu SMALLINT,
+    vgraCodGra SMALLINT,
+    vlugCodLug SMALLINT,
+    vcluCodClu SMALLINT,
+    vresCodRes SMALLINT,
+    vdonSwCita BOOLEAN,
+    CONSTRAINT fk_don_tipo_doc FOREIGN KEY (vtidCodTid) REFERENCES vamTipoDid(vtidCodTid),
+    CONSTRAINT fk_don_ocupacion FOREIGN KEY (vocuCodOcu) REFERENCES vamOcupaci(vocuCodOcu),
+    CONSTRAINT fk_don_grado_inst FOREIGN KEY (vgraCodGra) REFERENCES vamGradIns(vgraCodGra),
+    CONSTRAINT fk_don_lug_nac FOREIGN KEY (vlugCodLug) REFERENCES vamLugNaci(vlugCodLug),
+    CONSTRAINT fk_don_club FOREIGN KEY (vcluCodClu) REFERENCES vamClubDon(vcluCodClu),
+    CONSTRAINT fk_don_zona FOREIGN KEY (vzonCodZon) REFERENCES vamZonaDir(vzonCodZon)
+);
+CREATE TABLE vamDonFoto ( 
+    vdonCodDon INT UNIQUE REFERENCES vamDonante(vdonCodDon),
+    vdonFotogr BYTEA
+);
+
+
+
+
+----modeulo screening-----
+CREATE TABLE vamGrupSan (
+    vqrsCodGrs SMALLINT PRIMARY KEY,
+    vqrsGruABO VARCHAR(15) NOT NULL,
+    vqrsTipoRH CHAR(1) NOT NULL,
+    vprgCodPrg SMALLINT NOT NULL,
+    vprgEstMin SMALLINT NOT NULL,
+    vprgEstMax SMALLINT NOT NULL
+);
+
+CREATE TABLE vamTipoDon (
+    vtdnCodTdn SMALLINT PRIMARY KEY,
+    vtdnDescn VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE vamTipoCen (
+    viceCodTce SMALLINT PRIMARY KEY,
+    viceDescri VARCHAR(50) NOT NULL
+);

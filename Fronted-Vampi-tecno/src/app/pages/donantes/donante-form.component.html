@@ -1,0 +1,455 @@
+<div class="container mx-auto px-4 py-8">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">
+      {{ isEditMode ? 'Editar Donante' : 'Nuevo Donante' }}
+    </h1>
+    <button 
+      (click)="onCancel()"
+      class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200">
+      Volver
+    </button>
+  </div>
+
+  <!-- Mensajes -->
+  <div *ngIf="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+    {{ error }}
+  </div>
+  
+  <div *ngIf="success" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+    {{ success }}
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="flex justify-center items-center py-8">
+    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+    <span class="ml-2 text-gray-600">{{ isEditMode ? 'Actualizando...' : 'Guardando...' }}</span>
+  </div>
+
+  <!-- Formulario -->
+  <form [formGroup]="donanteForm" (ngSubmit)="onSubmit()" class="bg-white rounded-lg shadow-md p-6">
+    
+    <!-- Información Personal -->
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Información Personal</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Apellido Paterno -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Apellido Paterno *
+          </label>
+          <input 
+            type="text" 
+            formControlName="vdonPatern"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vdonPatern')">
+          <div *ngIf="isFieldInvalid('vdonPatern')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vdonPatern') }}
+          </div>
+        </div>
+
+        <!-- Apellido Materno -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Apellido Materno *
+          </label>
+          <input 
+            type="text" 
+            formControlName="vdonMatern"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vdonMatern')">
+          <div *ngIf="isFieldInvalid('vdonMatern')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vdonMatern') }}
+          </div>
+        </div>
+
+        <!-- Nombres -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Nombres *
+          </label>
+          <input 
+            type="text" 
+            formControlName="vdonNombre"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vdonNombre')">
+          <div *ngIf="isFieldInvalid('vdonNombre')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vdonNombre') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+        <!-- Fecha de Nacimiento -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Fecha de Nacimiento *
+          </label>
+          <input 
+            type="date" 
+            formControlName="vdonFecNac"
+            (change)="onFechaNacimientoChange()"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vdonFecNac')">
+          <div *ngIf="isFieldInvalid('vdonFecNac')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vdonFecNac') }}
+          </div>
+        </div>
+
+        <!-- Edad -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Edad *
+          </label>
+          <input 
+            type="number" 
+            formControlName="vdonEdadDo"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vdonEdadDo')">
+          <div *ngIf="isFieldInvalid('vdonEdadDo')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vdonEdadDo') }}
+          </div>
+        </div>
+
+        <!-- Sexo -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Sexo *
+          </label>
+          <select 
+            formControlName="vdonSexoDn"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vdonSexoDn')">
+            <option value="">Seleccionar...</option>
+            <option *ngFor="let sexo of sexos" [value]="sexo.value">
+              {{ sexo.label }}
+            </option>
+          </select>
+          <div *ngIf="isFieldInvalid('vdonSexoDn')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vdonSexoDn') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <!-- Estado Civil -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Estado Civil *
+          </label>
+          <select 
+            formControlName="vdonEstCiv"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vdonEstCiv')">
+            <option value="">Seleccionar...</option>
+            <option *ngFor="let estado of estadosCiviles" [value]="estado.value">
+              {{ estado.label }}
+            </option>
+          </select>
+          <div *ngIf="isFieldInvalid('vdonEstCiv')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vdonEstCiv') }}
+          </div>
+        </div>
+
+        <!-- Lugar de Nacimiento -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Lugar de Nacimiento *
+          </label>
+          <select 
+            formControlName="vlugCodLug"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vlugCodLug')">
+            <option value="">Seleccionar...</option>
+            <option *ngFor="let lugar of lugaresNacimiento" [value]="lugar.vlugCodLug">
+              {{ lugar.vlugCiudad }}
+            </option>
+          </select>
+          <div *ngIf="isFieldInvalid('vlugCodLug')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vlugCodLug') }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Documentación -->
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Documentación</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Tipo de Documento -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Tipo de Documento *
+          </label>
+          <select 
+            formControlName="vtidCodTid"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vtidCodTid')">
+            <option value="">Seleccionar...</option>
+            <option *ngFor="let tipo of tiposDocumento" [value]="tipo.vtidCodTid">
+              {{ tipo.vtidDescr }}
+            </option>
+          </select>
+          <div *ngIf="isFieldInvalid('vtidCodTid')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vtidCodTid') }}
+          </div>
+        </div>
+
+        <!-- Número de Documento -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Número de Documento *
+          </label>
+          <input 
+            type="text" 
+            formControlName="vdonDocide"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vdonDocide')">
+          <div *ngIf="isFieldInvalid('vdonDocide')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vdonDocide') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <!-- Carné de Trabajo -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Carné de Trabajo
+          </label>
+          <input 
+            type="text" 
+            formControlName="vdonCarneT"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        </div>
+
+        <!-- Club de Donantes -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Club de Donantes
+          </label>
+          <select 
+            formControlName="vcluCodClu"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <option value="">Seleccionar...</option>
+            <option *ngFor="let club of clubesDonantes" [value]="club.vcluCodClu">
+              {{ club.vcluDescri }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Información de Contacto -->
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Información de Contacto</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Teléfono Celular -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Teléfono Celular *
+          </label>
+          <input 
+            type="tel" 
+            formControlName="vdonTelCel"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vdonTelCel')">
+          <div *ngIf="isFieldInvalid('vdonTelCel')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vdonTelCel') }}
+          </div>
+        </div>
+
+        <!-- Teléfono Oficina -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Teléfono Oficina
+          </label>
+          <input 
+            type="tel" 
+            formControlName="vdonTelOfi"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <!-- Email Principal -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Email Principal
+          </label>
+          <input 
+            type="email" 
+            formControlName="vdonEmail"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vdonEmail')">
+          <div *ngIf="isFieldInvalid('vdonEmail')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vdonEmail') }}
+          </div>
+        </div>
+
+        <!-- Email Secundario -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Email Secundario
+          </label>
+          <input 
+            type="email" 
+            formControlName="vdonEmail2"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vdonEmail2')">
+          <div *ngIf="isFieldInvalid('vdonEmail2')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vdonEmail2') }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Información Laboral -->
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Información Laboral</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Ocupación -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Ocupación *
+          </label>
+          <select 
+            formControlName="vocuCodOcu"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vocuCodOcu')">
+            <option value="">Seleccionar...</option>
+            <option *ngFor="let ocupacion of ocupaciones" [value]="ocupacion.vocuCodOcu">
+              {{ ocupacion.vocudescri }}
+            </option>
+          </select>
+          <div *ngIf="isFieldInvalid('vocuCodOcu')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vocuCodOcu') }}
+          </div>
+        </div>
+
+        <!-- Grado de Instrucción -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Grado de Instrucción *
+          </label>
+          <select 
+            formControlName="vgraCodGra"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vgraCodGra')">
+            <option value="">Seleccionar...</option>
+            <option *ngFor="let grado of gradosInstruccion" [value]="grado.vgraCodGra">
+              {{ grado.vgraDescrn }}
+            </option>
+          </select>
+          <div *ngIf="isFieldInvalid('vgraCodGra')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vgraCodGra') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <!-- Dirección de Trabajo -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Dirección de Trabajo
+          </label>
+          <input 
+            type="text" 
+            formControlName="vdonDirTra"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        </div>
+      </div>
+    </div>
+
+    <!-- Dirección -->
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Dirección</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Zona -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Zona *
+          </label>
+          <select 
+            formControlName="vzonCodZon"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vzonCodZon')">
+            <option value="">Seleccionar...</option>
+            <option *ngFor="let zona of zonasDireccion" [value]="zona.vzonCodZon">
+              {{ zona.vzonDescr }}
+            </option>
+          </select>
+          <div *ngIf="isFieldInvalid('vzonCodZon')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vzonCodZon') }}
+          </div>
+        </div>
+
+        <!-- Dirección -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Dirección *
+          </label>
+          <input 
+            type="text" 
+            formControlName="vdonDirecc"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vdonDirecc')">
+          <div *ngIf="isFieldInvalid('vdonDirecc')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vdonDirecc') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <!-- Descripción de Dirección -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Descripción de Dirección
+          </label>
+          <textarea 
+            formControlName="vdonDesDir"
+            rows="3"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Referencias, puntos de referencia, etc."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estado -->
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Estado</h2>
+      
+      <div class="flex items-center">
+        <input 
+          type="checkbox" 
+          formControlName="vdonSwCita"
+          id="vdonSwCita"
+          class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+        <label for="vdonSwCita" class="ml-2 block text-sm text-gray-900">
+          Donante activo (puede recibir citas)
+        </label>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="flex justify-end gap-4 pt-6 border-t">
+      <button 
+        type="button"
+        (click)="onCancel()"
+        class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200">
+        Cancelar
+      </button>
+      <button 
+        type="submit"
+        [disabled]="loading || donanteForm.invalid"
+        class="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-2 px-6 rounded-lg transition duration-200">
+        {{ isEditMode ? 'Actualizar' : 'Crear' }} Donante
+      </button>
+    </div>
+  </form>
+</div> 

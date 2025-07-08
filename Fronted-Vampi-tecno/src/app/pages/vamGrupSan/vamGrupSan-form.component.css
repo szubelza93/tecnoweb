@@ -1,0 +1,99 @@
+/* Estilos específicos para el formulario de vamGrupSan */
+.container {
+  max-width: 1200px;
+}
+
+/* Animaciones para los botones */
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+/* Estilos para los campos del formulario */
+input, select {
+  transition: all 0.2s ease-in-out;
+}
+
+input:focus, select:focus {
+  transform: scale(1.02);
+}
+
+/* Estilos para campos con error */
+.border-red-500 {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Estilos para la información adicional */
+.bg-blue-50 {
+  background-color: #eff6ff;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .flex {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .flex-1 {
+    width: 100%;
+  }
+}
+
+/* Estilos para el loading */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Estilos para los mensajes */
+.bg-red-100 {
+  background-color: #fef2f2;
+}
+
+.bg-green-100 {
+  background-color: #f0fdf4;
+}
+
+/* Estilos para los placeholders */
+::placeholder {
+  color: #9ca3af;
+  opacity: 1;
+}
+
+/* Estilos para los selectores */
+select option {
+  padding: 8px;
+}
+
+/* Estilos para los botones de acción */
+button[type="submit"] {
+  font-weight: 600;
+}
+
+button[type="submit"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+} 

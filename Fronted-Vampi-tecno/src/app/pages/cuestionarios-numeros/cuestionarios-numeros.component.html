@@ -1,0 +1,59 @@
+<div class="container">
+  <h2>Gestión de Cuestionarios Números</h2>
+
+  <div class="card">
+    <div class="actions">
+      <button class="btn btn-primary" (click)="createCuestionario()">
+        <i class="fa fa-plus"></i> Nuevo Cuestionario
+      </button>
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar por descripción...">
+      <button class="btn btn-success" (click)="searchCuestionarios()">
+        <i class="fa fa-search"></i> Buscar
+      </button>
+      <button class="btn btn-secondary" (click)="clearSearch()" *ngIf="searchTerm">
+        Limpiar
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading">Cargando...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="table-container">
+    <table *ngIf="paginatedCuestionarios.length > 0">
+      <thead>
+        <tr>
+          <th>NÚMERO</th>
+          <th>DESCRIPCIÓN</th>
+          <th>ACCIONES</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cuestionario of paginatedCuestionarios">
+          <td>{{ cuestionario.vcueNroCue }}</td>
+          <td>{{ cuestionario.vcueDescri }}</td>
+          <td>
+            <button class="btn-icon" (click)="viewCuestionario(cuestionario)" title="Ver">
+              <i class="fa fa-eye"></i>
+            </button>
+            <button class="btn-icon" (click)="editCuestionario(cuestionario)" title="Editar">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn-icon delete" (click)="deleteCuestionario(cuestionario)" title="Eliminar">
+              <i class="fa fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="paginatedCuestionarios.length === 0 && !loading" style="padding: 2rem; text-align: center; color: #888;">
+      No hay cuestionarios para mostrar.
+    </div>
+  </div>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button class="btn" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+    <button class="btn" *ngFor="let page of pages" (click)="changePage(page)" [class.active]="page === currentPage">{{ page }}</button>
+    <button class="btn" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Siguiente</button>
+  </div>
+</div> 

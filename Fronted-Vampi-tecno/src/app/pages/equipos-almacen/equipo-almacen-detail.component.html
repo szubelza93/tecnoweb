@@ -1,0 +1,20 @@
+<div class="detail-container">
+  <h2>Detalle de Equipo de Almacén</h2>
+
+  <div *ngIf="loading">Cargando...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="equipo && !loading">
+    <p><strong>ID:</strong> {{ equipo.vequcodequ }}</p>
+    <p><strong>Descripción:</strong> {{ equipo.vequdescn }}</p>
+    <p><strong>Características:</strong> {{ equipo.vequcaract }}</p>
+    <p><strong>Tipo de Equipo:</strong> {{ equipo.vequtipequ }}</p>
+    <p><strong>Total Funciones:</strong> {{ equipo.vequtotf }}</p>
+    <p><strong>Total Columnas:</strong> {{ equipo.vequtotcol }}</p>
+    <p><strong>Temperatura:</strong> {{ equipo.vequtemper }}</p>
+    <p *ngIf="equipo.created_at"><strong>Creado:</strong> {{ equipo.created_at | date:'short' }}</p>
+    <p *ngIf="equipo.updated_at"><strong>Actualizado:</strong> {{ equipo.updated_at | date:'short' }}</p>
+  </div>
+
+  <button (click)="volver()">Volver</button>
+</div> 

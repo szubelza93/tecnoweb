@@ -1,0 +1,13 @@
+<div class="detail-container">
+  <h2>Detalle de Cuestionario Número</h2>
+
+  <div *ngIf="loading">Cargando...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="cuestionario && !loading">
+    <p><strong>Número:</strong> {{ cuestionario?.vcueNroCue }}</p>
+    <p><strong>Descripción:</strong> {{ cuestionario?.vcueDescri }}</p>
+  </div>
+
+  <button (click)="volver()">Volver</button>
+</div> 

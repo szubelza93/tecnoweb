@@ -1,0 +1,31 @@
+<div class="form-container">
+  <h2 *ngIf="!isEditMode">Nuevo Cuestionario Número</h2>
+  <h2 *ngIf="isEditMode">Editar Cuestionario Número</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="vcueNroCue">Número de Cuestionario</label>
+      <input id="vcueNroCue" type="number" formControlName="vcueNroCue" [disabled]="isEditMode">
+      <div class="error" *ngIf="vcueNroCue?.invalid && (vcueNroCue?.dirty || vcueNroCue?.touched)">
+        <span *ngIf="vcueNroCue?.errors?.['required']">El número es obligatorio.</span>
+        <span *ngIf="vcueNroCue?.errors?.['min']">Debe ser mayor a 0.</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="vcueDescri">Descripción</label>
+      <input id="vcueDescri" type="text" formControlName="vcueDescri" maxlength="255">
+      <div class="error" *ngIf="vcueDescri?.invalid && (vcueDescri?.dirty || vcueDescri?.touched)">
+        <span *ngIf="vcueDescri?.errors?.['required']">La descripción es obligatoria.</span>
+        <span *ngIf="vcueDescri?.errors?.['maxlength']">Máximo 255 caracteres.</span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="form.invalid || loading">{{ isEditMode ? 'Actualizar' : 'Crear' }}</button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+    <div *ngIf="loading">Procesando...</div>
+  </form>
+</div> 

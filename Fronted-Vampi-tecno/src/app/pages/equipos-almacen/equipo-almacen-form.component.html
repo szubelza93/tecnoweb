@@ -1,0 +1,76 @@
+<div class="form-container">
+  <h2 *ngIf="!isEditMode">Nuevo Equipo de Almacén</h2>
+  <h2 *ngIf="isEditMode">Editar Equipo de Almacén</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="vequcodequ">ID de Equipo</label>
+      <input id="vequcodequ" type="number" formControlName="vequcodequ" min="1" [readonly]="isEditMode">
+      <div class="error" *ngIf="vequcodequ?.invalid && (vequcodequ?.dirty || vequcodequ?.touched)">
+        <span *ngIf="vequcodequ?.errors?.['required']">El ID es obligatorio.</span>
+        <span *ngIf="vequcodequ?.errors?.['min']">Debe ser mayor o igual a 1.</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="vequdescn">Descripción</label>
+      <input id="vequdescn" type="text" formControlName="vequdescn" maxlength="255">
+      <div class="error" *ngIf="vequdescn?.invalid && (vequdescn?.dirty || vequdescn?.touched)">
+        <span *ngIf="vequdescn?.errors?.['required']">La descripción es obligatoria.</span>
+        <span *ngIf="vequdescn?.errors?.['maxlength']">Máximo 255 caracteres.</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="vequcaract">Características</label>
+      <input id="vequcaract" type="text" formControlName="vequcaract" maxlength="255">
+      <div class="error" *ngIf="vequcaract?.invalid && (vequcaract?.dirty || vequcaract?.touched)">
+        <span *ngIf="vequcaract?.errors?.['required']">Las características son obligatorias.</span>
+        <span *ngIf="vequcaract?.errors?.['maxlength']">Máximo 255 caracteres.</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="vequtipequ">Tipo de Equipo</label>
+      <input id="vequtipequ" type="text" formControlName="vequtipequ" maxlength="100">
+      <div class="error" *ngIf="vequtipequ?.invalid && (vequtipequ?.dirty || vequtipequ?.touched)">
+        <span *ngIf="vequtipequ?.errors?.['required']">El tipo es obligatorio.</span>
+        <span *ngIf="vequtipequ?.errors?.['maxlength']">Máximo 100 caracteres.</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="vequtotf">Total Funciones</label>
+      <input id="vequtotf" type="number" formControlName="vequtotf" min="0">
+      <div class="error" *ngIf="vequtotf?.invalid && (vequtotf?.dirty || vequtotf?.touched)">
+        <span *ngIf="vequtotf?.errors?.['required']">El total de funciones es obligatorio.</span>
+        <span *ngIf="vequtotf?.errors?.['min']">Debe ser mayor o igual a 0.</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="vequtotcol">Total Columnas</label>
+      <input id="vequtotcol" type="number" formControlName="vequtotcol" min="0">
+      <div class="error" *ngIf="vequtotcol?.invalid && (vequtotcol?.dirty || vequtotcol?.touched)">
+        <span *ngIf="vequtotcol?.errors?.['required']">El total de columnas es obligatorio.</span>
+        <span *ngIf="vequtotcol?.errors?.['min']">Debe ser mayor o igual a 0.</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="vequtemper">Temperatura</label>
+      <input id="vequtemper" type="text" formControlName="vequtemper" maxlength="20">
+      <div class="error" *ngIf="vequtemper?.invalid && (vequtemper?.dirty || vequtemper?.touched)">
+        <span *ngIf="vequtemper?.errors?.['required']">La temperatura es obligatoria.</span>
+        <span *ngIf="vequtemper?.errors?.['maxlength']">Máximo 20 caracteres.</span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="form.invalid || loading">{{ isEditMode ? 'Actualizar' : 'Crear' }}</button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+    <div *ngIf="loading">Procesando...</div>
+  </form>
+</div> 

@@ -1,0 +1,173 @@
+<div class="container mx-auto px-4 py-8">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">
+      {{ isEditMode ? 'Editar Grupo Sanguíneo' : 'Nuevo Grupo Sanguíneo' }}
+    </h1>
+    <button 
+      (click)="onCancel()"
+      class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200">
+      Volver
+    </button>
+  </div>
+
+  <!-- Mensajes -->
+  <div *ngIf="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+    {{ error }}
+  </div>
+  
+  <div *ngIf="success" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+    {{ success }}
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="flex justify-center items-center py-8">
+    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+    <span class="ml-2 text-gray-600">{{ isEditMode ? 'Actualizando...' : 'Guardando...' }}</span>
+  </div>
+
+  <!-- Formulario -->
+  <form [formGroup]="vamGrupSanForm" (ngSubmit)="onSubmit()" class="bg-white rounded-lg shadow-md p-6">
+    
+    <!-- Código del Grupo Sanguíneo -->
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-gray-700 mb-1">
+        Código del Grupo Sanguíneo *
+      </label>
+      <input 
+        type="number" 
+        formControlName="vqrsCodGrs"
+        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        [class.border-red-500]="isFieldInvalid('vqrsCodGrs')"
+        placeholder="Ej: 1">
+      <div *ngIf="isFieldInvalid('vqrsCodGrs')" class="text-red-500 text-sm mt-1">
+        {{ getFieldError('vqrsCodGrs') }}
+      </div>
+    </div>
+
+    <!-- Información del Grupo Sanguíneo -->
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Información del Grupo Sanguíneo</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Grupo ABO -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Grupo ABO *
+          </label>
+          <select 
+            formControlName="vqrsGruABO"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vqrsGruABO')">
+            <option value="">Seleccionar grupo...</option>
+            <option *ngFor="let grupo of gruposABO" [value]="grupo.value">
+              {{ grupo.label }}
+            </option>
+          </select>
+          <div *ngIf="isFieldInvalid('vqrsGruABO')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vqrsGruABO') }}
+          </div>
+        </div>
+
+        <!-- Tipo RH -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Tipo RH *
+          </label>
+          <select 
+            formControlName="vqrsTipoRH"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vqrsTipoRH')">
+            <option value="">Seleccionar tipo...</option>
+            <option *ngFor="let tipo of tiposRH" [value]="tipo.value">
+              {{ tipo.label }}
+            </option>
+          </select>
+          <div *ngIf="isFieldInvalid('vqrsTipoRH')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vqrsTipoRH') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+        <!-- Código Programa -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Código Programa *
+          </label>
+          <input 
+            type="number" 
+            formControlName="vprgCodPrg"
+            min="1"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vprgCodPrg')"
+            placeholder="Ej: 1">
+          <div *ngIf="isFieldInvalid('vprgCodPrg')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vprgCodPrg') }}
+          </div>
+        </div>
+
+        <!-- Estándar Mínimo -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Estándar Mínimo *
+          </label>
+          <input 
+            type="number" 
+            formControlName="vprgEstMin"
+            min="0"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vprgEstMin')"
+            placeholder="Ej: 0">
+          <div *ngIf="isFieldInvalid('vprgEstMin')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vprgEstMin') }}
+          </div>
+        </div>
+
+        <!-- Estándar Máximo -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Estándar Máximo *
+          </label>
+          <input 
+            type="number" 
+            formControlName="vprgEstMax"
+            min="0"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="isFieldInvalid('vprgEstMax')"
+            placeholder="Ej: 100">
+          <div *ngIf="isFieldInvalid('vprgEstMax')" class="text-red-500 text-sm mt-1">
+            {{ getFieldError('vprgEstMax') }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Información adicional -->
+      <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+        <h3 class="text-sm font-medium text-blue-800 mb-2">Información del Grupo Sanguíneo</h3>
+        <div class="text-sm text-blue-700">
+          <p class="mb-1">• <strong>Grupo ABO:</strong> Determina el tipo de antígenos en la superficie de los glóbulos rojos (A, B, AB, O)</p>
+          <p class="mb-1">• <strong>Tipo RH:</strong> Indica la presencia (+) o ausencia (-) del factor Rh</p>
+          <p class="mb-1">• <strong>Código Programa:</strong> Identificador único del programa de screening</p>
+          <p class="mb-1">• <strong>Estándares:</strong> Valores mínimo y máximo para los parámetros de control de calidad</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="flex justify-end gap-4 pt-6 border-t">
+      <button 
+        type="button"
+        (click)="onCancel()"
+        class="px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition duration-200">
+        Cancelar
+      </button>
+      <button 
+        type="submit"
+        [disabled]="loading"
+        class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200">
+        {{ isEditMode ? 'Actualizar' : 'Crear' }} Grupo Sanguíneo
+      </button>
+    </div>
+  </form>
+</div> 

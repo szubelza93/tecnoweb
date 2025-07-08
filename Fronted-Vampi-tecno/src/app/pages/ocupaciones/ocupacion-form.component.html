@@ -1,0 +1,31 @@
+<div class="form-container">
+  <h2 *ngIf="!isEdit">Nueva Ocupación</h2>
+  <h2 *ngIf="isEdit">Editar Ocupación</h2>
+
+  <form [formGroup]="ocupacionForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="vocucodocu">Código</label>
+      <input id="vocucodocu" type="number" formControlName="vocucodocu" [readonly]="isEdit">
+      <div class="error" *ngIf="ocupacionForm.get('vocucodocu')?.invalid && (ocupacionForm.get('vocucodocu')?.dirty || ocupacionForm.get('vocucodocu')?.touched)">
+        <span *ngIf="ocupacionForm.get('vocucodocu')?.errors?.['required']">El código es obligatorio.</span>
+        <span *ngIf="ocupacionForm.get('vocucodocu')?.errors?.['min']">Debe ser mayor o igual a 1.</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="vocudescri">Descripción</label>
+      <input id="vocudescri" type="text" formControlName="vocudescri" maxlength="255">
+      <div class="error" *ngIf="ocupacionForm.get('vocudescri')?.invalid && (ocupacionForm.get('vocudescri')?.dirty || ocupacionForm.get('vocudescri')?.touched)">
+        <span *ngIf="ocupacionForm.get('vocudescri')?.errors?.['required']">La descripción es obligatoria.</span>
+        <span *ngIf="ocupacionForm.get('vocudescri')?.errors?.['maxlength']">Máximo 255 caracteres.</span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="ocupacionForm.invalid || loading">{{ isEdit ? 'Actualizar' : 'Crear' }}</button>
+      <button type="button" (click)="router.navigate(['/ocupaciones'])">Cancelar</button>
+    </div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+    <div *ngIf="loading">Procesando...</div>
+  </form>
+</div> 

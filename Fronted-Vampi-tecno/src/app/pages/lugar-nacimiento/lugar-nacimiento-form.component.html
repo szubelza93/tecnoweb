@@ -1,0 +1,30 @@
+<form [formGroup]="lugarForm" (ngSubmit)="onSubmit()" class="form">
+  <div class="form-group">
+    <label for="vlugpaisna">País</label>
+    <input id="vlugpaisna" formControlName="vlugpaisna" type="text" required />
+    <div *ngIf="lugarForm.get('vlugpaisna')?.invalid && lugarForm.get('vlugpaisna')?.touched" class="error">
+      El país es obligatorio.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="vlugciudad">Ciudad</label>
+    <input id="vlugciudad" formControlName="vlugciudad" type="text" required />
+    <div *ngIf="lugarForm.get('vlugciudad')?.invalid && lugarForm.get('vlugciudad')?.touched" class="error">
+      La ciudad es obligatoria.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="vlugprovin">Provincia</label>
+    <input id="vlugprovin" formControlName="vlugprovin" type="text" required />
+    <div *ngIf="lugarForm.get('vlugprovin')?.invalid && lugarForm.get('vlugprovin')?.touched" class="error">
+      La provincia es obligatoria.
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary" [disabled]="lugarForm.invalid">Guardar</button>
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+  </div>
+</form> 

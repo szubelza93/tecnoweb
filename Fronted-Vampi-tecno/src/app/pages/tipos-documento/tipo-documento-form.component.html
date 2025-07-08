@@ -1,0 +1,29 @@
+<div class="form-container">
+  <h2 *ngIf="!isEdit">Nuevo Tipo de Documento</h2>
+  <h2 *ngIf="isEdit">Editar Tipo de Documento</h2>
+
+  <form [formGroup]="tipoDocumentoForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="vtidCodTid">Código</label>
+      <input id="vtidCodTid" type="number" formControlName="vtidCodTid" [readonly]="isEdit">
+      <div class="error" *ngIf="tipoDocumentoForm.get('vtidCodTid')?.invalid && (tipoDocumentoForm.get('vtidCodTid')?.dirty || tipoDocumentoForm.get('vtidCodTid')?.touched)">
+        <span *ngIf="tipoDocumentoForm.get('vtidCodTid')?.errors?.['required']">El código es obligatorio.</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="vtidDescr">Descripción</label>
+      <input id="vtidDescr" type="text" formControlName="vtidDescr" maxlength="255">
+      <div class="error" *ngIf="tipoDocumentoForm.get('vtidDescr')?.invalid && (tipoDocumentoForm.get('vtidDescr')?.dirty || tipoDocumentoForm.get('vtidDescr')?.touched)">
+        <span *ngIf="tipoDocumentoForm.get('vtidDescr')?.errors?.['required']">La descripción es obligatoria.</span>
+        <span *ngIf="tipoDocumentoForm.get('vtidDescr')?.errors?.['maxlength']">Máximo 255 caracteres.</span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="tipoDocumentoForm.invalid || loading">{{ isEdit ? 'Actualizar' : 'Crear' }}</button>
+      <button type="button" (click)="router.navigate(['/tipos-documento'])">Cancelar</button>
+    </div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+    <div *ngIf="loading">Procesando...</div>
+  </form> 

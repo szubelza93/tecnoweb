@@ -1,0 +1,68 @@
+<div class="container">
+  <h2>Gestión de Lugares de Nacimiento</h2>
+
+  <div class="card">
+    <div class="actions">
+      <button class="btn btn-primary" (click)="createLugar()">
+        <i class="fa fa-plus"></i> Nuevo Lugar
+      </button>
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar por ciudad, país o provincia...">
+      <button class="btn btn-success" (click)="searchLugares()">
+        <i class="fa fa-search"></i> Buscar
+      </button>
+      <button class="btn btn-secondary" (click)="clearSearch()" *ngIf="searchTerm">
+        Limpiar
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="showForm">
+    <app-lugar-nacimiento-form
+      [lugar]="editLugarData"
+      (save)="onSaveLugar($event)"
+      (cancel)="onCancelForm()">
+    </app-lugar-nacimiento-form>
+  </div>
+  <div *ngIf="!showForm">
+    <div class="table-container">
+      <table *ngIf="paginatedLugares.length > 0">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>País</th>
+            <th>Ciudad</th>
+            <th>Provincia</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let lug of paginatedLugares">
+            <td>{{ lug.vlugcodlug }}</td>
+            <td>{{ lug.vlugpaisna }}</td>
+            <td>{{ lug.vlugciudad }}</td>
+            <td>{{ lug.vlugprovin }}</td>
+            <td>
+              <button class="btn-icon" (click)="editLugar(lug)" title="Editar">
+                <i class="fa fa-edit"></i>
+              </button>
+              <button class="btn-icon delete" (click)="deleteLugar(lug)" title="Eliminar">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="paginatedLugares.length === 0 && !loading" style="padding: 2rem; text-align: center; color: #888;">
+        No hay lugares de nacimiento para mostrar.
+      </div>
+    </div>
+
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button class="btn" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+      <button class="btn" *ngFor="let page of pages" (click)="changePage(page)" [class.active]="page === currentPage">{{ page }}</button>
+      <button class="btn" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Siguiente</button>
+    </div>
+  </div>
+</div> 

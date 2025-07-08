@@ -1,0 +1,55 @@
+<div class="container">
+  <h2>Gestión de Ocupaciones</h2>
+
+  <div class="card">
+    <div class="actions">
+      <button class="btn btn-primary" (click)="createOcupacion()">
+        <i class="fa fa-plus"></i> Nueva Ocupación
+      </button>
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar por descripción...">
+      <button class="btn btn-success" (click)="searchOcupaciones()">
+        <i class="fa fa-search"></i> Buscar
+      </button>
+      <button class="btn btn-secondary" (click)="clearSearch()" *ngIf="searchTerm">
+        Limpiar
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="table-container">
+    <table *ngIf="paginatedOcupaciones.length > 0">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Descripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ocu of paginatedOcupaciones">
+          <td>{{ ocu.vocucodocu }}</td>
+          <td>{{ ocu.vocudescri }}</td>
+          <td>
+            <button class="btn-icon" (click)="editOcupacion(ocu)" title="Editar">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn-icon delete" (click)="deleteOcupacion(ocu)" title="Eliminar">
+              <i class="fa fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="paginatedOcupaciones.length === 0 && !loading" style="padding: 2rem; text-align: center; color: #888;">
+      No hay ocupaciones para mostrar.
+    </div>
+  </div>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button class="btn" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+    <button class="btn" *ngFor="let page of pages" (click)="changePage(page)" [class.active]="page === currentPage">{{ page }}</button>
+    <button class="btn" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Siguiente</button>
+  </div>
+</div> 

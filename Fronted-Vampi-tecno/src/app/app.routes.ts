@@ -102,6 +102,43 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/vamTipoDon/vamTipoDon-form.component').then(m => m.VamTipoDonFormComponent)
             },
             {
+                path: 'tipos-documento',
+                loadComponent: () => import('./pages/tipos-documento/tipos-documento.component').then(m => m.TiposDocumentoComponent)
+            },
+            {
+                path: 'tipos-documento/crear',
+                loadComponent: () => import('./pages/tipos-documento/tipo-documento-form.component').then(m => m.TipoDocumentoFormComponent)
+            },
+            {
+                path: 'tipos-documento/editar/:id',
+                loadComponent: () => import('./pages/tipos-documento/tipo-documento-form.component').then(m => m.TipoDocumentoFormComponent)
+            },
+            {
+                path: 'ocupaciones',
+                loadComponent: () => import('./pages/ocupaciones/ocupaciones.component').then(m => m.OcupacionesComponent)
+            },
+            {
+                path: 'ocupaciones/crear',
+                loadComponent: () => import('./pages/ocupaciones/ocupacion-form.component').then(m => m.OcupacionFormComponent)
+            },
+            {
+                path: 'ocupaciones/editar/:id',
+                loadComponent: () => import('./pages/ocupaciones/ocupacion-form.component').then(m => m.OcupacionFormComponent)
+            },
+            // Rutas del módulo de lugares de nacimiento
+            {
+                path: 'lugares-nacimiento',
+                loadComponent: () => import('./pages/lugar-nacimiento/lugar-nacimiento.component').then(m => m.LugarNacimientoComponent)
+            },
+            {
+                path: 'lugares-nacimiento/crear',
+                loadComponent: () => import('./pages/lugar-nacimiento/lugar-nacimiento-form.component').then(m => m.LugarNacimientoFormComponent)
+            },
+            {
+                path: 'lugares-nacimiento/editar/:id',
+                loadComponent: () => import('./pages/lugar-nacimiento/lugar-nacimiento-form.component').then(m => m.LugarNacimientoFormComponent)
+            },
+            {
                 path: '',
                 redirectTo: 'dashboard',
                 pathMatch: 'full'

@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './blank.component.html',
-  styleUrl: './blank.component.css'
+  styleUrls: ['./blank.component.css']
 })
 export class BlankComponent implements OnInit {
   progress = 45;

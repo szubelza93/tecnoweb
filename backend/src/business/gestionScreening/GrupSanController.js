@@ -26,19 +26,20 @@ class GrupSanController {
                 limit: parseInt(limit), 
                 sort: sort.toUpperCase() 
             });
+            console.log(grupos);
             
             // Transformación de datos para presentación
             const formattedGrupos = grupos.map(grupo => ({
-                id: grupo.vqrsCodGrs,
-                grupoABO: grupo.vqrsGruABO,
-                tipoRH: grupo.vqrsTipoRH,
+                id: grupo.vqrscodgrs,
+                grupoABO: grupo.vqrsgruabo,
+                tipoRH: grupo.vqrstiporh,
                 programa: {
-                    codigo: grupo.vprgCodPrg,
-                    estaturaMinima: grupo.vprgEstMin,
-                    estaturaMaxima: grupo.vprgEstMax
+                    codigo: grupo.vprgcodprg,
+                    estaturaMinima: grupo.vprgestmin,
+                    estaturaMaxima: grupo.vprgestmax
                 },
-                informacionCompleta: `${grupo.vqrsGruABO}${grupo.vqrsTipoRH}`,
-                rangoEstatura: `${grupo.vprgEstMin} - ${grupo.vprgEstMax} cm`
+                informacionCompleta: `${grupo.vqrsgruabo}${grupo.vqrstiporh}`,
+                rangoEstatura: `${grupo.vprgestmin} - ${grupo.vprgestmax} cm`
             }));
             
             // Obtener total de registros para paginación

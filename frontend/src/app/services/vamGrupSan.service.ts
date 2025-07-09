@@ -8,12 +8,12 @@ import { map } from 'rxjs/operators';
 // Función de mapeo explícita para VamGrupSan
 function mapVamGrupSanFromBackend(v: any): VamGrupSan {
   return {
-    vqrsCodGrs: v.vqrscodgrs,
-    vqrsGruABO: v.vqrsgruabo,
-    vqrsTipoRH: v.vqrstiporh,
-    vprgCodPrg: v.vprgcodprg,
-    vprgEstMin: Number(v.vprgestmin),
-    vprgEstMax: Number(v.vprgestmax),
+    vqrsCodGrs: v.id,
+    vqrsGruABO: v.grupoABO,
+    vqrsTipoRH: v.tipoRH,
+    vprgCodPrg: v.programa?.codigo,
+    vprgEstMin: Number(v.programa?.estaturaMinima),
+    vprgEstMax: Number(v.programa?.estaturaMaxima),
     created_at: v.created_at,
     updated_at: v.updated_at
   };
@@ -29,15 +29,11 @@ export class VamGrupSanService {
 
   // Operaciones CRUD principales
   getAllVamGrupSan(): Observable<ApiResponse<VamGrupSan[]>> {
-    return this.http.get<ApiResponse<any[]>>(this.baseUrl).pipe(
+    return this.http.get<ApiResponse<any>>(this.baseUrl).pipe(
       map(response => {
         console.log('Respuesta del backend:', response);
-        const mappedData = Array.isArray(response.data) ? response.data.map(v => {
-          console.log('Dato original:', v);
-          const mapped = mapVamGrupSanFromBackend(v);
-          console.log('Dato mapeado:', mapped);
-          return mapped;
-        }) : [];
+        const grupos = response.data && Array.isArray(response.data.grupos) ? response.data.grupos : [];
+        const mappedData = grupos.map(mapVamGrupSanFromBackend);
         console.log('Datos finales:', mappedData);
         return {
           ...response,

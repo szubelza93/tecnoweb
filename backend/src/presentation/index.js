@@ -4,7 +4,7 @@ const {
   tipoDocumentoRoutes } = require('./gestionDonante');
   
 const { tipoBolRoutes, bolsaHeRoutes, reaccioRoutes, extDonaRoutes, serCrviRoutes } = require('./gestionExtraccion');
-const { almacenRoutes, equipoAlmacenRoutes } = require('./gestionProduccion');
+const { almacenRoutes, equipoAlmacenRoutes, vamObsequiRoutes, vamRefrigeRoutes } = require('./gestionProduccion');
 const { grupSanRoutes, tipoDonRoutes, screeniRoutes, cuesNroRoutes, cuestioRoutes, resPregRoutes, citaciRoutes, citaDonRoutes } = require('./gestionScreening');
 const { pruebasRoutes, serologRoutes } = require('./gestionLaboratorio');
 
@@ -28,6 +28,8 @@ router.use('/servicios-criovinificacion', serCrviRoutes);
 // Rutas de gestión de producción
 router.use('/almacenes', almacenRoutes);
 router.use('/equipos-almacen', equipoAlmacenRoutes);
+router.use('/obsequios', vamObsequiRoutes);
+router.use('/refrigeradores', vamRefrigeRoutes);
 
 // Rutas de gestión de laboratorio
 router.use('/pruebas', pruebasRoutes);

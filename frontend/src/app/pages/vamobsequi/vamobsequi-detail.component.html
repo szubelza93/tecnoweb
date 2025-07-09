@@ -1,0 +1,21 @@
+<div class="flex justify-center items-center min-h-[60vh]">
+  <div *ngIf="loading" class="p-8 text-gray-500 text-lg">Cargando...</div>
+  <div *ngIf="error" class="p-8 text-red-500 text-lg">{{ error }}</div>
+  <div *ngIf="obsequio && !loading" class="max-w-lg w-full bg-white rounded-xl shadow-lg border border-gray-200 p-8">
+    <h3 class="text-2xl font-bold mb-6 text-center text-green-800">Detalle de Obsequio</h3>
+    <div class="space-y-3">
+      <div><span class="font-semibold text-gray-700">Código:</span> <span class="text-gray-900">{{ obsequio.vobscodobs }}</span></div>
+      <div><span class="font-semibold text-gray-700">Descripción:</span> <span class="text-gray-900">{{ obsequio.vobsdescri }}</span></div>
+      <div><span class="font-semibold text-gray-700">Características:</span> <span class="text-gray-900">{{ obsequio.vobscaract }}</span></div>
+      <div class="flex gap-4">
+        <div><span class="font-semibold text-gray-700">Ingresos:</span> <span class="text-gray-900">{{ obsequio.vobsingres }}</span></div>
+        <div><span class="font-semibold text-gray-700">Salidas:</span> <span class="text-gray-900">{{ obsequio.vobssalida }}</span></div>
+        <div><span class="font-semibold text-gray-700">Cantidad:</span> <span class="text-gray-900">{{ obsequio.vobscantid }}</span></div>
+      </div>
+    </div>
+    <div class="flex justify-center mt-8">
+      <button class="bg-gray-700 hover:bg-gray-900 text-white px-6 py-2 rounded shadow transition" (click)="volver()">REGRESAR</button>
+    </div>
+  </div>
+  <div *ngIf="!obsequio && !loading && !error" class="p-8 text-gray-500 text-lg">No hay datos para mostrar.</div>
+</div> 

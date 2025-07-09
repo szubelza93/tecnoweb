@@ -166,6 +166,22 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/zona-direccion/zona-direccion.component').then(m => m.ZonaDireccionComponent)
             },
             {
+                path: 'vamobsequi',
+                loadComponent: () => import('./pages/vamobsequi/vamobsequi.component').then(m => m.VamobsequiComponent)
+            },
+            {
+                path: 'vamobsequi/crear',
+                loadComponent: () => import('./pages/vamobsequi/vamobsequi-form.component').then(m => m.VamobsequiFormComponent)
+            },
+            {
+                path: 'vamobsequi/editar/:id',
+                loadComponent: () => import('./pages/vamobsequi/vamobsequi-form.component').then(m => m.VamobsequiFormComponent)
+            },
+            {
+                path: 'vamobsequi/ver/:id',
+                loadComponent: () => import('./pages/vamobsequi/vamobsequi-detail.component').then(m => m.VamobsequiDetailComponent)
+            },
+            {
                 path: '',
                 redirectTo: 'dashboard',
                 pathMatch: 'full'

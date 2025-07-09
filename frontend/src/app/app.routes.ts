@@ -17,6 +17,10 @@ export const routes: Routes = [
                 loadComponent: () => import('./business/dashboard/dashboard.component')
             },
             {
+                path: 'blank',
+                loadComponent: () => import('./pages/blank/blank.component').then(m => m.BlankComponent)
+            },
+            {
                 path: 'profile',
                 loadComponent: () => import('./business/profile/profile.component')
             },

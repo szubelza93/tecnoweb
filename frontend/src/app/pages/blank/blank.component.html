@@ -1,0 +1,51 @@
+<div class="min-h-screen bg-gray-50 p-6">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">Página en Desarrollo</h1>
+      <p class="text-gray-600">Esta sección está siendo desarrollada actualmente.</p>
+    </div>
+
+    <!-- Content Card -->
+    <div class="bg-white rounded-lg shadow-md p-8">
+      <div class="text-center">
+        <!-- Icon -->
+        <div class="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 main-icon">
+          <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
+        </div>
+        
+        <h2 class="text-2xl font-semibold text-gray-900 mb-4">Funcionalidad Próximamente</h2>
+        <p class="text-gray-600 mb-6 max-w-md mx-auto">
+          Estamos trabajando para implementar nuevas funcionalidades en esta sección. 
+          Muy pronto tendrás acceso a herramientas avanzadas para gestionar tu información.
+        </p>
+        
+        <!-- Progress Bar -->
+        <div class="w-full bg-gray-200 rounded-full h-2 mb-6">
+          <div class="bg-blue-600 h-2 rounded-full progress-bar" [style.width]="getProgressWidth()"></div>
+        </div>
+        
+        <p class="text-sm text-gray-500">Progreso: {{ progress | number:'1.0-0' }}% completado</p>
+      </div>
+    </div>
+
+    <!-- Features Preview -->
+    <div class="grid md:grid-cols-3 gap-6 mt-8">
+      <div *ngFor="let feature of features" class="bg-white rounded-lg shadow-md p-6 feature-card fade-in-up">
+        <div [class]="'w-12 h-12 bg-' + feature.color + '-100 rounded-lg flex items-center justify-center mb-4'">
+          <svg [class]="'w-6 h-6 text-' + feature.color + '-600'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <ng-container [ngSwitch]="feature.icon">
+              <path *ngSwitchCase="'check-circle'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              <path *ngSwitchCase="'lightning-bolt'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              <path *ngSwitchCase="'shield-check'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </ng-container>
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ feature.title }}</h3>
+        <p class="text-gray-600 text-sm">{{ feature.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

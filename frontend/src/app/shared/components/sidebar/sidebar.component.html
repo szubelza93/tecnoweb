@@ -2,11 +2,11 @@
   class="bg-gradient-to-br from-green-800 to-green-900 -translate-x-80 fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0"
 >
   <div class="relative border-b border-white/20">
-    <a class="flex items-center gap-4 py-6 px-8" href="#/">
+    <a class="flex items-center gap-4 py-6 px-8" href="/blank">
       <h6
         class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-white"
       >
-        Banco de sangre
+        Banco de sangre Regional SC
       </h6>
     </a>
     <button
@@ -37,7 +37,7 @@
   <div class="m-4">
     <ul class="mb-4 flex flex-col gap-1">
       <li>
-        <a routerLink="/dashboard">
+        <a routerLink="/blank">
           <button
             routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
             class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
@@ -60,130 +60,98 @@
             <p
               class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize"
             >
-              dashboard
+              Inicio
             </p>
           </button>
         </a>
       </li>
-      <!-- Acceso directo a Cuestionario Número -->
+
+      <!-- Configuración -->
       <li>
-        <a routerLink="/cuestionarios-numeros">
+        <div>
           <button
-            routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
-            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
+            (click)="toggleConfigMenu()"
             type="button"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-inherit">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
-              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" fill="none" />
-            </svg>
-            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
-              Cuestionario Número
-            </p>
-          </button>
-        </a>
-      </li>
-      <!-- Acceso directo a Equipo Almacén -->
-      <li>
-        <a routerLink="/equipos-almacen">
-          <button
-            routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+            [attr.aria-expanded]="isConfigMenuOpen"
+            aria-controls="config-submenu"
             class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
-            type="button"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-inherit">
-              <rect x="4" y="7" width="16" height="10" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2" />
+            <!-- Ícono configuración -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+              class="w-5 h-5 text-inherit"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M11.078 2.25c-.917 0-1.699.663-1.85 1.567L9.05 4.889c-.02.12-.115.26-.297.348a7.493 7.493 0 00-.986.57c-.166.115-.334.126-.45.083L6.3 5.508a1.875 1.875 0 00-2.282.819l-.922 1.597a1.875 1.875 0 00.432 2.385l.84.692c.095.078.17.229.154.43a7.598 7.598 0 000 1.139c.015.2-.059.352-.153.43l-.841.692a1.875 1.875 0 00-.432 2.385l.922 1.597a1.875 1.875 0 002.282.818l1.019-.382c.115-.043.283-.031.45.082.312.214.641.405.985.57.182.088.277.228.297.35l.178 1.071c.151.904.933 1.567 1.85 1.567h1.844c.916 0 1.699-.663 1.85-1.567l.178-1.072c.02-.12.114-.26.297-.349.344-.165.673-.356.985-.57.167-.114.335-.125.45-.082l1.02.382a1.875 1.875 0 002.28-.819l.923-1.597a1.875 1.875 0 00-.432-2.385l-.84-.692c-.095-.078-.17-.229-.154-.43a7.614 7.614 0 000-1.139c-.016-.2.059-.352.153-.43l.84-.692c.708-.582.891-1.59.433-2.385l-.922-1.597a1.875 1.875 0 00-2.282-.818l-1.02.382c-.114.043-.282.031-.449-.083a7.49 7.49 0 00-.985-.57c-.183-.087-.277-.227-.297-.348L9.928 3.817c-.151-.904-.933-1.567-1.85-1.567H11.078zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z"
+                clip-rule="evenodd"
+              />
             </svg>
-            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
-              Equipo Almacén
+            <p
+              class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize"
+            >
+              Configuración
             </p>
+            <!-- Flecha del submenú -->
+            <svg
+              [ngClass]="{
+                'rotate-90': isConfigMenuOpen,
+                'rotate-0': !isConfigMenuOpen
+              }"
+              class="ml-auto w-4 h-4 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
           </button>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/ocupaciones">
-          <button
-            routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
-            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
-            type="button"
+          <div
+            *ngIf="isConfigMenuOpen"
+            id="config-submenu"
+            class="ml-8 flex flex-col gap-1 mt-2 transition-all"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-inherit">
-              <rect x="4" y="7" width="16" height="10" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2" />
-            </svg>
-            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
-              Ocupaciones
-            </p>
-          </button>
-        </a>
+            <a
+              routerLink="/cuestionarios-numeros"
+              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
+              >Cuestionarios</a
+            >
+
+
+            <a
+              routerLink="/vam-grup-san"
+              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
+              >Grupos Sanguíneos</a
+            >
+
+            <a
+              routerLink="/equipos-almacen"
+              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
+              >Equipos Almacenamiento</a
+            >
+
+            <a
+              routerLink="/club-donantes"
+              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
+              >Club de Donantes</a
+            >
+          </div>
+        </div>
       </li>
-      <li>
-        <a routerLink="/lugares-nacimiento">
-          <button
-            routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
-            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
-            type="button"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-inherit">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
-              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" fill="none" />
-            </svg>
-            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
-              Lugares de Nacimiento
-            </p>
-          </button>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/grados-instruccion">
-          <button
-            routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
-            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
-            type="button"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-inherit">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 616-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-            </svg>
-            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
-              Grados de Instrucción
-            </p>
-          </button>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/club-donantes">
-          <button
-            routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
-            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
-            type="button"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-inherit">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
-              Club de Donantes
-            </p>
-          </button>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/zona-direccion">
-          <button
-            routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
-            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
-            type="button"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-inherit">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
-              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" fill="none" />
-            </svg>
-            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
-              Zona Dirección
-            </p>
-          </button>
-        </a>
-      </li>
+
+      <!-- Acceso directo a Donantes -->
       <li>
         <div>
           <button
@@ -201,12 +169,16 @@
               aria-hidden="true"
               class="w-5 h-5 text-inherit"
             >
-              <!-- <path fill-rule="evenodd" d="..." clip-rule="evenodd"></path> -->
+              <path
+                fill-rule="evenodd"
+                d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z"
+                clip-rule="evenodd"
+              />
             </svg>
             <p
               class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize"
             >
-              Usuario
+              Control de Donantes
             </p>
             <!-- Flecha del submenú -->
             <svg
@@ -236,14 +208,46 @@
               routerLink="/donantes"
               routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
               class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
-              >Donantes</a
+              >Registro</a
             >
             <a
               routerLink="/personal"
               routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
               class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
-              >Personal</a
+              >Citaciones</a
             >
+
+            <a
+              routerLink="/grados-instruccion"
+              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
+              >Grados de Instrucción</a
+            >
+            <a
+              routerLink="/lugares-nacimiento"
+              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
+              >Lugares de Nacimiento</a
+            >
+            <a
+              routerLink="/ocupaciones"
+              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
+              >Ocupaciones</a
+            >
+            <a
+              routerLink="/tipos-documento"
+              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
+              >Tipos de Documento</a
+            >
+            <a
+              routerLink="/zona-direccion"
+              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
+              >Zona Dirección</a
+            >
+
           </div>
         </div>
       </li>
@@ -259,19 +263,7 @@
             class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
           >
             <!-- Ícono screening -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              aria-hidden="true"
-              class="w-5 h-5 text-inherit"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-1.34-.67l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                clip-rule="evenodd"
-              />
-            </svg>
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#f20202"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-clipboard-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h4.5m7.5 -10v-4a2 2 0 0 0 -2 -2h-2" /><path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2" /><path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M20.2 20.2l1.8 1.8" /></svg>
             <p
               class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize"
             >
@@ -307,17 +299,12 @@
               class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
               >VamScreeni</a
             >
-            <a
-              routerLink="/vam-grup-san"
-              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
-              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
-              >VamGrupSan</a
-            >
+
             <a
               routerLink="/vam-tipo-don"
               routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
               class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
-              >VamTipoDon</a
+              >Tipos de Donación</a
             >
 
             <a
@@ -333,36 +320,98 @@
               class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
               >VamCuestio</a
             >
-
-            <a
-              routerLink="#"
-              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
-              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
-              >VamCuesNro</a
-            >
           
           </div>
         </div>
       </li>
 
+      <!-- Extracción -->
       <li>
-        <a routerLink="/tipos-documento">
+        <a routerLink="/club-donantes">
+          <button
+            routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
+            type="button"
+          >
+          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#f20202"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-vaccine"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 3l4 4" /><path d="M19 5l-4.5 4.5" /><path d="M11.5 6.5l6 6" /><path d="M16.5 11.5l-6.5 6.5h-4v-4l6.5 -6.5" /><path d="M7.5 12.5l1.5 1.5" /><path d="M10.5 9.5l1.5 1.5" /><path d="M3 21l3 -3" /></svg>
+            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
+              Extracción
+            </p>
+          </button>
+        </a>
+      </li>
+
+      <!-- Laboratorio -->
+      <li>
+        <a routerLink="/club-donantes">
+          <button
+            routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
+            type="button"
+          >
+          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="#f90606"  class="icon icon-tabler icons-tabler-filled icon-tabler-test-pipe-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16 2a1 1 0 0 1 0 2v14a4 4 0 1 1 -8 0v-14a1 1 0 1 1 0 -2zm-2 2h-4v7h4z" /></svg>
+            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
+              Laboratorio
+            </p>
+          </button>
+        </a>
+      </li>
+
+      <!-- Acceso directo a Club de Donantes -->
+      <li>
+        <a routerLink="/club-donantes">
           <button
             routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
             class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
             type="button"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-inherit">
-              <rect x="4" y="7" width="16" height="10" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
             <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
-              Tipos de Documento
+              Producción
             </p>
           </button>
         </a>
       </li>
 
+      <!-- Acceso directo a Club de Donantes -->
+      <li>
+        <a routerLink="/club-donantes">
+          <button
+            routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
+            type="button"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-inherit">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
+              Distribución
+            </p>
+          </button>
+        </a>
+      </li>
+
+      <!-- Acceso directo a Club de Donantes -->
+      <li>
+        <a routerLink="/club-donantes">
+          <button
+            routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
+            type="button"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-inherit">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
+              Unidad Móvil
+            </p>
+          </button>
+        </a>
+      </li>
+
+      <!-- Acceso directo a Tablas -->
       <li>
         <a routerLink="/tables">
           <button
@@ -391,6 +440,7 @@
           </button>
         </a>
       </li>
+      <!-- Acceso directo a Notificaciones -->
       <li>
         <a class="" href="#">
           <button
@@ -418,6 +468,7 @@
           </button>
         </a>
       </li>
+      <!-- Acceso directo a Auth -->
     </ul>
     <ul class="mb-4 flex flex-col gap-1">
       <li class="mx-3.5 mt-4 mb-2">

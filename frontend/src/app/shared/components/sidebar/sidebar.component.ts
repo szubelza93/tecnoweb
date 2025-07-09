@@ -12,6 +12,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class SidebarComponent {
   isUserMenuOpen = false;
   isScreeningMenuOpen = false;
+  isConfigMenuOpen = false;
 
   toggleUserMenu() {
     this.isUserMenuOpen = !this.isUserMenuOpen;
@@ -19,5 +20,9 @@ export class SidebarComponent {
 
   toggleScreeningMenu() {
     this.isScreeningMenuOpen = !this.isScreeningMenuOpen;
+  }
+
+  toggleConfigMenu() {
+    this.isConfigMenuOpen = !this.isConfigMenuOpen;
   }
 }

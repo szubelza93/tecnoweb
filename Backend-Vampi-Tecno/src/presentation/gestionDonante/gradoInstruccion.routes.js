@@ -2,7 +2,7 @@ const express = require('express');
 const GradoInstruccionController = require('../../business//gestionDonante/GradoInstruccionController');
 const { asyncHandler } = require('../../shared/middlewares/errorHandler');
 const { authenticate, authorize } = require('../../shared/middlewares/auth');
-const { validateId, validateGradoInstruccion } = require('../../shared/middlewares/validation');
+const { validateId, validateGradoInstruccion, validateGradoInstruccionCreate } = require('../../shared/middlewares/validation');
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ const router = express.Router();
 
 // Rutas CRUD básicas
 router.get('/', /* authorize('donantes.listar'), */ asyncHandler(GradoInstruccionController.getAll));
-router.post('/', /* authorize('donantes.crear'), */ validateGradoInstruccion, asyncHandler(GradoInstruccionController.create));
+router.post('/', /* authorize('donantes.crear'), */ validateGradoInstruccionCreate, asyncHandler(GradoInstruccionController.create));
 router.get('/:id', validateId, /* authorize('donantes.leer'), */ asyncHandler(GradoInstruccionController.getById));
 router.put('/:id', validateId, /* authorize('donantes.actualizar'), */ validateGradoInstruccion, asyncHandler(GradoInstruccionController.update));
 router.delete('/:id', validateId, /* authorize('donantes.eliminar'), */ asyncHandler(GradoInstruccionController.delete));

@@ -1,0 +1,46 @@
+<form [formGroup]="clubForm" (ngSubmit)="onSubmit()" class="form">
+  <div class="form-group">
+    <label for="vcluCodClu">Código</label>
+    <input id="vcluCodClu" formControlName="vcluCodClu" type="number" required />
+    <div *ngIf="clubForm.get('vcluCodClu')?.invalid && clubForm.get('vcluCodClu')?.touched" class="error">
+      El código es obligatorio y debe ser un número positivo.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="vcluDescri">Descripción</label>
+    <input id="vcluDescri" formControlName="vcluDescri" type="text" required />
+    <div *ngIf="clubForm.get('vcluDescri')?.invalid && clubForm.get('vcluDescri')?.touched" class="error">
+      La descripción es obligatoria y debe tener entre 2 y 50 caracteres.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="vcluDirecc">Dirección</label>
+    <input id="vcluDirecc" formControlName="vcluDirecc" type="text" />
+    <div *ngIf="clubForm.get('vcluDirecc')?.invalid && clubForm.get('vcluDirecc')?.touched" class="error">
+      La dirección no puede exceder 50 caracteres.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="vcluTelefo">Teléfono</label>
+    <input id="vcluTelefo" formControlName="vcluTelefo" type="text" placeholder="12345678" />
+    <div *ngIf="clubForm.get('vcluTelefo')?.invalid && clubForm.get('vcluTelefo')?.touched" class="error">
+      El teléfono debe tener exactamente 8 dígitos numéricos.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="vcluRepRes">Representante</label>
+    <input id="vcluRepRes" formControlName="vcluRepRes" type="text" />
+    <div *ngIf="clubForm.get('vcluRepRes')?.invalid && clubForm.get('vcluRepRes')?.touched" class="error">
+      El representante no puede exceder 50 caracteres.
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary" [disabled]="clubForm.invalid">Guardar</button>
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+  </div>
+</form> 

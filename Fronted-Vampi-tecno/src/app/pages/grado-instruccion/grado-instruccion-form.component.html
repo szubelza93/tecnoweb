@@ -1,0 +1,22 @@
+<form [formGroup]="gradoForm" (ngSubmit)="onSubmit()" class="form">
+  <div class="form-group">
+    <label for="vgraCodGra">Código</label>
+    <input id="vgraCodGra" formControlName="vgraCodGra" type="number" required />
+    <div *ngIf="gradoForm.get('vgraCodGra')?.invalid && gradoForm.get('vgraCodGra')?.touched" class="error">
+      El código es obligatorio y debe ser un número positivo.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="vgraDescrn">Descripción</label>
+    <input id="vgraDescrn" formControlName="vgraDescrn" type="text" required />
+    <div *ngIf="gradoForm.get('vgraDescrn')?.invalid && gradoForm.get('vgraDescrn')?.touched" class="error">
+      La descripción es obligatoria y debe tener entre 2 y 50 caracteres.
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary" [disabled]="gradoForm.invalid">Guardar</button>
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+  </div>
+</form> 

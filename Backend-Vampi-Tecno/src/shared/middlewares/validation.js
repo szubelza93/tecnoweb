@@ -54,8 +54,24 @@ const validateGradoInstruccion = [
   handleValidationErrors
 ];
 
+// Validaciones de Grado de Instrucción para Creación (con código)
+const validateGradoInstruccionCreate = [
+  body('vgraCodGra').isInt({ min: 1 }).withMessage('El código de grado debe ser un entero positivo.'),
+  body('vgraDescrn').trim().notEmpty().isLength({ min: 2, max: 50 }).withMessage('La descripción debe tener entre 2 y 50 caracteres.'),
+  handleValidationErrors
+];
+
 // Validaciones de Lugar de Nacimiento
 const validateLugarNacimiento = [
+  body('vlugCodLug').isInt({ min: 1 }).withMessage('El código de lugar debe ser un entero positivo.'),
+  body('vlugPaisna').trim().notEmpty().isLength({ min: 2, max: 20 }).withMessage('El país debe tener entre 2 y 20 caracteres.'),
+  body('vlugCiudad').trim().notEmpty().isLength({ min: 2, max: 20 }).withMessage('La ciudad debe tener entre 2 y 20 caracteres.'),
+  body('vlugProvin').trim().notEmpty().isLength({ min: 2, max: 20 }).withMessage('La provincia debe tener entre 2 y 20 caracteres.'),
+  handleValidationErrors
+];
+
+// Validaciones de Lugar de Nacimiento para Creación (con código)
+const validateLugarNacimientoCreate = [
   body('vlugCodLug').isInt({ min: 1 }).withMessage('El código de lugar debe ser un entero positivo.'),
   body('vlugPaisna').trim().notEmpty().isLength({ min: 2, max: 20 }).withMessage('El país debe tener entre 2 y 20 caracteres.'),
   body('vlugCiudad').trim().notEmpty().isLength({ min: 2, max: 20 }).withMessage('La ciudad debe tener entre 2 y 20 caracteres.'),
@@ -271,7 +287,9 @@ module.exports = {
   validateDonante,
   validateOcupacion,
   validateGradoInstruccion,
+  validateGradoInstruccionCreate,
   validateLugarNacimiento,
+  validateLugarNacimientoCreate,
   validateClubDonantes,
   validateZonaDireccion,
   validateTipoDocumento,

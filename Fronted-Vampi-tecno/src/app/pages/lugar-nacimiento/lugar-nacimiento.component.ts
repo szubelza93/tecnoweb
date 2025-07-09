@@ -24,6 +24,7 @@ export class LugarNacimientoComponent implements OnInit {
   totalItems = 0;
   showForm = false;
   editLugarData: LugarNacimiento | null = null;
+  isEditing = false;
 
   constructor(
     private lugarService: LugarNacimientoService,
@@ -59,9 +60,9 @@ export class LugarNacimientoComponent implements OnInit {
       return;
     }
     this.filteredLugares = this.lugares.filter(lug =>
-      lug.vlugciudad.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      lug.vlugpaisna.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      lug.vlugprovin.toLowerCase().includes(this.searchTerm.toLowerCase())
+      lug.vlugCiudad.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      lug.vlugPaisna.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      lug.vlugProvin.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
     this.totalItems = this.filteredLugares.length;
     this.currentPage = 1;
@@ -99,19 +100,32 @@ export class LugarNacimientoComponent implements OnInit {
   }
 
   createLugar(): void {
-    this.editLugarData = null;
+    // Generar el siguiente código disponible
+    const maxCode = this.lugares.length > 0 
+      ? Math.max(...this.lugares.map(l => l.vlugCodLug))
+      : 0;
+    const nextCode = maxCode + 1;
+    
+    this.editLugarData = {
+      vlugCodLug: nextCode,
+      vlugPaisna: '',
+      vlugCiudad: '',
+      vlugProvin: ''
+    };
+    this.isEditing = false;
     this.showForm = true;
   }
 
   editLugar(lug: LugarNacimiento): void {
     this.editLugarData = { ...lug };
+    this.isEditing = true;
     this.showForm = true;
   }
 
   deleteLugar(lug: LugarNacimiento): void {
-    if (confirm(`¿Está seguro de eliminar el lugar ${lug.vlugciudad}, ${lug.vlugpaisna}?`)) {
+    if (confirm(`¿Está seguro de eliminar el lugar ${lug.vlugCiudad}, ${lug.vlugPaisna}?`)) {
       this.loading = true;
-      this.lugarService.delete(lug.vlugcodlug).subscribe({
+      this.lugarService.delete(lug.vlugCodLug).subscribe({
         next: () => {
           this.loadLugares();
           this.loading = false;
@@ -125,12 +139,13 @@ export class LugarNacimientoComponent implements OnInit {
   }
 
   onSaveLugar(lugar: LugarNacimiento) {
-    if (this.editLugarData) {
+    if (this.isEditing) {
       // Edición
       this.lugarService.updateLugarNacimiento(lugar).subscribe({
         next: () => {
           this.loadLugares();
           this.showForm = false;
+          this.isEditing = false;
         },
         error: err => this.error = 'Error al actualizar el lugar.'
       });
@@ -140,6 +155,7 @@ export class LugarNacimientoComponent implements OnInit {
         next: () => {
           this.loadLugares();
           this.showForm = false;
+          this.isEditing = false;
         },
         error: err => this.error = 'Error al crear el lugar.'
       });
@@ -148,5 +164,6 @@ export class LugarNacimientoComponent implements OnInit {
 
   onCancelForm() {
     this.showForm = false;
+    this.isEditing = false;
   }
 } 

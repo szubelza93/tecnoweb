@@ -138,6 +138,29 @@ export const routes: Routes = [
                 path: 'lugares-nacimiento/editar/:id',
                 loadComponent: () => import('./pages/lugar-nacimiento/lugar-nacimiento-form.component').then(m => m.LugarNacimientoFormComponent)
             },
+            // Rutas del módulo de grados de instrucción
+            {
+                path: 'grados-instruccion',
+                loadComponent: () => import('./pages/grado-instruccion/grado-instruccion.component').then(m => m.GradoInstruccionComponent)
+            },
+            {
+                path: 'grados-instruccion/crear',
+                loadComponent: () => import('./pages/grado-instruccion/grado-instruccion-form.component').then(m => m.GradoInstruccionFormComponent)
+            },
+            {
+                path: 'grados-instruccion/editar/:id',
+                loadComponent: () => import('./pages/grado-instruccion/grado-instruccion-form.component').then(m => m.GradoInstruccionFormComponent)
+            },
+            // Rutas del módulo de club de donantes
+            {
+                path: 'club-donantes',
+                loadComponent: () => import('./pages/club-donantes/club-donantes.component').then(m => m.ClubDonantesComponent)
+            },
+            // Rutas del módulo de zona de dirección
+            {
+                path: 'zona-direccion',
+                loadComponent: () => import('./pages/zona-direccion/zona-direccion.component').then(m => m.ZonaDireccionComponent)
+            },
             {
                 path: '',
                 redirectTo: 'dashboard',

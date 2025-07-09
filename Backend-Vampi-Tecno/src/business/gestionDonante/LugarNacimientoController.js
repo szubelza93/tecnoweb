@@ -16,6 +16,7 @@ class LugarNacimientoController {
     }
     
     static async create(req, res) {
+        console.log('JSON recibido en el backend:', req.body);
         const nuevoLugar = await LugarNacimiento.create(req.body);
         ResponseHelper.created(res, nuevoLugar, 'Lugar de nacimiento creado exitosamente.');
     }

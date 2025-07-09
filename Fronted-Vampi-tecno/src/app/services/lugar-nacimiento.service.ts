@@ -13,10 +13,10 @@ export class LugarNacimientoService {
   getAll(): Observable<LugarNacimiento[]> {
     return this.http.get<any>(this.baseUrl).pipe(
       map(response => (response.data as any[]).map(d => ({
-        vlugcodlug: d.vlugcodlug,
-        vlugpaisna: d.vlugpaisna,
-        vlugciudad: d.vlugciudad,
-        vlugprovin: d.vlugprovin
+        vlugCodLug: d.vlugCodLug || d.vlugcodlug,
+        vlugPaisna: d.vlugPaisna || d.vlugpaisna,
+        vlugCiudad: d.vlugCiudad || d.vlugciudad,
+        vlugProvin: d.vlugProvin || d.vlugprovin
       })))
     );
   }
@@ -28,12 +28,14 @@ export class LugarNacimientoService {
   }
 
   create(lugar: any): Observable<LugarNacimiento> {
+    console.log('JSON enviado al crear:', lugar);
     return this.http.post<any>(this.baseUrl, lugar).pipe(
       map(response => response.data)
     );
   }
 
   update(id: number, lugar: any): Observable<LugarNacimiento> {
+    console.log('JSON enviado al actualizar:', lugar);
     return this.http.put<any>(`${this.baseUrl}/${id}`, lugar).pipe(
       map(response => response.data)
     );
@@ -48,6 +50,6 @@ export class LugarNacimientoService {
   }
 
   updateLugarNacimiento(lugar: LugarNacimiento): Observable<LugarNacimiento> {
-    return this.update(lugar.vlugcodlug, lugar);
+    return this.update(lugar.vlugCodLug, lugar);
   }
 } 

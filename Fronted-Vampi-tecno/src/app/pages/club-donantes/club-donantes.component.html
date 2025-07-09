@@ -1,13 +1,13 @@
 <div class="container">
-  <h2>Gestión de Lugares de Nacimiento</h2>
+  <h2>Gestión de Clubes de Donantes</h2>
 
   <div class="card">
     <div class="actions">
-      <button class="btn btn-primary" (click)="createLugar()">
-        <i class="fa fa-plus"></i> Nuevo Lugar
+      <button class="btn btn-primary" (click)="createClub()">
+        <i class="fa fa-plus"></i> Nuevo Club
       </button>
-      <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar por ciudad, país o provincia...">
-      <button class="btn btn-success" (click)="searchLugares()">
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar por descripción, dirección o representante...">
+      <button class="btn btn-success" (click)="searchClubes()">
         <i class="fa fa-search"></i> Buscar
       </button>
       <button class="btn btn-secondary" (click)="clearSearch()" *ngIf="searchTerm">
@@ -19,43 +19,45 @@
   <div *ngIf="error" class="error">{{ error }}</div>
 
   <div *ngIf="showForm">
-    <app-lugar-nacimiento-form
-      [lugar]="editLugarData"
-      (save)="onSaveLugar($event)"
+    <app-club-donantes-form
+      [club]="editClubData"
+      (save)="onSaveClub($event)"
       (cancel)="onCancelForm()">
-    </app-lugar-nacimiento-form>
+    </app-club-donantes-form>
   </div>
   <div *ngIf="!showForm">
     <div class="table-container">
-      <table *ngIf="paginatedLugares.length > 0">
+      <table *ngIf="paginatedClubes.length > 0">
         <thead>
           <tr>
             <th>Código</th>
-            <th>País</th>
-            <th>Ciudad</th>
-            <th>Provincia</th>
+            <th>Descripción</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Representante</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let lug of paginatedLugares">
-            <td>{{ lug.vlugCodLug }}</td>
-            <td>{{ lug.vlugPaisna }}</td>
-            <td>{{ lug.vlugCiudad }}</td>
-            <td>{{ lug.vlugProvin }}</td>
+          <tr *ngFor="let club of paginatedClubes">
+            <td>{{ club.vcluCodClu }}</td>
+            <td>{{ club.vcluDescri }}</td>
+            <td>{{ club.vcluDirecc || '-' }}</td>
+            <td>{{ club.vcluTelefo || '-' }}</td>
+            <td>{{ club.vcluRepRes || '-' }}</td>
             <td>
-              <button class="btn-icon" (click)="editLugar(lug)" title="Editar">
+              <button class="btn-icon" (click)="editClub(club)" title="Editar">
                 <i class="fa fa-edit"></i>
               </button>
-              <button class="btn-icon delete" (click)="deleteLugar(lug)" title="Eliminar">
+              <button class="btn-icon delete" (click)="deleteClub(club)" title="Eliminar">
                 <i class="fa fa-trash"></i>
               </button>
             </td>
           </tr>
         </tbody>
       </table>
-      <div *ngIf="paginatedLugares.length === 0 && !loading" style="padding: 2rem; text-align: center; color: #888;">
-        No hay lugares de nacimiento para mostrar.
+      <div *ngIf="paginatedClubes.length === 0 && !loading" style="padding: 2rem; text-align: center; color: #888;">
+        No hay clubes de donantes para mostrar.
       </div>
     </div>
 

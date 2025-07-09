@@ -1,24 +1,32 @@
 <form [formGroup]="lugarForm" (ngSubmit)="onSubmit()" class="form">
   <div class="form-group">
-    <label for="vlugpaisna">País</label>
-    <input id="vlugpaisna" formControlName="vlugpaisna" type="text" required />
-    <div *ngIf="lugarForm.get('vlugpaisna')?.invalid && lugarForm.get('vlugpaisna')?.touched" class="error">
+    <label for="vlugCodLug">Código</label>
+    <input id="vlugCodLug" formControlName="vlugCodLug" type="number" required />
+    <div *ngIf="lugarForm.get('vlugCodLug')?.invalid && lugarForm.get('vlugCodLug')?.touched" class="error">
+      El código es obligatorio y debe ser un número positivo.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="vlugPaisna">País</label>
+    <input id="vlugPaisna" formControlName="vlugPaisna" type="text" required />
+    <div *ngIf="lugarForm.get('vlugPaisna')?.invalid && lugarForm.get('vlugPaisna')?.touched" class="error">
       El país es obligatorio.
     </div>
   </div>
 
   <div class="form-group">
-    <label for="vlugciudad">Ciudad</label>
-    <input id="vlugciudad" formControlName="vlugciudad" type="text" required />
-    <div *ngIf="lugarForm.get('vlugciudad')?.invalid && lugarForm.get('vlugciudad')?.touched" class="error">
+    <label for="vlugCiudad">Ciudad</label>
+    <input id="vlugCiudad" formControlName="vlugCiudad" type="text" required />
+    <div *ngIf="lugarForm.get('vlugCiudad')?.invalid && lugarForm.get('vlugCiudad')?.touched" class="error">
       La ciudad es obligatoria.
     </div>
   </div>
 
   <div class="form-group">
-    <label for="vlugprovin">Provincia</label>
-    <input id="vlugprovin" formControlName="vlugprovin" type="text" required />
-    <div *ngIf="lugarForm.get('vlugprovin')?.invalid && lugarForm.get('vlugprovin')?.touched" class="error">
+    <label for="vlugProvin">Provincia</label>
+    <input id="vlugProvin" formControlName="vlugProvin" type="text" required />
+    <div *ngIf="lugarForm.get('vlugProvin')?.invalid && lugarForm.get('vlugProvin')?.touched" class="error">
       La provincia es obligatoria.
     </div>
   </div>

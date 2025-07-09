@@ -19,10 +19,10 @@ export class LugarNacimientoFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.lugarForm = this.fb.group({
-      vlugcodlug: [''], // Código, solo para edición
-      vlugpaisna: ['', Validators.required],
-      vlugciudad: ['', Validators.required],
-      vlugprovin: ['', Validators.required]
+      vlugCodLug: ['', Validators.required], // Código requerido para creación y edición
+      vlugPaisna: ['', Validators.required],
+      vlugCiudad: ['', Validators.required],
+      vlugProvin: ['', Validators.required]
     });
   }
 

@@ -15,6 +15,7 @@ class GradoInstruccionController {
     }
     
     static async create(req, res) {
+        console.log('JSON recibido en el backend:', req.body);
         const nuevoGrado = await GradoInstruccion.create(req.body);
         ResponseHelper.created(res, nuevoGrado, 'Grado de instrucción creado exitosamente.');
     }

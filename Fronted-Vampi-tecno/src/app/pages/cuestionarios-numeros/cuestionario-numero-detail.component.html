@@ -5,8 +5,8 @@
   <div *ngIf="error" class="error">{{ error }}</div>
 
   <div *ngIf="cuestionario && !loading">
-    <p><strong>Número:</strong> {{ cuestionario?.vcueNroCue }}</p>
-    <p><strong>Descripción:</strong> {{ cuestionario?.vcueDescri }}</p>
+    <p><strong>Número:</strong> {{ cuestionario.vcueNroCue }}</p>
+    <p><strong>Descripción:</strong> {{ cuestionario.vcueDescri }}</p>
   </div>
 
   <button (click)="volver()">Volver</button>

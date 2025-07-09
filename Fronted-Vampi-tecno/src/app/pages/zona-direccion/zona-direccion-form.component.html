@@ -1,0 +1,30 @@
+<form [formGroup]="zonaForm" (ngSubmit)="onSubmit()" class="form">
+  <div class="form-group">
+    <label for="vzonCodZon">Código</label>
+    <input id="vzonCodZon" formControlName="vzonCodZon" type="number" required />
+    <div *ngIf="zonaForm.get('vzonCodZon')?.invalid && zonaForm.get('vzonCodZon')?.touched" class="error">
+      El código es obligatorio y debe ser un número positivo.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="vlugCodLug">Código Lugar</label>
+    <input id="vlugCodLug" formControlName="vlugCodLug" type="number" required />
+    <div *ngIf="zonaForm.get('vlugCodLug')?.invalid && zonaForm.get('vlugCodLug')?.touched" class="error">
+      El código de lugar es obligatorio y debe ser un número positivo.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="vzonDescr">Descripción</label>
+    <input id="vzonDescr" formControlName="vzonDescr" type="text" required />
+    <div *ngIf="zonaForm.get('vzonDescr')?.invalid && zonaForm.get('vzonDescr')?.touched" class="error">
+      La descripción es obligatoria y debe tener entre 2 y 50 caracteres.
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary" [disabled]="zonaForm.invalid">Guardar</button>
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+  </div>
+</form> 

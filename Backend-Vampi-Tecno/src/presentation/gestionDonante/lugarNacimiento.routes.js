@@ -2,7 +2,7 @@ const express = require('express');
 const LugarNacimientoController = require('../../business//gestionDonante/LugarNacimientoController');
 const { asyncHandler } = require('../../shared/middlewares/errorHandler');
 const { authenticate, authorize } = require('../../shared/middlewares/auth');
-const { validateId } = require('../../shared/middlewares/validation');
+const { validateId, validateLugarNacimiento, validateLugarNacimientoCreate } = require('../../shared/middlewares/validation');
 
 const router = express.Router();
 
@@ -10,9 +10,9 @@ const router = express.Router();
 
 // Rutas CRUD básicas
 router.get('/', /* authorize('donantes.listar'), */ asyncHandler(LugarNacimientoController.getAll));
-router.post('/', /* authorize('donantes.crear'), */ asyncHandler(LugarNacimientoController.create));
+router.post('/', validateLugarNacimientoCreate, /* authorize('donantes.crear'), */ asyncHandler(LugarNacimientoController.create));
 router.get('/:id', validateId, /* authorize('donantes.leer'), */ asyncHandler(LugarNacimientoController.getById));
-router.put('/:id', validateId, /* authorize('donantes.actualizar'), */ asyncHandler(LugarNacimientoController.update));
+router.put('/:id', validateId, validateLugarNacimiento, /* authorize('donantes.actualizar'), */ asyncHandler(LugarNacimientoController.update));
 router.delete('/:id', validateId, /* authorize('donantes.eliminar'), */ asyncHandler(LugarNacimientoController.delete));
 
 // Rutas de búsqueda

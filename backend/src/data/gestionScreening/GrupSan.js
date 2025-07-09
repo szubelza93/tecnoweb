@@ -60,6 +60,11 @@ class GrupSan {
     );
     return res.rows;
   }
+  
+  static async count() {
+    const res = await pool.query('SELECT COUNT(*) FROM vamGrupSan');
+    return parseInt(res.rows[0].count, 10);
+  }
 }
 
 module.exports = GrupSan; 

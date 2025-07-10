@@ -72,6 +72,47 @@ function mapDonanteFromBackend(d: any): Donante {
   };
 }
 
+// Nueva función para mapear desde el detalle formateado del backend al modelo Donante
+function mapDonanteFromBackendDetalle(d: any): Donante {
+  // d es el objeto formateado del backend (con id, nombreCompleto, documento, etc.)
+  // Se intentará reconstruir el objeto Donante lo mejor posible
+  return {
+    vdonCodDon: d.id || '',
+    vdonPatern: d.nombreCompleto ? d.nombreCompleto.split(' ')[1] || '' : '',
+    vdonMatern: d.nombreCompleto ? d.nombreCompleto.split(' ')[2] || '' : '',
+    vdonNombre: d.nombreCompleto ? d.nombreCompleto.split(' ')[0] || '' : '',
+    vzonCodZon: d.direccion?.zona || '',
+    vdonDirecc: d.direccion?.direccion || '',
+    vdonDesDir: d.direccion?.descripcion || '',
+    vtidCodTid: '',
+    vdonDocide: d.documento || '',
+    vdonFecNac: d.informacionPersonal?.fechaNacimiento || '',
+    vdonEdadDo: d.edad || d.informacionPersonal?.edad || 0,
+    vdonEstCiv: d.estadoCivil || d.informacionPersonal?.estadoCivil || '',
+    vdonSexoDn: d.sexo || d.informacionPersonal?.sexo || '',
+    vdonTelOfi: d.contactos?.telefonoOficina || '',
+    vdonTelCel: d.telefono || d.contactos?.telefonoCelular || '',
+    vdonEmail: d.email || d.contactos?.email || '',
+    vdonEmail2: '',
+    vdonDirTra: d.informacionLaboral?.direccionTrabajo || '',
+    vdonCarneT: d.informacionAdicional?.carnetTrabajo || '',
+    vocuCodOcu: '',
+    vgraCodGra: '',
+    vlugCodLug: '',
+    vcluCodClu: '',
+    vresCodRes: d.informacionAdicional?.codigoReserva || '',
+    vdonSwCita: d.informacionAdicional?.cita || false,
+    created_at: d.created_at,
+    updated_at: d.updated_at,
+    tipo_documento: d.informacionPersonal?.tipoDocumento || '',
+    ocupacion: d.informacionLaboral?.ocupacion || '',
+    grado_instruccion: d.informacionLaboral?.gradoInstruccion || '',
+    lugar_nacimiento: d.informacionAdicional?.lugarNacimiento || '',
+    club_donantes: d.informacionAdicional?.clubDonantes || '',
+    zona_direccion: d.informacionAdicional?.zonaDireccion || ''
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -81,31 +122,26 @@ export class DonanteService {
   constructor(private http: HttpClient) { }
 
   // Operaciones CRUD principales
-  getAllDonantes(): Observable<ApiResponse<Donante[]>> {
-    return this.http.get<ApiResponse<any[]>>(this.baseUrl).pipe(
-      map(response => {
-        console.log('Respuesta del backend:', response);
-        const mappedData = Array.isArray(response.data) ? response.data.map(d => {
-          console.log('Dato original:', d);
-          const mapped = mapDonanteFromBackend(d);
-          console.log('Dato mapeado:', mapped);
-          return mapped;
-        }) : [];
-        console.log('Datos finales:', mappedData);
-        return {
-          ...response,
-          data: mappedData
-        };
-      })
+  getAllDonantes(): Observable<any[]> {
+    return this.http.get<any>(this.baseUrl).pipe(
+      map(response => response.data.donantes)
     );
   }
 
   getDonanteById(id: string): Observable<ApiResponse<Donante>> {
     return this.http.get<ApiResponse<any>>(`${this.baseUrl}/${id}`).pipe(
-      map(response => ({
-        ...response,
-        data: response.data ? mapDonanteFromBackend(response.data) : {} as Donante
-      }))
+      map(response => {
+        // Si la respuesta ya viene formateada, intentar mapear los campos al modelo Donante
+        const d = response.data || {};
+        // Intentar extraer los campos originales si existen, si no, mapear desde el formateado
+        if (d.vdonCodDon || d.vdonPatern || d.vdonNombre) {
+          // Ya es formato Donante
+          return { ...response, data: d as Donante };
+        } else {
+          // Mapear desde el objeto formateado del backend
+          return { ...response, data: mapDonanteFromBackendDetalle(d) };
+        }
+      })
     );
   }
 
@@ -154,8 +190,10 @@ export class DonanteService {
     return this.http.get<ApiResponse<GradoInstruccion[]>>(buildApiUrl(API_CONFIG.RELATED_DATA.GRADOS_INSTRUCCION));
   }
 
-  getLugaresNacimiento(): Observable<ApiResponse<LugarNacimiento[]>> {
-    return this.http.get<ApiResponse<LugarNacimiento[]>>(buildApiUrl(API_CONFIG.RELATED_DATA.LUGARES_NACIMIENTO));
+  getLugaresNacimiento(): Observable<any[]> {
+    return this.http.get<any>(buildApiUrl(API_CONFIG.RELATED_DATA.LUGARES_NACIMIENTO)).pipe(
+      map(response => response.data)
+    );
   }
 
   getClubesDonantes(): Observable<ApiResponse<ClubDonantes[]>> {

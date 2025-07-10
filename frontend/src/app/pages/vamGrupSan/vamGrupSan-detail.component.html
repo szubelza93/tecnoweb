@@ -1,0 +1,16 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="bg-white rounded-lg shadow-md p-8 max-w-lg mx-auto">
+    <h2 class="text-2xl font-bold mb-4">Detalle del Grupo Sanguíneo</h2>
+    <div *ngIf="loading" class="text-center">Cargando...</div>
+    <div *ngIf="error" class="text-red-600 mb-4">{{ error }}</div>
+    <div *ngIf="vamGrupSan && !loading">
+      <p><strong>Código:</strong> {{ vamGrupSan.vqrsCodGrs }}</p>
+      <p><strong>Grupo ABO:</strong> {{ vamGrupSan.vqrsGruABO }}</p>
+      <p><strong>Tipo RH:</strong> {{ vamGrupSan.vqrsTipoRH }}</p>
+      <p><strong>Código Programa:</strong> {{ vamGrupSan.vprgCodPrg }}</p>
+      <p><strong>Estatura Mínima:</strong> {{ vamGrupSan.vprgEstMin }}</p>
+      <p><strong>Estatura Máxima:</strong> {{ vamGrupSan.vprgEstMax }}</p>
+    </div>
+    <button (click)="volver()" class="mt-6 bg-blue-600 text-white px-4 py-2 rounded">Volver</button>
+  </div>
+</div> 

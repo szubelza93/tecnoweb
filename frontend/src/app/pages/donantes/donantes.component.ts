@@ -13,8 +13,8 @@ import { Donante } from '../../models/donante.interface';
   styleUrls: ['./donantes.component.css']
 })
 export class DonantesComponent implements OnInit {
-  donantes: Donante[] = [];
-  filteredDonantes: Donante[] = [];
+  donantes: any[] = [];
+  filteredDonantes: any[] = [];
   loading = false;
   error = '';
   searchTerm = '';
@@ -36,25 +36,16 @@ export class DonantesComponent implements OnInit {
   loadDonantes(): void {
     this.loading = true;
     this.error = '';
-    
     this.donanteService.getAllDonantes().subscribe({
-      next: (response) => {
-        console.log('Respuesta en componente:', response);
-        if (response.success) {
-          this.donantes = response.data;
-          console.log('Donantes cargados:', this.donantes);
-          this.filteredDonantes = [...this.donantes];
-          this.totalItems = this.donantes.length;
-        } else {
-          this.error = response.message || 'Error al cargar donantes';
-        }
+      next: (data) => {
+        this.donantes = data;
+        this.filteredDonantes = [...this.donantes];
+        this.totalItems = this.donantes.length;
         this.loading = false;
       },
       error: (err) => {
-        console.error('Error completo:', err);
         this.error = 'Error de conexión al cargar donantes';
         this.loading = false;
-        console.error('Error loading donantes:', err);
       }
     });
   }
@@ -66,23 +57,17 @@ export class DonantesComponent implements OnInit {
       this.currentPage = 1;
       return;
     }
-
     this.loading = true;
     this.donanteService.searchDonantesByNombre(this.searchTerm).subscribe({
       next: (response) => {
-        if (response.success) {
-          this.filteredDonantes = response.data;
-          this.totalItems = this.filteredDonantes.length;
-          this.currentPage = 1;
-        } else {
-          this.error = response.message || 'Error en la búsqueda';
-        }
+        this.filteredDonantes = response.data;
+        this.totalItems = this.filteredDonantes.length;
+        this.currentPage = 1;
         this.loading = false;
       },
       error: (err) => {
         this.error = 'Error de conexión en la búsqueda';
         this.loading = false;
-        console.error('Error searching donantes:', err);
       }
     });
   }
@@ -95,7 +80,7 @@ export class DonantesComponent implements OnInit {
   }
 
   // Paginación
-  get paginatedDonantes(): Donante[] {
+  get paginatedDonantes(): any[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     return this.filteredDonantes.slice(startIndex, endIndex);
@@ -124,18 +109,18 @@ export class DonantesComponent implements OnInit {
     this.router.navigate(['/donantes/crear']);
   }
 
-  editDonante(donante: Donante): void {
-    this.router.navigate(['/donantes/editar', donante.vdonCodDon]);
+  editDonante(donante: any): void {
+    this.router.navigate(['/donantes/editar', donante.id]);
   }
 
-  viewDonante(donante: Donante): void {
-    this.router.navigate(['/donantes/ver', donante.vdonCodDon]);
+  viewDonante(donante: any): void {
+    this.router.navigate(['/donantes/ver', donante.id]);
   }
 
-  deleteDonante(donante: Donante): void {
-    if (confirm(`¿Está seguro de eliminar al donante ${donante.vdonNombre} ${donante.vdonPatern}?`)) {
+  deleteDonante(donante: any): void {
+    if (confirm(`¿Está seguro de eliminar al donante ${donante.nombreCompleto}?`)) {
       this.loading = true;
-      this.donanteService.deleteDonante(donante.vdonCodDon!).subscribe({
+      this.donanteService.deleteDonante(donante.id).subscribe({
         next: (response) => {
           if (response.success) {
             this.loadDonantes(); // Recargar la lista
@@ -147,7 +132,6 @@ export class DonantesComponent implements OnInit {
         error: (err) => {
           this.error = 'Error de conexión al eliminar donante';
           this.loading = false;
-          console.error('Error deleting donante:', err);
         }
       });
     }

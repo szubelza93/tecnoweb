@@ -60,10 +60,18 @@ class GrupSan {
     );
     return res.rows;
   }
-  
+
   static async count() {
     const res = await pool.query('SELECT COUNT(*) FROM vamGrupSan');
     return parseInt(res.rows[0].count, 10);
+  }
+
+  static async findByGrupoAndRH(grupoABO, tipoRH) {
+    const res = await pool.query(
+      'SELECT * FROM vamGrupSan WHERE vqrsGruABO = $1 AND vqrsTipoRH = $2',
+      [grupoABO, tipoRH]
+    );
+    return res.rows[0];
   }
 }
 

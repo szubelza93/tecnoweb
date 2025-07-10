@@ -32,7 +32,7 @@ export class DonanteFormComponent implements OnInit {
   donanteForm: FormGroup;
   isEditMode = false;
   loading = false;
-  error = '';
+  error: any = '';
   success = '';
   
   // Datos para los selectores
@@ -119,35 +119,88 @@ export class DonanteFormComponent implements OnInit {
   }
 
   private loadRelatedData(): void {
-    // Cargar todos los datos relacionados en paralelo
-    Promise.all([
-      this.donanteService.getTiposDocumento().toPromise(),
-      this.donanteService.getOcupaciones().toPromise(),
-      this.donanteService.getGradosInstruccion().toPromise(),
-      this.donanteService.getLugaresNacimiento().toPromise(),
-      this.donanteService.getClubesDonantes().toPromise(),
-      this.donanteService.getZonasDireccion().toPromise()
-    ]).then(([tiposDoc, ocup, grados, lugares, clubes, zonas]) => {
-      if (tiposDoc?.success) this.tiposDocumento = tiposDoc.data;
-      if (ocup?.success) this.ocupaciones = ocup.data;
-      if (grados?.success) this.gradosInstruccion = grados.data;
-      if (lugares?.success) this.lugaresNacimiento = lugares.data;
-      if (clubes?.success) this.clubesDonantes = clubes.data;
-      if (zonas?.success) this.zonasDireccion = zonas.data;
-    }).catch(err => {
-      console.error('Error loading related data:', err);
-      this.error = 'Error al cargar datos relacionados';
+    // Cargar lugares de nacimiento
+    this.donanteService.getLugaresNacimiento().subscribe(lugares => {
+      this.lugaresNacimiento = this.mapLugarNacimientoCampos(lugares);
+      console.log('Lugares de nacimiento:', this.lugaresNacimiento);
+    });
+    // Tipos de documento
+    this.donanteService.getTiposDocumento().subscribe(response => {
+      this.tiposDocumento = this.mapTiposDocumentoCampos(response.data);
+    });
+    // Ocupaciones
+    this.donanteService.getOcupaciones().subscribe(response => {
+      this.ocupaciones = this.mapOcupacionesCampos(response.data);
+    });
+    // Grados de instrucción
+    this.donanteService.getGradosInstruccion().subscribe(response => {
+      this.gradosInstruccion = this.mapGradosInstruccionCampos(response.data);
+    });
+    // Clubes de donantes
+    this.donanteService.getClubesDonantes().subscribe(response => {
+      this.clubesDonantes = this.mapClubesDonantesCampos(response.data);
+    });
+    // Zonas de dirección
+    this.donanteService.getZonasDireccion().subscribe(response => {
+      this.zonasDireccion = this.mapZonasDireccionCampos(response.data);
     });
   }
 
+  // Mapea los campos de los lugares de nacimiento a camelCase para que coincidan con la interfaz
+  private mapLugarNacimientoCampos(lugares: any[]): LugarNacimiento[] {
+    return lugares.map(lugar => ({
+      vlugCodLug: lugar.vlugcodlug,
+      vlugCiudad: lugar.vlugciudad,
+      vlugPaisNa: lugar.vlugpaisna,
+      vlugProvin: lugar.vlugprovin
+    }));
+  }
+
+  private mapTiposDocumentoCampos(tipos: any[]): TipoDocumento[] {
+    return tipos.map(tipo => ({
+      vtidCodTid: tipo.vtidcodtid,
+      vtidDescr: tipo.vtiddescr
+    }));
+  }
+
+  private mapOcupacionesCampos(ocupaciones: any[]): Ocupacion[] {
+    return ocupaciones.map(ocu => ({
+      vocuCodOcu: ocu.vocucodocu,
+      vocudescri: ocu.vocudescri
+    }));
+  }
+
+  private mapGradosInstruccionCampos(grados: any[]): GradoInstruccion[] {
+    return grados.map(gra => ({
+      vgraCodGra: gra.vgracodgra,
+      vgraDescrn: gra.vgradescrn
+    }));
+  }
+
+  private mapClubesDonantesCampos(clubes: any[]): ClubDonantes[] {
+    return clubes.map(clu => ({
+      vcluCodClu: clu.vclucodclu,
+      vcluDescri: clu.vcludescri
+    }));
+  }
+
+  private mapZonasDireccionCampos(zonas: any[]): ZonaDireccion[] {
+    return zonas.map(zona => ({
+      vzonCodZon: zona.vzoncodzon,
+      vzonDescr: zona.vzondescr
+    }));
+  }
+
   onSubmit(): void {
+    console.log('Submit', this.donanteForm.value, this.donanteForm.valid);
     if (this.donanteForm.valid) {
       this.loading = true;
       this.error = '';
       this.success = '';
 
-      const donanteData = this.donanteForm.value;
-      
+      const donanteData = { ...this.donanteForm.value };
+      // Eliminar el campo vdonCodDon para que el backend lo genere automáticamente
+      delete donanteData.vdonCodDon;
       // Convertir edad a número
       donanteData.vdonEdadDo = parseInt(donanteData.vdonEdadDo);
 
@@ -175,7 +228,7 @@ export class DonanteFormComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        this.error = ERROR_MESSAGES.NETWORK_ERROR;
+        this.error = err.error || err.message || 'Error desconocido';
         this.loading = false;
         console.error('Error creating donante:', err);
       }

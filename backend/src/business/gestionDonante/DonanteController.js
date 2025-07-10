@@ -27,38 +27,36 @@ class DonanteController {
                 search, 
                 sort: sort.toUpperCase() 
             });
+            console.log(donantes);
             
             // Transformación de datos para presentación
             const formattedDonantes = donantes.map(donante => ({
-                id: donante.vdonCodDon,
-                nombreCompleto: `${donante.vdonPatern || ''} ${donante.vdonMatern || ''} ${donante.vdonNombre || ''}`.trim(),
-                documento: donante.vdonDocide,
-                email: donante.vdonEmail,
-                telefono: donante.vdonTelCel,
-                edad: donante.vdonEdadDo,
-                estadoCivil: donante.vdonEstCiv,
-                sexo: donante.vdonSexoDn,
+                id: donante.vdoncoddon,
+                nombreCompleto: `${donante.vdonpatern || ''} ${donante.vdonmatern || ''} ${donante.vdonnombre || ''}`.trim(),
+                documento: donante.vdondocide,
+                email: donante.vdonemail,
+                telefono: donante.vdontelcel,
                 ocupacion: donante.ocupacion,
                 gradoInstruccion: donante.grado_instruccion,
                 lugarNacimiento: donante.lugar_nacimiento,
                 clubDonantes: donante.club_donantes,
                 zonaDireccion: donante.zona_direccion,
-                fechaNacimiento: donante.vdonFecNac,
+                fechaNacimiento: donante.vdonfecnac,
                 direccion: {
                     zona: donante.zona_direccion,
-                    direccion: donante.vdonDirecc,
-                    descripcion: donante.vdonDesDir
+                    direccion: donante.vdondirecc,
+                    descripcion: donante.vdondesdir
                 },
                 contactos: {
-                    telefonoDomicilio: donante.vdonTelDom,
-                    telefonoOficina: donante.vdonTelOff,
-                    telefonoCelular: donante.vdonTelCel,
-                    email: donante.vdonEmail
+                    telefonoDomicilio: donante.vdonteldom,
+                    telefonoOficina: donante.vdonteloff,
+                    telefonoCelular: donante.vdontelcel,
+                    email: donante.vdonemail
                 },
                 informacionLaboral: {
                     ocupacion: donante.ocupacion,
-                    trabajo: donante.vdonTrabaj,
-                    direccionTrabajo: donante.vdonDirTra
+                    trabajo: donante.vdontrabaj,
+                    direccionTrabajo: donante.vdondirtra
                 }
             }));
             

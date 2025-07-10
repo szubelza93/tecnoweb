@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-blank',
@@ -31,11 +31,13 @@ export class BlankComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngOnInit(): void {
-    // Simular carga de datos
-    this.simulateProgress();
+    if (isPlatformBrowser(this.platformId)) {
+      // Simular carga de datos solo en el navegador
+      this.simulateProgress();
+    }
   }
 
   private simulateProgress(): void {

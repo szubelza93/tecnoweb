@@ -177,6 +177,23 @@ export const routes: Routes = [
                 path: 'vamobsequi/editar/:id',
                 loadComponent: () => import('./pages/vamobsequi/vamobsequi-form.component').then(m => m.VamobsequiFormComponent)
             },
+            // Rutas del módulo de refrigeradores
+            {
+                path: 'vamrefrige',
+                loadComponent: () => import('./pages/vamrefrige/vamrefrige.component').then(m => m.VamrefrigeComponent)
+            },
+            {
+                path: 'vamrefrige/crear',
+                loadComponent: () => import('./pages/vamrefrige/vamrefrige-form.component').then(m => m.VamrefrigeFormComponent)
+            },
+            {
+                path: 'vamrefrige/editar/:id',
+                loadComponent: () => import('./pages/vamrefrige/vamrefrige-form.component').then(m => m.VamrefrigeFormComponent)
+            },
+            {
+                path: 'vamrefrige/:id',
+                loadComponent: () => import('./pages/vamrefrige/vamrefrige-detail.component').then(m => m.VamrefrigeDetailComponent)
+            },
             {
                 path: 'vamobsequi/ver/:id',
                 loadComponent: () => import('./pages/vamobsequi/vamobsequi-detail.component').then(m => m.VamobsequiDetailComponent)

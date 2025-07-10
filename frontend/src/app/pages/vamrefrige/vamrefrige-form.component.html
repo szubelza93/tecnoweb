@@ -1,0 +1,29 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div>
+    <label>Descripción</label>
+    <input formControlName="vrefdescri" />
+  </div>
+  <div>
+    <label>Características</label>
+    <input formControlName="vrefcaract" />
+  </div>
+  <div>
+    <label>Cantidad de Ingreso</label>
+    <input type="number" formControlName="vrefingres" min="0" />
+  </div>
+  <div>
+    <label>Cantidad de Salida</label>
+    <input type="number" formControlName="vrefsalida" min="0" />
+  </div>
+  <div>
+    <label>Cantidad</label>
+    <input type="number" formControlName="vrefcantid" />
+  </div>
+  <div class="flex gap-4 mt-4">
+    <button type="submit" [disabled]="form.invalid || loading" class="bg-green-700 text-white px-4 py-2 rounded">
+      {{ loading ? 'Guardando...' : (editMode ? 'Actualizar' : 'Guardar') }}
+    </button>
+    <button type="button" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded" (click)="volver()">REGRESAR</button>
+  </div>
+  <div *ngIf="errorMsg" class="bg-red-100 text-red-800 p-2 rounded mt-2">{{ errorMsg }}</div>
+</form>

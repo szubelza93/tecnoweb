@@ -11,7 +11,8 @@ const router = express.Router();
 // Rutas CRUD básicas
 router.get('/', /* authorize('extraccion.listar'), */ asyncHandler(BolsaHeController.getAll));
 router.post('/', validateBolsaHe, /* authorize('extraccion.crear'), */ asyncHandler(BolsaHeController.create));
-router.get('/:id', validateId, /* authorize('extraccion.leer'), */ asyncHandler(BolsaHeController.getById));
+router.get('/:id', validateId, /*
+     authorize('extraccion.leer'), */ asyncHandler(BolsaHeController.getById));
 router.put('/:id', validateId, validateBolsaHe, /* authorize('extraccion.actualizar'), */ asyncHandler(BolsaHeController.update));
 router.delete('/:id', validateId, /* authorize('extraccion.eliminar'), */ asyncHandler(BolsaHeController.delete));
 

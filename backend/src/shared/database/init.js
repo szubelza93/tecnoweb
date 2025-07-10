@@ -401,6 +401,30 @@ const createTables = async () => {
       )
     `);
 
+    // TABLA DE REFRIGERADORES (GESTIÓN DE PRODUCCIÓN)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS vamrefrige (
+        vrefcodref SERIAL PRIMARY KEY,
+        vrefdescri VARCHAR(50) NOT NULL,
+        vrefcaract VARCHAR(250),
+        vrefingres SMALLINT NOT NULL,
+        vrefsalida SMALLINT,
+        vrefcantid SMALLINT NOT NULL
+      )
+    `);
+
+    // TABLA DE OBSEQUIOS (GESTIÓN DE PRODUCCIÓN)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS vamObsequi (
+        vobsCodObs SMALLSERIAL PRIMARY KEY,
+        vobsDescri VARCHAR(50),
+        vobsCaract VARCHAR(250),
+        vobsIngres SMALLINT,
+        vobsSalida SMALLINT,
+        vobsCantid SMALLINT
+      )
+    `);
+
     console.log('✅ Tablas creadas correctamente.');
 
     // ÍNDICES

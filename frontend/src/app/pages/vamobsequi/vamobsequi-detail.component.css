@@ -1,0 +1,12 @@
+.p-4 {
+  padding: 1rem;
+}
+.bg-white {
+  background: #fff;
+}
+.rounded {
+  border-radius: 0.5rem;
+}
+.shadow {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+} 

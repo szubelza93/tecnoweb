@@ -86,6 +86,17 @@ class Donante {
     }
 
     static async create(data) {
+        const params = [
+            data.vdonCodDon, data.vdonPatern, data.vdonMatern, data.vdonNombre, data.vzonCodZon,
+            data.vdonDirecc, data.vdonDesDir, data.vtidCodTid, data.vdonDocide, data.vdonFecNac,
+            data.vdonEdadDo, data.vdonEstCiv, data.vdonSexoDn, data.vdonTelDom, data.vdonTelOff, data.vdonTelCel,
+            data.vdonEmail, data.vdonTrabaj, data.vdonDirTra, data.vdonCarneT, data.vocuCodOcu,
+            data.vgraCodGra, data.vlugCodLug, data.vcluCodClu, data.vresCodRes, data.vdonSwCita
+        ];
+        
+        console.log('=== PARÁMETROS PARA LA CONSULTA SQL ===');
+        console.log('Parámetros:', params);
+        
         const res = await pool.query(`
             INSERT INTO vamDonante (
                 vdonCodDon, vdonPatern, vdonMatern, vdonNombre, vzonCodZon,
@@ -95,17 +106,48 @@ class Donante {
                 vgraCodGra, vlugCodLug, vcluCodClu, vresCodRes, vdonSwCita
             ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26)
             RETURNING *
-        `, [
-            data.vdonCodDon, data.vdonPatern, data.vdonMatern, data.vdonNombre, data.vzonCodZon,
-            data.vdonDirecc, data.vdonDesDir, data.vtidCodTid, data.vdonDocide, data.vdonFecNac,
-            data.vdonEdadDo, data.vdonEstCiv, data.vdonSexoDn, data.vdonTelDom, data.vdonTelOff, data.vdonTelCel,
-            data.vdonEmail, data.vdonTrabaj, data.vdonDirTra, data.vdonCarneT, data.vocuCodOcu,
-            data.vgraCodGra, data.vlugCodLug, data.vcluCodClu, data.vresCodRes, data.vdonSwCita
-        ]);
+        `, params);
         return res.rows[0];
     }
 
     static async update(id, data) {
+        console.log('=== MODELO UPDATE - DATOS RECIBIDOS ===');
+        console.log('ID:', id);
+        console.log('Datos:', data);
+        
+        // Preparar parámetros con valores por defecto para campos faltantes
+        const params = [
+            data.vdonPatern || null, 
+            data.vdonMatern || null, 
+            data.vdonNombre || null, 
+            data.vzonCodZon || null,
+            data.vdonDirecc || null, 
+            data.vdonDesDir || null, 
+            data.vtidCodTid || null, 
+            data.vdonDocide || null, 
+            data.vdonFecNac || null,
+            data.vdonEdadDo || null, 
+            data.vdonEstCiv || null, 
+            data.vdonSexoDn || null, 
+            data.vdonTelDom || null, 
+            data.vdonTelOff || null, 
+            data.vdonTelCel || null,
+            data.vdonEmail || null, 
+            data.vdonTrabaj || null, 
+            data.vdonDirTra || null, 
+            data.vdonCarneT || 0, 
+            data.vocuCodOcu || null,
+            data.vgraCodGra || null, 
+            data.vlugCodLug || null, 
+            data.vcluCodClu || null, 
+            data.vresCodRes || null, 
+            data.vdonSwCita || 0, 
+            id
+        ];
+        
+        console.log('=== PARÁMETROS PARA UPDATE ===');
+        console.log('Parámetros:', params);
+        
         const res = await pool.query(`
             UPDATE vamDonante SET
                 vdonPatern = $1, vdonMatern = $2, vdonNombre = $3, vzonCodZon = $4,
@@ -116,13 +158,11 @@ class Donante {
                 updated_at = CURRENT_TIMESTAMP
             WHERE vdonCodDon = $26
             RETURNING *
-        `, [
-            data.vdonPatern, data.vdonMatern, data.vdonNombre, data.vzonCodZon,
-            data.vdonDirecc, data.vdonDesDir, data.vtidCodTid, data.vdonDocide, data.vdonFecNac,
-            data.vdonEdadDo, data.vdonEstCiv, data.vdonSexoDn, data.vdonTelDom, data.vdonTelOff, data.vdonTelCel,
-            data.vdonEmail, data.vdonTrabaj, data.vdonDirTra, data.vdonCarneT, data.vocuCodOcu,
-            data.vgraCodGra, data.vlugCodLug, data.vcluCodClu, data.vresCodRes, data.vdonSwCita, id
-        ]);
+        `, params);
+        
+        console.log('=== RESULTADO UPDATE ===');
+        console.log('Resultado:', res.rows[0]);
+        
         return res.rows[0];
     }
 

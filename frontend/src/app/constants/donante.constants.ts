@@ -23,8 +23,9 @@ export const VALIDATION_CONFIG = {
   MIN_AGE: 18,
   MAX_AGE: 100,
   MIN_NAME_LENGTH: 2,
-  MIN_DOCUMENT_LENGTH: 8,
-  PHONE_PATTERN: /^[0-9]{9,10}$/
+  MIN_DOCUMENT_LENGTH: 7,
+  MAX_DOCUMENT_LENGTH: 8,
+  PHONE_PATTERN: /^[0-9]{8}$/
 };
 
 // Mensajes de error
@@ -33,7 +34,7 @@ export const ERROR_MESSAGES = {
   MIN_LENGTH: (min: number) => `Mínimo ${min} caracteres`,
   MAX_LENGTH: (max: number) => `Máximo ${max} caracteres`,
   EMAIL: 'Email inválido',
-  PHONE: 'Formato de teléfono inválido',
+  PHONE: 'Formato de teléfono inválido (exactamente 8 dígitos)',
   MIN_AGE: (min: number) => `Edad mínima: ${min} años`,
   MAX_AGE: (max: number) => `Edad máxima: ${max} años`,
   LOADING_ERROR: 'Error al cargar datos',

@@ -121,12 +121,12 @@ class GrupSanController {
             }
             
             // Validar estatura mínima
-            if (data.vprgEstMin < 100 || data.vprgEstMin > 250) {
+            if (data.vprgEstMin < 1 || data.vprgEstMin > 250) {
                 throw new ValidationError('Estatura mínima debe estar entre 100 y 250 cm');
             }
             
             // Validar estatura máxima
-            if (data.vprgEstMax < 100 || data.vprgEstMax > 250) {
+            if (data.vprgEstMax < 1 || data.vprgEstMax > 250) {
                 throw new ValidationError('Estatura máxima debe estar entre 100 y 250 cm');
             }
             
@@ -209,10 +209,10 @@ class GrupSanController {
             
             // Validar estaturas si se están actualizando
             if (data.vprgEstMin && data.vprgEstMax) {
-                if (data.vprgEstMin < 100 || data.vprgEstMin > 250) {
+                if (data.vprgEstMin < 1 || data.vprgEstMin > 250) {
                     throw new ValidationError('Estatura mínima debe estar entre 100 y 250 cm');
                 }
-                if (data.vprgEstMax < 100 || data.vprgEstMax > 250) {
+                if (data.vprgEstMax < 1 || data.vprgEstMax > 250) {
                     throw new ValidationError('Estatura máxima debe estar entre 100 y 250 cm');
                 }
                 if (data.vprgEstMax <= data.vprgEstMin) {
@@ -381,7 +381,7 @@ class GrupSanController {
             }
             
             // Validar rango de estaturas
-            if (parseInt(minEstatura) < 100 || parseInt(maxEstatura) > 250) {
+            if (parseInt(minEstatura) < 1 || parseInt(maxEstatura) > 250) {
                 throw new ValidationError('Las estaturas deben estar entre 100 y 250 cm');
             }
             

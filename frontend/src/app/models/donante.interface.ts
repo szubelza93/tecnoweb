@@ -72,3 +72,108 @@ export interface ApiResponse<T> {
   message?: string;
   error?: string;
 } 
+
+// Interfaces para el detalle del donante (respuesta del backend)
+export interface DonanteDetalle {
+  id: string;
+  nombreCompleto: string;
+  documento: string;
+  email: string;
+  telefono: string;
+  edad: number;
+  estadoCivil: string;
+  sexo: string;
+  direccion: DonanteDireccion;
+  informacionPersonal: DonanteInformacionPersonal;
+  informacionLaboral: DonanteInformacionLaboral;
+  contactos: DonanteContactos;
+  informacionAdicional: DonanteInformacionAdicional;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface DonanteDireccion {
+  zona: string;
+  direccion: string;
+  descripcion: string;
+}
+
+export interface DonanteInformacionPersonal {
+  fechaNacimiento: string;
+  edad: number;
+  estadoCivil: string;
+  sexo: string;
+  tipoDocumento: string;
+}
+
+export interface DonanteInformacionLaboral {
+  ocupacion: string;
+  trabajo: string;
+  direccionTrabajo: string;
+  gradoInstruccion: string;
+}
+
+export interface DonanteContactos {
+  telefonoDomicilio: string;
+  telefonoOficina: string;
+  telefonoCelular: string;
+  email: string;
+}
+
+export interface DonanteInformacionAdicional {
+  lugarNacimiento: string;
+  clubDonantes: string;
+  zonaDireccion: string;
+  carnetTrabajo: string;
+  cita: boolean;
+  codigoReserva?: string;
+}
+
+// Interfaz para los datos formateados que devuelve el backend en la lista
+export interface DonanteListado {
+  id: number;
+  nombreCompleto: string;
+  documento: string;
+  email: string;
+  telefono: string;
+  edad: number;
+  estadoCivil: string;
+  sexo: string;
+  ocupacion: string;
+  gradoInstruccion: string;
+  lugarNacimiento: string;
+  clubDonantes: string;
+  zonaDireccion: string;
+  fechaNacimiento: string;
+  direccion: {
+    zona: string;
+    direccion: string;
+    descripcion: string;
+  };
+  informacionPersonal: {
+    fechaNacimiento: string;
+    edad: number;
+    estadoCivil: string;
+    sexo: string;
+    tipoDocumento: string;
+  };
+  contactos: {
+    telefonoDomicilio: string;
+    telefonoOficina: string;
+    telefonoCelular: string;
+    email: string;
+  };
+  informacionLaboral: {
+    ocupacion: string;
+    trabajo: string;
+    direccionTrabajo: string;
+    gradoInstruccion: string;
+  };
+  informacionAdicional: {
+    lugarNacimiento: string;
+    clubDonantes: string;
+    zonaDireccion: string;
+    carnetTrabajo: string;
+    cita: boolean;
+  };
+} 

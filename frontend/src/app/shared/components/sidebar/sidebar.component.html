@@ -198,20 +198,21 @@
             id="screening-submenu"
             class="ml-8 flex flex-col gap-1 mt-2 transition-all"
           >
+<!--
             <a
               routerLink="#"
               routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
               class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
               >VamScreeni</a
             >
-
+        -->
             <a
               routerLink="/vam-tipo-don"
               routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
               class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
               >Tipos de Donación</a
             >
-
+<!--
             <a
               routerLink="#"
               routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
@@ -225,7 +226,7 @@
               class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
               >VamCuestio</a
             >
-          
+        -->       
           </div>
         </div>
       </li>
@@ -238,7 +239,9 @@
             class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
             type="button"
           >
-          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#ffffff"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-vaccine"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 3l4 4" /><path d="M19 5l-4.5 4.5" /><path d="M11.5 6.5l6 6" /><path d="M16.5 11.5l-6.5 6.5h-4v-4l6.5 -6.5" /><path d="M7.5 12.5l1.5 1.5" /><path d="M10.5 9.5l1.5 1.5" /><path d="M3 21l3 -3" /></svg>
+          <svg  
+            xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#ffffff"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-vaccine"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 3l4 4" /><path d="M19 5l-4.5 4.5" /><path d="M11.5 6.5l6 6" /><path d="M16.5 11.5l-6.5 6.5h-4v-4l6.5 -6.5" /><path d="M7.5 12.5l1.5 1.5" /><path d="M10.5 9.5l1.5 1.5" /><path d="M3 21l3 -3" />
+          </svg>
             <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
               Extracción
             </p>
@@ -469,46 +472,24 @@
               class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
               >Club de Donantes</a
             >
+
+            <a
+              routerLink="/vamobsequi"
+              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
+              >Obsequios</a
+            >
+
+            <a
+              routerLink="/vamrefrige"
+              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
+              >Refrigerios</a
+            >
           </div>
         </div>
       </li>
 
-      <!-- Obsequios -->
-      <li>
-        <a routerLink="/vamobsequi">
-          <button
-            routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
-            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
-            type="button"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-inherit" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
-              Obsequios
-            </p>
-          </button>
-        </a>
-      </li>
-      <!-- Refrigeradores -->
-      <li>
-        <a routerLink="/vamrefrige">
-          <button
-            routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
-            class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize"
-            type="button"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-inherit" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <rect x="6" y="3" width="12" height="18" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
-              <rect x="9" y="6" width="6" height="5" rx="1" stroke="currentColor" stroke-width="2" fill="none"/>
-              <line x1="12" y1="17" x2="12" y2="17" stroke="currentColor" stroke-width="2"/>
-            </svg>
-            <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
-              Refrigeradores
-            </p>
-          </button>
-        </a>
-      </li>
     </ul>
   </div>
 </aside>

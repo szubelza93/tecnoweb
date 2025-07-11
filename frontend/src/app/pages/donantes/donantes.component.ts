@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DonanteService } from '../../services/donante.service';
-import { Donante } from '../../models/donante.interface';
+import { Donante, DonanteListado } from '../../models/donante.interface';
 
 @Component({
   selector: 'app-donantes',
@@ -13,8 +13,8 @@ import { Donante } from '../../models/donante.interface';
   styleUrls: ['./donantes.component.css']
 })
 export class DonantesComponent implements OnInit {
-  donantes: Donante[] = [];
-  filteredDonantes: Donante[] = [];
+  donantes: DonanteListado[] = [];
+  filteredDonantes: DonanteListado[] = [];
   loading = false;
   error = '';
   searchTerm = '';
@@ -41,7 +41,7 @@ export class DonantesComponent implements OnInit {
       next: (response) => {
         console.log('Respuesta en componente:', response);
         if (response.success) {
-          this.donantes = response.data;
+          this.donantes = response.data.donantes || [];
           console.log('Donantes cargados:', this.donantes);
           this.filteredDonantes = [...this.donantes];
           this.totalItems = this.donantes.length;
@@ -71,7 +71,7 @@ export class DonantesComponent implements OnInit {
     this.donanteService.searchDonantesByNombre(this.searchTerm).subscribe({
       next: (response) => {
         if (response.success) {
-          this.filteredDonantes = response.data;
+          this.filteredDonantes = response.data || [];
           this.totalItems = this.filteredDonantes.length;
           this.currentPage = 1;
         } else {
@@ -95,7 +95,7 @@ export class DonantesComponent implements OnInit {
   }
 
   // Paginación
-  get paginatedDonantes(): Donante[] {
+  get paginatedDonantes(): DonanteListado[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     return this.filteredDonantes.slice(startIndex, endIndex);
@@ -124,18 +124,18 @@ export class DonantesComponent implements OnInit {
     this.router.navigate(['/donantes/crear']);
   }
 
-  editDonante(donante: Donante): void {
-    this.router.navigate(['/donantes/editar', donante.vdonCodDon]);
+  editDonante(donante: DonanteListado): void {
+    this.router.navigate(['/donantes/editar', donante.id.toString()]);
   }
 
-  viewDonante(donante: Donante): void {
-    this.router.navigate(['/donantes/ver', donante.vdonCodDon]);
+  viewDonante(donante: DonanteListado): void {
+    this.router.navigate(['/donantes/ver', donante.id.toString()]);
   }
 
-  deleteDonante(donante: Donante): void {
-    if (confirm(`¿Está seguro de eliminar al donante ${donante.vdonNombre} ${donante.vdonPatern}?`)) {
+  deleteDonante(donante: DonanteListado): void {
+    if (confirm(`¿Está seguro de eliminar al donante ${donante.nombreCompleto}?`)) {
       this.loading = true;
-      this.donanteService.deleteDonante(donante.vdonCodDon!).subscribe({
+      this.donanteService.deleteDonante(donante.id.toString()).subscribe({
         next: (response) => {
           if (response.success) {
             this.loadDonantes(); // Recargar la lista
@@ -154,8 +154,8 @@ export class DonantesComponent implements OnInit {
   }
 
   // Utilidades
-  getFullName(donante: Donante): string {
-    return `${donante.vdonNombre} ${donante.vdonPatern} ${donante.vdonMatern}`.trim();
+  getFullName(donante: DonanteListado): string {
+    return donante.nombreCompleto;
   }
 
   formatDate(dateString: string): string {

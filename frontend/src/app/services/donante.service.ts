@@ -72,6 +72,48 @@ function mapDonanteFromBackend(d: any): Donante {
   };
 }
 
+// Nueva función para mapear desde el detalle formateado del backend al modelo Donante
+function mapDonanteFromBackendDetalle(d: any): Donante {
+  // Separar nombre completo en partes
+  let vdonPatern = '';
+  let vdonMatern = '';
+  let vdonNombre = '';
+  if (d.nombreCompleto) {
+    const partes = d.nombreCompleto.trim().split(' ');
+    vdonPatern = partes[0] || '';
+    vdonMatern = partes[1] || '';
+    vdonNombre = partes.slice(2).join(' ') || '';
+  }
+
+  return {
+    vdonCodDon: d.id || '',
+    vdonPatern,
+    vdonMatern,
+    vdonNombre,
+    vzonCodZon: d.direccion?.zona || '',
+    vdonDirecc: d.direccion?.direccion || '',
+    vdonDesDir: d.direccion?.descripcion || '',
+    vtidCodTid: d.informacionPersonal?.tipoDocumento || '',
+    vdonDocide: d.documento || '',
+    vdonFecNac: d.informacionPersonal?.fechaNacimiento || '',
+    vdonEdadDo: d.edad || '',
+    vdonEstCiv: d.estadoCivil || d.informacionPersonal?.estadoCivil || '',
+    vdonSexoDn: d.sexo || d.informacionPersonal?.sexo || '',
+    vdonTelOfi: d.contactos?.telefonoOficina || '',
+    vdonTelCel: d.contactos?.telefonoCelular || d.telefono || '',
+    vdonEmail: d.contactos?.email || d.email || '',
+    vdonEmail2: '',
+    vdonDirTra: d.informacionLaboral?.direccionTrabajo || '',
+    vdonCarneT: d.informacionAdicional?.carnetTrabajo || '',
+    vocuCodOcu: d.informacionLaboral?.ocupacion || '',
+    vgraCodGra: d.informacionLaboral?.gradoInstruccion || '',
+    vlugCodLug: d.informacionAdicional?.lugarNacimiento || '',
+    vcluCodClu: d.informacionAdicional?.clubDonantes || '',
+    vresCodRes: d.informacionAdicional?.codigoReserva || '',
+    vdonSwCita: d.informacionAdicional?.cita || false
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -81,40 +123,43 @@ export class DonanteService {
   constructor(private http: HttpClient) { }
 
   // Operaciones CRUD principales
-  getAllDonantes(): Observable<ApiResponse<Donante[]>> {
-    return this.http.get<ApiResponse<any[]>>(this.baseUrl).pipe(
+  getAllDonantes(): Observable<any> {
+    return this.http.get<any>(this.baseUrl).pipe(
       map(response => {
-        console.log('Respuesta del backend:', response);
-        const mappedData = Array.isArray(response.data) ? response.data.map(d => {
-          console.log('Dato original:', d);
-          const mapped = mapDonanteFromBackend(d);
-          console.log('Dato mapeado:', mapped);
-          return mapped;
-        }) : [];
-        console.log('Datos finales:', mappedData);
-        return {
-          ...response,
-          data: mappedData
-        };
+        console.log('Respuesta completa del backend:', response);
+        // Devolver la respuesta completa para que el componente pueda acceder a data.donantes
+        return response;
       })
     );
   }
 
   getDonanteById(id: string): Observable<ApiResponse<Donante>> {
     return this.http.get<ApiResponse<any>>(`${this.baseUrl}/${id}`).pipe(
-      map(response => ({
-        ...response,
-        data: response.data ? mapDonanteFromBackend(response.data) : {} as Donante
-      }))
+      map(response => {
+        console.log('=== RESPUESTA DEL BACKEND - GET BY ID ===');
+        console.log('Respuesta completa:', response);
+        console.log('Datos del donante:', response.data);
+        
+        // El backend ahora devuelve los datos en formato plano
+        return { ...response, data: response.data as Donante };
+      })
     );
   }
 
   createDonante(donante: Donante): Observable<ApiResponse<Donante>> {
+    console.log('=== SERVICIO - CREAR DONANTE ===');
+    console.log('URL:', this.baseUrl);
+    console.log('Datos a enviar:', donante);
+    
     return this.http.post<ApiResponse<any>>(this.baseUrl, donante).pipe(
-      map(response => ({
-        ...response,
-        data: response.data ? mapDonanteFromBackend(response.data) : {} as Donante
-      }))
+      map(response => {
+        console.log('=== RESPUESTA DEL BACKEND ===');
+        console.log('Respuesta completa:', response);
+        return {
+          ...response,
+          data: response.data as Donante
+        };
+      })
     );
   }
 
@@ -122,7 +167,7 @@ export class DonanteService {
     return this.http.put<ApiResponse<any>>(`${this.baseUrl}/${id}`, donante).pipe(
       map(response => ({
         ...response,
-        data: response.data ? mapDonanteFromBackend(response.data) : {} as Donante
+        data: response.data as Donante
       }))
     );
   }
@@ -131,13 +176,13 @@ export class DonanteService {
     return this.http.delete<ApiResponse<any>>(`${this.baseUrl}/${id}`);
   }
 
-  searchDonantesByNombre(nombre: string): Observable<ApiResponse<Donante[]>> {
+  searchDonantesByNombre(nombre: string): Observable<ApiResponse<any[]>> {
     const params = new HttpParams().set('nombre', nombre);
     return this.http.get<ApiResponse<any[]>>(buildApiUrl(API_CONFIG.DONANTES.SEARCH), { params }).pipe(
-      map(response => ({
-        ...response,
-        data: Array.isArray(response.data) ? response.data.map(mapDonanteFromBackend) : []
-      }))
+      map(response => {
+        console.log('Respuesta de búsqueda:', response);
+        return response;
+      })
     );
   }
 
@@ -154,8 +199,10 @@ export class DonanteService {
     return this.http.get<ApiResponse<GradoInstruccion[]>>(buildApiUrl(API_CONFIG.RELATED_DATA.GRADOS_INSTRUCCION));
   }
 
-  getLugaresNacimiento(): Observable<ApiResponse<LugarNacimiento[]>> {
-    return this.http.get<ApiResponse<LugarNacimiento[]>>(buildApiUrl(API_CONFIG.RELATED_DATA.LUGARES_NACIMIENTO));
+  getLugaresNacimiento(): Observable<any[]> {
+    return this.http.get<any>(buildApiUrl(API_CONFIG.RELATED_DATA.LUGARES_NACIMIENTO)).pipe(
+      map(response => response.data)
+    );
   }
 
   getClubesDonantes(): Observable<ApiResponse<ClubDonantes[]>> {
@@ -164,5 +211,10 @@ export class DonanteService {
 
   getZonasDireccion(): Observable<ApiResponse<ZonaDireccion[]>> {
     return this.http.get<ApiResponse<ZonaDireccion[]>>(buildApiUrl(API_CONFIG.RELATED_DATA.ZONAS_DIRECCION));
+  }
+
+  // Obtener el siguiente código disponible
+  getNextCode(): Observable<ApiResponse<{nextCode: number}>> {
+    return this.http.get<ApiResponse<{nextCode: number}>>(`${this.baseUrl}/next-code`);
   }
 } 

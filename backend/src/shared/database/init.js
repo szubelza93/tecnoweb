@@ -278,15 +278,15 @@ const createTables = async () => {
 
     // TABLA DE CUESTIONARIOS (GESTIÓN DE SCREENING)
     await client.query(`
-      CREATE TABLE IF NOT EXISTS vamCuestio (
-          vcueNroCue SMALLINT,
-          vcueNroPre SMALLINT,
-          vcuePregun VARCHAR(250),
-          vcueOpcio1 VARCHAR(10),
-          vcueOpcio2 VARCHAR(10),
-          vcueRespue CHAR(1),
-          PRIMARY KEY (vcueNroCue, vcueNroPre),
-          CONSTRAINT fk_cues_numero FOREIGN KEY (vcueNroCue) REFERENCES vamCuesNro (vcueNroCue)
+      CREATE TABLE IF NOT EXISTS vamcuestio (
+        vcuenrocue SMALLINT,
+        vcuenropre SMALLSERIAL,
+        vcuepregun VARCHAR(250),
+        vcueopcio1 VARCHAR(10),
+        vcueopcio2 VARCHAR(10),
+        vcuerespue CHAR(1),
+        PRIMARY KEY (vcuenrocue, vcuenropre),
+        CONSTRAINT fk_vamcuesnro FOREIGN KEY (vcuenrocue) REFERENCES vamcuesnro (vcuenrocue)
       )
     `);
 
@@ -410,6 +410,26 @@ const createTables = async () => {
         vrefingres SMALLINT NOT NULL,
         vrefsalida SMALLINT,
         vrefcantid SMALLINT NOT NULL
+      )
+    `);
+
+    // TABLA DE TIPO DE CENTRO (GESTIÓN DE CONFIGURACIÓN)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS vamtipocen (
+        vtcecodtce SMALLSERIAL PRIMARY KEY,
+        vtcedescri VARCHAR(50)
+      )
+    `);
+
+    // TABLA DE CENTROS DE DONACIÓN (GESTIÓN DE CONFIGURACIÓN)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS vamcentdon (
+        vcencodcen SMALLSERIAL PRIMARY KEY,
+        vcennombre VARCHAR(50),
+        vcendirecc VARCHAR(50),
+        vcentelefo CHAR(8),
+        vtcecodtce SMALLINT,
+        CONSTRAINT fk_vamtipocen FOREIGN KEY (vtcecodtce) REFERENCES vamtipocen (vtcecodtce)
       )
     `);
 

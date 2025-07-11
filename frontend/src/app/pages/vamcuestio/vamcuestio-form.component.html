@@ -1,0 +1,38 @@
+<div class="container">
+  <h2>{{ editMode ? 'Editar Pregunta' : 'Nueva Pregunta' }}</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="vcuenrocue">N° Cuestionario</label>
+      <select id="vcuenrocue" formControlName="vcuenrocue" required>
+        <option value="">Seleccione...</option>
+        <option *ngFor="let c of cuesNro" [value]="c.vcuenrocue">{{ c.vcuenrocue }} - {{ c.vcuedescri }}</option>
+      </select>
+    </div>
+    <div>
+      <label for="vcuepregun">Pregunta</label>
+      <input id="vcuepregun" formControlName="vcuepregun" maxlength="250" />
+      <div *ngIf="form.get('vcuepregun')?.invalid && form.get('vcuepregun')?.touched">
+        <small *ngIf="form.get('vcuepregun')?.errors?.['required']">La pregunta es obligatoria.</small>
+        <small *ngIf="form.get('vcuepregun')?.errors?.['minlength']">Mínimo 2 caracteres.</small>
+        <small *ngIf="form.get('vcuepregun')?.errors?.['maxlength']">Máximo 250 caracteres.</small>
+      </div>
+    </div>
+    <div>
+      <label for="vcueopcio1">Opción 1</label>
+      <input id="vcueopcio1" formControlName="vcueopcio1" maxlength="10" />
+    </div>
+    <div>
+      <label for="vcueopcio2">Opción 2</label>
+      <input id="vcueopcio2" formControlName="vcueopcio2" maxlength="10" />
+    </div>
+    <div>
+      <label for="vcuerespue">Respuesta</label>
+      <input id="vcuerespue" formControlName="vcuerespue" maxlength="1" />
+    </div>
+    <button type="submit" [disabled]="loading || form.invalid">{{ editMode ? 'Actualizar' : 'Crear' }}</button>
+    <button type="button" (click)="volver()">Cancelar</button>
+  </form>
+  <div *ngIf="successMsg" class="success">{{ successMsg }}</div>
+  <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+  <div *ngIf="loading">Guardando...</div>
+</div>

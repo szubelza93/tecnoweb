@@ -1,0 +1,37 @@
+/* Estilos modernos para el detalle de preguntas de cuestionario */
+.container {
+  max-width: 500px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 2rem 2.5rem;
+  text-align: left;
+}
+h2 {
+  margin-bottom: 1.2rem;
+  color: #195e37;
+  font-size: 1.5rem;
+}
+p {
+  font-size: 1.1rem;
+  margin-bottom: 0.7rem;
+}
+button {
+  margin-top: 1rem;
+  background: #388e3c;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button:hover {
+  background: #256029;
+}
+.error {
+  color: #e53935;
+  margin: 1rem 0;
+}

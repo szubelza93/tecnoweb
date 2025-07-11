@@ -218,12 +218,11 @@ const validateCuesNro = [
 
 // Validaciones de Cuestionario
 const validateCuestio = [
-  body('vcueNroCue').isInt({ min: 1 }).withMessage('El número de cuestionario debe ser un entero positivo.'),
-  body('vcueNroPre').isInt({ min: 1 }).withMessage('El número de pregunta debe ser un entero positivo.'),
-  body('vcuePregun').trim().notEmpty().isLength({ min: 2, max: 250 }).withMessage('La pregunta debe tener entre 2 y 250 caracteres.'),
-  body('vcueOpcio1').optional().trim().isLength({ max: 10 }).withMessage('La opción 1 no puede exceder 10 caracteres.'),
-  body('vcueOpcio2').optional().trim().isLength({ max: 10 }).withMessage('La opción 2 no puede exceder 10 caracteres.'),
-  body('vcueRespue').optional().isLength({ min: 1, max: 1 }).withMessage('La respuesta debe ser un solo carácter.'),
+  body('vcuenrocue').isInt({ min: 1 }).withMessage('El número de cuestionario debe ser un entero positivo.'),
+  body('vcuepregun').trim().notEmpty().isLength({ min: 2, max: 250 }).withMessage('La pregunta debe tener entre 2 y 250 caracteres.'),
+  body('vcueopcio1').optional().trim().isLength({ max: 10 }).withMessage('La opción 1 no puede exceder 10 caracteres.'),
+  body('vcueopcio2').optional().trim().isLength({ max: 10 }).withMessage('La opción 2 no puede exceder 10 caracteres.'),
+  body('vcuerespue').optional().isLength({ min: 1, max: 1 }).withMessage('La respuesta debe ser un solo carácter.'),
   handleValidationErrors
 ];
 

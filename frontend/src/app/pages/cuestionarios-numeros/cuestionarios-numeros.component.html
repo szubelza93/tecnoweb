@@ -1,17 +1,21 @@
 <div class="container">
-  <h2>Gestión de Cuestionarios Números</h2>
-
-  <div class="card">
-    <div class="actions">
-      <button class="btn btn-primary" (click)="createCuestionario()">
-        <i class="fa fa-plus"></i> Nuevo Cuestionario
-      </button>
-      <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar por descripción...">
-      <button class="btn btn-success" (click)="searchCuestionarios()">
-        <i class="fa fa-search"></i> Buscar
-      </button>
-      <button class="btn btn-secondary" (click)="clearSearch()" *ngIf="searchTerm">
-        Limpiar
+  <h2 class="mb-1">Gestión de Cuestionarios Números</h2>
+  <div class="card p-2 mb-1">
+    <div class="flex items-center gap-1 mb-1">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm"
+        (input)="searchCuestionarios()"
+        placeholder="Buscar en cualquier campo..."
+        class="border border-gray-300 rounded-lg px-2 py-1"
+        style="width: 50%;" />
+      <button 
+        (click)="createCuestionario()"
+        class="ml-auto flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition duration-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12M6 12h12" />
+        </svg>
+        Nuevo Cuestionario
       </button>
     </div>
   </div>
@@ -19,7 +23,7 @@
   <div *ngIf="loading">Cargando...</div>
   <div *ngIf="error" class="error">{{ error }}</div>
 
-  <div class="table-container">
+  <div class="table-container mt-0">
     <table *ngIf="paginatedCuestionarios.length > 0">
       <thead>
         <tr>

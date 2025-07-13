@@ -1,0 +1,18 @@
+<div class="container">
+  <h2>{{ editMode ? 'Editar Tipo de Centro' : 'Nuevo Tipo de Centro' }}</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="vtcedescri">Descripción</label>
+      <input id="vtcedescri" formControlName="vtcedescri" maxlength="50" />
+      <div *ngIf="form.get('vtcedescri')?.invalid && form.get('vtcedescri')?.touched">
+        <small *ngIf="form.get('vtcedescri')?.errors?.['required']">La descripción es obligatoria.</small>
+        <small *ngIf="form.get('vtcedescri')?.errors?.['maxlength']">Máximo 50 caracteres.</small>
+      </div>
+    </div>
+    <button type="submit" [disabled]="loading || form.invalid">{{ editMode ? 'Actualizar' : 'Crear' }}</button>
+    <button type="button" (click)="volver()">Cancelar</button>
+  </form>
+  <div *ngIf="successMsg" class="success">{{ successMsg }}</div>
+  <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+  <div *ngIf="loading">Guardando...</div>
+</div>

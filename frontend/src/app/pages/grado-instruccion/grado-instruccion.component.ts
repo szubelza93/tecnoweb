@@ -53,14 +53,17 @@ export class GradoInstruccionComponent implements OnInit {
   }
 
   searchGrados(): void {
-    if (!this.searchTerm.trim()) {
+    const term = this.searchTerm.trim().toLowerCase();
+    if (!term) {
       this.filteredGrados = [...this.grados];
       this.totalItems = this.grados.length;
       this.currentPage = 1;
       return;
     }
     this.filteredGrados = this.grados.filter(grad =>
-      grad.vgraDescrn.toLowerCase().includes(this.searchTerm.toLowerCase())
+      Object.values(grad).some(val =>
+        val !== null && val !== undefined && val.toString().toLowerCase().includes(term)
+      )
     );
     this.totalItems = this.filteredGrados.length;
     this.currentPage = 1;

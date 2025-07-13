@@ -1,5 +1,5 @@
 <aside
-  class="bg-gradient-to-br from-green-800 to-green-900 -translate-x-80 fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0 overflow-y-auto"
+  class="bg-gradient-to-br from-green-800 to-green-900 fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 overflow-y-auto"
 >
   <div class="relative border-b border-white/20">
     <a class="flex items-center gap-4 py-6 px-8" href="#">
@@ -113,6 +113,22 @@
               class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm flex items-center gap-2"
               >
               <span class="inline-block w-2 h-2 rounded-full bg-green-400"></span>
+              Cuestionarios Números
+            </a>
+            <a
+              routerLink="/vamcentdon"
+              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm flex items-center gap-2"
+              >
+              <span class="inline-block w-2 h-2 rounded-full bg-green-400"></span>
+              Centros de Donación
+            </a>
+            <a
+              routerLink="/personal"
+              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm flex items-center gap-2"
+              >
+              <span class="inline-block w-2 h-2 rounded-full bg-green-400"></span>
               Citaciones
             </a>
 
@@ -148,6 +164,12 @@
               <span class="inline-block w-2 h-2 rounded-full bg-green-400"></span>
               Tipos de Documento
             </a>
+            <a
+              routerLink="/vamtipocen"
+              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm"
+              >Tipos de Centro</a
+            >
             <a
               routerLink="/zona-direccion"
               routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
@@ -259,7 +281,7 @@
       <!-- Laboratorio -->
       <li>
         <a
-          routerLink="/ocupaciones"
+          routerLink="/blank"
           routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
           class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize no-underline"
         >
@@ -272,7 +294,7 @@
       <!-- Producción -->
       <li>
         <a
-          routerLink="/lugares-nacimiento"
+          routerLink="/blank"
           routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
           class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize no-underline"
         >
@@ -288,7 +310,7 @@
       <!-- Distribución -->
       <li>
         <a
-          routerLink="/grados-instruccion"
+          routerLink="/blank"
           routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
           class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize no-underline"
         >
@@ -304,7 +326,7 @@
       <!-- Unidad Móvil -->
       <li>
         <a
-          routerLink="/vamobsequi"
+          routerLink="/blank"
           routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
           class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 flex w-full items-center gap-4 px-4 capitalize no-underline"
         >
@@ -446,6 +468,16 @@
               Cuestionarios
             </a>
 
+            <a
+              routerLink="/vamcuestio"
+              routerLinkActive="bg-gradient-to-tr from-green-600 to-green-400 shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85]"
+              class="py-2 px-4 rounded text-white hover:bg-white/10 transition-all text-sm flex items-center gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16h6m2 4a2 2 0 002-2V6a2 2 0 00-2-2H7a2 2 0 00-2 2v12a2 2 0 002 2h10z" />
+              </svg>
+              Pregunta
+            </a>
 
             <a
               routerLink="/vam-grup-san"

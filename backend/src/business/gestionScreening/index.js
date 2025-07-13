@@ -6,8 +6,10 @@ const CuestioController = require('./CuestioController');
 const ResPregController = require('./ResPregController');
 const CitaciController = require('./CitaciController');
 const CitaDonController = require('./CitaDonController');
+const VamCuestioController = require('./VamCuestioController');
 
 module.exports = {
+    VamCuestioController,
     GrupSanController,
     TipoDonController,
     ScreeniController,

@@ -71,7 +71,7 @@ export class DonanteFormComponent implements OnInit {
       vdonDirecc: ['', Validators.required],
       vdonDesDir: [''],
       vtidCodTid: ['', Validators.required],
-      vdonDocide: ['', [Validators.required, Validators.minLength(VALIDATION_CONFIG.MIN_DOCUMENT_LENGTH)]],
+      vdonDocide: ['', [Validators.required, Validators.minLength(VALIDATION_CONFIG.MIN_DOCUMENT_LENGTH), Validators.maxLength(VALIDATION_CONFIG.MAX_DOCUMENT_LENGTH)]],
       vdonFecNac: ['', Validators.required],
       vdonEdadDo: ['', [Validators.required, Validators.min(VALIDATION_CONFIG.MIN_AGE), Validators.max(VALIDATION_CONFIG.MAX_AGE)]],
       vdonEstCiv: ['', Validators.required],
@@ -96,15 +96,33 @@ export class DonanteFormComponent implements OnInit {
     if (id) {
       this.isEditMode = true;
       this.loadDonante(id);
+    } else {
+      // En modo creación, obtener el siguiente código automáticamente
+      this.loadNextCode();
     }
   }
 
   private loadDonante(id: string): void {
     this.loading = true;
+    console.log('=== CARGANDO DONANTE ===');
+    console.log('ID del donante:', id);
+    
     this.donanteService.getDonanteById(id).subscribe({
       next: (response) => {
+        console.log('=== RESPUESTA DEL SERVICIO ===');
+        console.log('Respuesta completa:', response);
+        console.log('Datos del donante:', response.data);
+        
         if (response.success) {
+          console.log('=== APLICANDO DATOS AL FORMULARIO ===');
+          // Corregir formato de fecha para el input type="date"
+          if (response.data.vdonFecNac) {
+            response.data.vdonFecNac = response.data.vdonFecNac.substring(0, 10);
+          }
+          console.log('Datos a aplicar:', response.data);
           this.donanteForm.patchValue(response.data);
+          console.log('=== ESTADO DEL FORMULARIO DESPUÉS DE PATCH ===');
+          console.log('Valores del formulario:', this.donanteForm.value);
         } else {
           this.error = response.message || 'Error al cargar el donante';
         }
@@ -114,6 +132,23 @@ export class DonanteFormComponent implements OnInit {
         this.error = 'Error de conexión al cargar el donante';
         this.loading = false;
         console.error('Error loading donante:', err);
+      }
+    });
+  }
+
+  private loadNextCode(): void {
+    this.donanteService.getNextCode().subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.donanteForm.patchValue({ vdonCodDon: response.data.nextCode });
+          console.log('Código asignado:', response.data.nextCode);
+        } else {
+          this.error = response.message || 'Error al obtener el código';
+        }
+      },
+      error: (err) => {
+        this.error = 'Error de conexión al obtener el código';
+        console.error('Error loading next code:', err);
       }
     });
   }
@@ -192,17 +227,38 @@ export class DonanteFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('Submit', this.donanteForm.value, this.donanteForm.valid);
+    console.log('=== DATOS DEL FORMULARIO ===');
+    console.log('Formulario válido:', this.donanteForm.valid);
+    console.log('Valores del formulario:', this.donanteForm.value);
+    console.log('Errores del formulario:', this.donanteForm.errors);
+    
+    // Mostrar errores de cada campo
+    Object.keys(this.donanteForm.controls).forEach(key => {
+      const control = this.donanteForm.get(key);
+      if (control && control.invalid) {
+        console.log(`Campo ${key}:`, {
+          value: control.value,
+          errors: control.errors,
+          touched: control.touched,
+          dirty: control.dirty
+        });
+      }
+    });
+    
     if (this.donanteForm.valid) {
       this.loading = true;
       this.error = '';
       this.success = '';
 
       const donanteData = { ...this.donanteForm.value };
-      // Eliminar el campo vdonCodDon para que el backend lo genere automáticamente
-      delete donanteData.vdonCodDon;
       // Convertir edad a número
       donanteData.vdonEdadDo = parseInt(donanteData.vdonEdadDo);
+      // Convertir campos booleanos/números
+      donanteData.vdonCarneT = donanteData.vdonCarneT === true || donanteData.vdonCarneT === 1 || donanteData.vdonCarneT === "1" ? 1 : 0;
+      donanteData.vdonSwCita = donanteData.vdonSwCita === true || donanteData.vdonSwCita === 1 || donanteData.vdonSwCita === "1" ? 1 : 0;
+
+      console.log('=== DATOS A ENVIAR AL BACKEND ===');
+      console.log('Datos del donante:', donanteData);
 
       if (this.isEditMode) {
         this.updateDonante(donanteData);
@@ -211,7 +267,50 @@ export class DonanteFormComponent implements OnInit {
       }
     } else {
       this.markFormGroupTouched();
+      this.showValidationErrors();
     }
+  }
+
+  private showValidationErrors(): void {
+    const errors: string[] = [];
+    Object.keys(this.donanteForm.controls).forEach(key => {
+      const control = this.donanteForm.get(key);
+      if (control && control.invalid) {
+        const fieldName = this.getFieldDisplayName(key);
+        const errorMessage = this.getFieldError(key);
+        if (errorMessage) {
+          errors.push(`${fieldName}: ${errorMessage}`);
+        }
+      }
+    });
+    
+    if (errors.length > 0) {
+      this.error = {
+        message: 'Errores de validación detectados:',
+        errors: errors
+      };
+    }
+  }
+
+  private getFieldDisplayName(fieldName: string): string {
+    const fieldNames: { [key: string]: string } = {
+      'vdonPatern': 'Apellido Paterno',
+      'vdonMatern': 'Apellido Materno',
+      'vdonNombre': 'Nombres',
+      'vzonCodZon': 'Zona',
+      'vdonDirecc': 'Dirección',
+      'vtidCodTid': 'Tipo de Documento',
+      'vdonDocide': 'Número de Documento',
+      'vdonFecNac': 'Fecha de Nacimiento',
+      'vdonEdadDo': 'Edad',
+      'vdonEstCiv': 'Estado Civil',
+      'vdonSexoDn': 'Sexo',
+      'vdonTelCel': 'Teléfono Celular',
+      'vocuCodOcu': 'Ocupación',
+      'vgraCodGra': 'Grado de Instrucción',
+      'vlugCodLug': 'Lugar de Nacimiento'
+    };
+    return fieldNames[fieldName] || fieldName;
   }
 
   private createDonante(donanteData: Donante): void {
@@ -228,7 +327,22 @@ export class DonanteFormComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        this.error = err.error || err.message || 'Error desconocido';
+        console.error('Error completo del backend:', err);
+        
+        if (err.error && err.error.errors) {
+          // Errores de validación del backend
+          this.error = {
+            message: err.error.message || 'Errores de validación del backend:',
+            errors: err.error.errors.map((error: any) => `${error.field}: ${error.message}`)
+          };
+        } else if (err.error && err.error.message) {
+          // Error general del backend
+          this.error = err.error.message;
+        } else {
+          // Error de red o desconocido
+          this.error = 'Error de conexión o servidor';
+        }
+        
         this.loading = false;
         console.error('Error creating donante:', err);
       }
@@ -265,7 +379,10 @@ export class DonanteFormComponent implements OnInit {
   private markFormGroupTouched(): void {
     Object.keys(this.donanteForm.controls).forEach(key => {
       const control = this.donanteForm.get(key);
-      control?.markAsTouched();
+      if (control) {
+        control.markAsTouched();
+        control.markAsDirty();
+      }
     });
   }
 
@@ -279,6 +396,7 @@ export class DonanteFormComponent implements OnInit {
     if (field && field.errors) {
       if (field.errors['required']) return ERROR_MESSAGES.REQUIRED;
       if (field.errors['minlength']) return ERROR_MESSAGES.MIN_LENGTH(field.errors['minlength'].requiredLength);
+      if (field.errors['maxlength']) return ERROR_MESSAGES.MAX_LENGTH(field.errors['maxlength'].requiredLength);
       if (field.errors['email']) return ERROR_MESSAGES.EMAIL;
       if (field.errors['pattern']) return ERROR_MESSAGES.PHONE;
       if (field.errors['min']) return ERROR_MESSAGES.MIN_AGE(field.errors['min'].min);

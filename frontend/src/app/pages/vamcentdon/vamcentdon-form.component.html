@@ -1,0 +1,42 @@
+<div class="container">
+  <h2>{{ isEditMode ? 'Editar Centro de Donante' : 'Nuevo Centro de Donante' }}</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="vcennombre">Nombre</label>
+      <input id="vcennombre" formControlName="vcennombre" maxlength="100" />
+      <div *ngIf="form.get('vcennombre')?.invalid && form.get('vcennombre')?.touched">
+        <small *ngIf="form.get('vcennombre')?.errors?.['required']">El nombre es obligatorio.</small>
+        <small *ngIf="form.get('vcennombre')?.errors?.['maxlength']">Máximo 100 caracteres.</small>
+      </div>
+    </div>
+    <div>
+      <label for="vcendirecc">Dirección</label>
+      <input id="vcendirecc" formControlName="vcendirecc" maxlength="150" />
+    </div>
+    <div>
+      <label for="vcentelefo">Teléfono</label>
+      <input id="vcentelefo" formControlName="vcentelefo" maxlength="8" />
+      <div *ngIf="form.get('vcentelefo')?.invalid && form.get('vcentelefo')?.touched">
+        <small *ngIf="form.get('vcentelefo')?.errors?.['required']">El teléfono es obligatorio.</small>
+        <small *ngIf="form.get('vcentelefo')?.errors?.['pattern']">Debe tener 8 dígitos.</small>
+      </div>
+    </div>
+    <div>
+      <label for="vtcecodtce">Tipo de Centro</label>
+      <select id="vtcecodtce" formControlName="vtcecodtce" class="form-input">
+        <option value="">Seleccione un tipo</option>
+        <option *ngFor="let tipo of tiposCentro" [value]="tipo.vtcecodtce">
+          {{ tipo.vtcedescri }}
+        </option>
+      </select>
+      <div *ngIf="form.get('vtcecodtce')?.invalid && form.get('vtcecodtce')?.touched">
+        <small *ngIf="form.get('vtcecodtce')?.errors?.['required']">El tipo es obligatorio.</small>
+      </div>
+    </div>
+    <button type="submit" [disabled]="loading || form.invalid">{{ isEditMode ? 'Actualizar' : 'Crear' }}</button>
+    <button type="button" (click)="volver()">Cancelar</button>
+  </form>
+  <div *ngIf="successMsg" class="success">{{ successMsg }}</div>
+  <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+  <div *ngIf="loading">Guardando...</div>
+</div>

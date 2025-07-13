@@ -1,0 +1,61 @@
+<div class="container mx-auto mt-8">
+  <div class="mb-6">
+    <h2 class="text-2xl font-semibold text-green-900 mb-2">Preguntas de Cuestionario</h2>
+    <div class="flex items-center gap-4 mb-4">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm"
+        (input)="filtrarCuestionarios()"
+        placeholder="Buscar en cualquier campo..."
+        class="border border-gray-300 rounded-lg px-4 py-2"
+        style="width: 50%;" />
+      <button 
+        (click)="crearCuestionario()"
+        class="ml-auto flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition duration-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12M6 12h12" />
+        </svg>
+        Nuevo
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="text-red-600 mb-2">{{ error }}</div>
+  <div *ngIf="loading" class="mb-2">Cargando...</div>
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white rounded shadow">
+      <thead>
+        <tr>
+          <th class="px-4 py-2">ID</th>
+          <th class="px-4 py-2">N° Cuest.</th>
+          <th class="px-4 py-2">Pregunta</th>
+          <th class="px-4 py-2">Opción 1</th>
+          <th class="px-4 py-2">Opción 2</th>
+          <th class="px-4 py-2">Resp.</th>
+          <th class="px-4 py-2">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of filteredCuestionarios">
+          <td class="border px-4 py-2">{{ c.vcuenropre }}</td>
+          <td class="border px-4 py-2">{{ getNombreCuestionario(c.vcuenrocue) }}</td>
+          <td class="border px-4 py-2">{{ c.vcuepregun }}</td>
+          <td class="border px-4 py-2">{{ c.vcueopcio1 }}</td>
+          <td class="border px-4 py-2">{{ c.vcueopcio2 }}</td>
+          <td class="border px-4 py-2">{{ c.vcuerespue }}</td>
+          <td class="border px-4 py-2 flex gap-2 justify-center">
+            <button title="Ver" (click)="verCuestionario(c.vcuenropre!)" class="accion-btn hover:scale-110 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-blue-600"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+            </button>
+            <button title="Editar" (click)="editarCuestionario(c.vcuenropre!)" class="accion-btn hover:scale-110 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-yellow-500"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5h2M12 7v10m9 2a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h14z" /></svg>
+            </button>
+            <button title="Eliminar" (click)="eliminarCuestionario(c.vcuenropre!)" class="accion-btn hover:scale-110 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-red-600"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

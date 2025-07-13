@@ -60,31 +60,20 @@ export class VamGrupSanComponent implements OnInit {
   }
 
   searchVamGrupSan(): void {
-    if (!this.searchTerm.trim()) {
+    const term = this.searchTerm.toLowerCase();
+    if (!term) {
       this.filteredVamGrupSan = [...this.vamGrupSanList];
       this.totalItems = this.vamGrupSanList.length;
       this.currentPage = 1;
       return;
     }
-
-    this.loading = true;
-    this.vamGrupSanService.searchVamGrupSanByGruABO(this.searchTerm).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.filteredVamGrupSan = response.data;
-          this.totalItems = this.filteredVamGrupSan.length;
-          this.currentPage = 1;
-        } else {
-          this.error = response.message || 'Error en la búsqueda';
-        }
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = 'Error de conexión en la búsqueda';
-        this.loading = false;
-        console.error('Error searching vamGrupSan:', err);
-      }
-    });
+    this.filteredVamGrupSan = this.vamGrupSanList.filter(item =>
+      Object.values(item).some(val =>
+        val !== null && val !== undefined && val.toString().toLowerCase().includes(term)
+      )
+    );
+    this.totalItems = this.filteredVamGrupSan.length;
+    this.currentPage = 1;
   }
 
   clearSearch(): void {

@@ -1,0 +1,8 @@
+<div class="container" *ngIf="tipo">
+  <h2>Detalle de Tipo de Centro</h2>
+  <p><strong>ID:</strong> {{ tipo.vtcecodtce }}</p>
+  <p><strong>Descripción:</strong> {{ tipo.vtcedescri }}</p>
+  <button (click)="volver()">Volver</button>
+</div>
+<div *ngIf="loading">Cargando detalle...</div>
+<div *ngIf="error" class="error">{{ error }}</div>

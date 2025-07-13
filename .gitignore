@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 Backend-Vampi-Tecno/package-lock.json
 Backend-Vampi-Tecno/yarn.lock
+git
 
 # Variables de entorno
 Backend-Vampi-Tecno/.env.local

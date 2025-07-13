@@ -56,30 +56,20 @@ export class VamTipoDonComponent implements OnInit {
   }
 
   searchVamTipoDon(): void {
-    if (!this.searchTerm.trim()) {
+    const term = this.searchTerm.trim().toLowerCase();
+    if (!term) {
       this.filteredVamTipoDon = [...this.vamTipoDonList];
       this.totalItems = this.vamTipoDonList.length;
       this.currentPage = 1;
       return;
     }
-
-    this.loading = true;
-    this.vamTipoDonService.searchVamTipoDonByDescn(this.searchTerm).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.filteredVamTipoDon = response.data;
-          this.totalItems = this.filteredVamTipoDon.length;
-          this.currentPage = 1;
-        } else {
-          this.error = response.message || 'Error en la búsqueda';
-        }
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = 'Error de conexión en la búsqueda';
-        this.loading = false;
-      }
-    });
+    this.filteredVamTipoDon = this.vamTipoDonList.filter(item =>
+      Object.values(item).some(val =>
+        val !== null && val !== undefined && val.toString().toLowerCase().includes(term)
+      )
+    );
+    this.totalItems = this.filteredVamTipoDon.length;
+    this.currentPage = 1;
   }
 
   clearSearch(): void {

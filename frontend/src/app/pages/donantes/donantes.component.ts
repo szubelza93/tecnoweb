@@ -60,31 +60,20 @@ export class DonantesComponent implements OnInit {
   }
 
   searchDonantes(): void {
-    if (!this.searchTerm.trim()) {
+    const term = this.searchTerm.trim().toLowerCase();
+    if (!term) {
       this.filteredDonantes = [...this.donantes];
       this.totalItems = this.donantes.length;
       this.currentPage = 1;
       return;
     }
-
-    this.loading = true;
-    this.donanteService.searchDonantesByNombre(this.searchTerm).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.filteredDonantes = response.data || [];
-          this.totalItems = this.filteredDonantes.length;
-          this.currentPage = 1;
-        } else {
-          this.error = response.message || 'Error en la búsqueda';
-        }
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = 'Error de conexión en la búsqueda';
-        this.loading = false;
-        console.error('Error searching donantes:', err);
-      }
-    });
+    this.filteredDonantes = this.donantes.filter(donante =>
+      Object.values(donante).some(val =>
+        val !== null && val !== undefined && val.toString().toLowerCase().includes(term)
+      )
+    );
+    this.totalItems = this.filteredDonantes.length;
+    this.currentPage = 1;
   }
 
   clearSearch(): void {

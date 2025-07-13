@@ -53,16 +53,17 @@ export class ClubDonantesComponent implements OnInit {
   }
 
   searchClubes(): void {
-    if (!this.searchTerm.trim()) {
+    const term = this.searchTerm.toLowerCase();
+    if (!term) {
       this.filteredClubes = [...this.clubes];
       this.totalItems = this.clubes.length;
       this.currentPage = 1;
       return;
     }
     this.filteredClubes = this.clubes.filter(club =>
-      club.vcluDescri.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      (club.vcluDirecc && club.vcluDirecc.toLowerCase().includes(this.searchTerm.toLowerCase())) ||
-      (club.vcluRepRes && club.vcluRepRes.toLowerCase().includes(this.searchTerm.toLowerCase()))
+      Object.values(club).some(val =>
+        val !== null && val !== undefined && val.toString().toLowerCase().includes(term)
+      )
     );
     this.totalItems = this.filteredClubes.length;
     this.currentPage = 1;

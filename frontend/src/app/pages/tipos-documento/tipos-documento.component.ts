@@ -49,14 +49,17 @@ export class TiposDocumentoComponent implements OnInit {
   }
 
   searchTiposDocumento(): void {
-    if (!this.searchTerm.trim()) {
+    const term = this.searchTerm.trim().toLowerCase();
+    if (!term) {
       this.filteredTipos = [...this.tiposDocumento];
       this.totalItems = this.tiposDocumento.length;
       this.currentPage = 1;
       return;
     }
     this.filteredTipos = this.tiposDocumento.filter(tipo =>
-      tipo.vtidDescr.toLowerCase().includes(this.searchTerm.toLowerCase())
+      Object.values(tipo).some(val =>
+        val !== null && val !== undefined && val.toString().toLowerCase().includes(term)
+      )
     );
     this.totalItems = this.filteredTipos.length;
     this.currentPage = 1;

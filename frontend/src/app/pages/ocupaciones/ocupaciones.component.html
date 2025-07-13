@@ -2,16 +2,21 @@
   <h2>Gestión de Ocupaciones</h2>
 
   <div class="card">
-    <div class="actions">
-      <button class="btn btn-primary" (click)="createOcupacion()">
-        <i class="fa fa-plus"></i> Nueva Ocupación
-      </button>
-      <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar por descripción...">
-      <button class="btn btn-success" (click)="searchOcupaciones()">
-        <i class="fa fa-search"></i> Buscar
-      </button>
-      <button class="btn btn-secondary" (click)="clearSearch()" *ngIf="searchTerm">
-        Limpiar
+    <div class="flex items-center gap-2 mb-1">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm"
+        (input)="searchOcupaciones()"
+        placeholder="Buscar en cualquier campo..."
+        class="border border-gray-300 rounded-lg px-2 py-1"
+        style="width: 50%;" />
+      <button 
+        (click)="createOcupacion()"
+        class="ml-auto flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition duration-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12M6 12h12" />
+        </svg>
+        Nueva Ocupación
       </button>
     </div>
   </div>

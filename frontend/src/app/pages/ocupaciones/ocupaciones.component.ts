@@ -49,14 +49,17 @@ export class OcupacionesComponent implements OnInit {
   }
 
   searchOcupaciones(): void {
-    if (!this.searchTerm.trim()) {
+    const term = this.searchTerm.trim().toLowerCase();
+    if (!term) {
       this.filteredOcupaciones = [...this.ocupaciones];
       this.totalItems = this.ocupaciones.length;
       this.currentPage = 1;
       return;
     }
     this.filteredOcupaciones = this.ocupaciones.filter(ocu =>
-      ocu.vocudescri.toLowerCase().includes(this.searchTerm.toLowerCase())
+      Object.values(ocu).some(val =>
+        val !== null && val !== undefined && val.toString().toLowerCase().includes(term)
+      )
     );
     this.totalItems = this.filteredOcupaciones.length;
     this.currentPage = 1;

@@ -1,20 +1,14 @@
 <div class="container">
-  <h2>Gestión de Equipos de Almacén</h2>
+  <div class="mb-2">
+  <h2 class="text-2xl font-bold m-0">Gestión de Equipos de Almacén</h2>
+</div>
 
-  <div class="card">
-    <div class="actions">
-      <button class="btn btn-primary" (click)="createEquipo()">
-        <i class="fa fa-plus"></i> Nuevo Equipo
-      </button>
-      <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar por descripción...">
-      <button class="btn btn-success" (click)="searchEquipos()">
-        <i class="fa fa-search"></i> Buscar
-      </button>
-      <button class="btn btn-secondary" (click)="clearSearch()" *ngIf="searchTerm">
-        Limpiar
-      </button>
-    </div>
-  </div>
+  <div class="flex items-center justify-between gap-4 mb-4">
+  <input type="text" [(ngModel)]="searchTerm" (input)="searchEquipos()" placeholder="Buscar en cualquier campo..." class="form-control border rounded px-3 py-2 mr-4" style="width: 50%;" />
+  <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4" (click)="createEquipo()">
+    + Nuevo Equipo
+  </button>
+</div>
 
   <div *ngIf="error" class="error">{{ error }}</div>
 

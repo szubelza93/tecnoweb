@@ -1,9 +1,22 @@
 <div class="container mx-auto mt-8">
   <div class="mb-6">
     <h2 class="text-2xl font-semibold text-green-900 mb-2">Preguntas de Cuestionario</h2>
-    <div class="flex justify-between items-center">
-      <input [(ngModel)]="searchTerm" (input)="filtrarCuestionarios()" placeholder="Buscar por pregunta o número" class="mb-0 px-3 py-2 border rounded w-full max-w-xs" />
-      <button (click)="crearCuestionario()" class="ml-4 nuevo-btn whitespace-nowrap">+ Nuevo</button>
+    <div class="flex items-center gap-4 mb-4">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm"
+        (input)="filtrarCuestionarios()"
+        placeholder="Buscar en cualquier campo..."
+        class="border border-gray-300 rounded-lg px-4 py-2"
+        style="width: 50%;" />
+      <button 
+        (click)="crearCuestionario()"
+        class="ml-auto flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition duration-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12M6 12h12" />
+        </svg>
+        Nuevo
+      </button>
     </div>
   </div>
 

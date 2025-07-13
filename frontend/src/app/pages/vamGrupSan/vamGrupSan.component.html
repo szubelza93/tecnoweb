@@ -1,37 +1,24 @@
 <div class="container mx-auto px-4 py-8">
-  <!-- Header -->
-  <div class="flex justify-between items-center mb-6">
+  <!-- Header y Barra de búsqueda unificados -->
+  <div class="flex items-center justify-between mb-6 gap-4">
     <h1 class="text-3xl font-bold text-gray-800">Gestión de Grupos Sanguíneos</h1>
-    <button 
-      (click)="createVamGrupSan()"
-      class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 flex items-center gap-2">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-      </svg>
-      Nuevo Grupo Sanguíneo
-    </button>
   </div>
-
-  <!-- Barra de búsqueda -->
   <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-    <div class="flex gap-4">
-      <div class="flex-1">
-        <input 
-          type="text" 
-          [(ngModel)]="searchTerm"
-          (keyup.enter)="searchVamGrupSan()"
-          placeholder="Buscar por grupo ABO..."
-          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-      </div>
+    <div class="flex items-center gap-4">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm"
+        (input)="searchVamGrupSan()"
+        placeholder="Buscar en cualquier campo..."
+        class="border border-gray-300 rounded-lg px-4 py-2"
+        style="width: 50%;" />
       <button 
-        (click)="searchVamGrupSan()"
-        class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-lg transition duration-200">
-        Buscar
-      </button>
-      <button 
-        (click)="clearSearch()"
-        class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200">
-        Limpiar
+        (click)="createVamGrupSan()"
+        class="ml-auto flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition duration-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12M6 12h12" />
+        </svg>
+        Nuevo Grupo Sanguíneo
       </button>
     </div>
   </div>

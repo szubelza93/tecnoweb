@@ -53,16 +53,17 @@ export class LugarNacimientoComponent implements OnInit {
   }
 
   searchLugares(): void {
-    if (!this.searchTerm.trim()) {
+    const term = this.searchTerm.trim().toLowerCase();
+    if (!term) {
       this.filteredLugares = [...this.lugares];
       this.totalItems = this.lugares.length;
       this.currentPage = 1;
       return;
     }
     this.filteredLugares = this.lugares.filter(lug =>
-      lug.vlugCiudad.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      lug.vlugPaisna.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      lug.vlugProvin.toLowerCase().includes(this.searchTerm.toLowerCase())
+      Object.values(lug).some(val =>
+        val !== null && val !== undefined && val.toString().toLowerCase().includes(term)
+      )
     );
     this.totalItems = this.filteredLugares.length;
     this.currentPage = 1;

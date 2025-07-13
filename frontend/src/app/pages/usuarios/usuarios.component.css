@@ -1,0 +1,174 @@
+/* Asegura que el contenido no quede debajo de los logos */
+.p-10 {
+  padding-top: 100px !important;
+}
+
+/* Fondo general blanco para la tabla y el drawer */
+.p-10, .relative.overflow-x-auto, #drawer-right-example2 {
+  background-color: #fff !important;
+}
+
+/* Encabezado de la tabla en verde SCZ, texto blanco */
+thead {
+  background-color: #4CAF50 !important;
+}
+thead th {
+  color: #fff !important;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Filas alternas: blanco y gris muy claro */
+tbody tr {
+  background-color: #fff;
+}
+tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+/* Texto general en gris oscuro */
+td, th, label, input, h1, h5, p {
+  color: #22292f !important;
+}
+
+/* Botón principal (Crear usuario, Guardar, Editar, Actualizar) */
+button.bg-blue-700,
+button.bg-blue-800,
+button.bg-green-600,
+button[type="submit"],
+.btn-editar {
+  background-color: #4CAF50 !important;
+  border: none;
+  color: #fff !important;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(76,175,80,0.08);
+  transition: background 0.2s, color 0.2s;
+}
+button.bg-blue-700:hover,
+button.bg-blue-800:hover,
+button.bg-green-600:hover,
+button[type="submit"]:hover,
+.btn-editar:hover {
+  background-color: #388e3c !important;
+}
+
+/* Botón Editar en la tabla (ícono) */
+button.text-green-600,
+button.text-green-500 {
+  color: #4CAF50 !important;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+button.text-green-600:hover,
+button.text-green-500:hover {
+  color: #388e3c !important;
+  text-decoration: underline;
+}
+
+/* Botón Eliminar (rojo) y hover más oscuro */
+button.bg-red-600,
+.btn-eliminar {
+  background-color: #e53935 !important;
+  color: #fff !important;
+  font-weight: 600;
+}
+button.bg-red-600:hover,
+.btn-eliminar:hover {
+  background-color: #b71c1c !important;
+  color: #fff !important;
+}
+
+/* Botones de acción en la tabla */
+button.text-blue-600,
+button.text-blue-500 {
+  color: #388e3c !important;
+  font-weight: 500;
+}
+button.text-blue-600:hover,
+button.text-blue-500:hover {
+  color: #1b5e20 !important;
+  text-decoration: underline;
+}
+
+button.text-green-600,
+button.text-green-500 {
+  color: #4CAF50 !important;
+  font-weight: 500;
+}
+button.text-green-600:hover,
+button.text-green-500:hover {
+  color: #388e3c !important;
+  text-decoration: underline;
+}
+
+/* Botón Eliminar (rojo, pero con verde en hover para coherencia visual) */
+button.text-red-600,
+button.text-red-500 {
+  color: #e53935 !important;
+  font-weight: 500;
+}
+button.text-red-600:hover,
+button.text-red-500:hover {
+  color: #4CAF50 !important;
+  text-decoration: underline;
+}
+
+/* Inputs del formulario con borde verde al enfocar */
+input:focus {
+  border-color: #4CAF50 !important;
+  box-shadow: 0 0 0 2px #c8e6c9;
+}
+
+/* Encabezado principal */
+h1.text-2xl {
+  color: #388e3c !important;
+}
+
+/* Drawer (formulario) con borde superior verde */
+#drawer-right-example2 {
+  border-top: 4px solid #4CAF50;
+  background-color: #fff !important;
+}
+
+/* Sombra suave para la tabla */
+.relative.overflow-x-auto {
+  box-shadow: 0 2px 16px rgba(34,41,47,0.06);
+}
+
+/* Título principal y títulos de sección en verde institucional */
+h1.text-2xl, h5, .titulo-verde {
+  color: #4CAF50 !important;
+}
+
+/* Drawer de detalles de usuario con tema claro y verde institucional */
+#drawer-user-details {
+  background-color: #fff !important;
+  border-top: 4px solid #4CAF50;
+}
+#drawer-user-details h5 {
+  color: #4CAF50 !important;
+}
+#drawer-user-details h6 {
+  color: #388e3c !important;
+}
+#drawer-user-details p {
+  color: #22292f !important;
+}
+#drawer-user-details button {
+  background-color: #4CAF50 !important;
+  color: #fff !important;
+  font-weight: 600;
+  border: none;
+  transition: background 0.2s;
+}
+#drawer-user-details button:hover {
+  background-color: #388e3c !important;
+}
+#drawer-user-details button.bg-red-700,
+#drawer-user-details button.bg-red-800 {
+  background-color: #e53935 !important;
+}
+#drawer-user-details button.bg-red-700:hover,
+#drawer-user-details button.bg-red-800:hover {
+  background-color: #b71c1c !important;
+}

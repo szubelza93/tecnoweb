@@ -14,8 +14,4 @@ import { NgIf } from '@angular/common';
 })
 export default class LayoutComponent {
   sidebarVisible = true;
-
-  toggleSidebar() {
-    this.sidebarVisible = !this.sidebarVisible;
-  }
 }

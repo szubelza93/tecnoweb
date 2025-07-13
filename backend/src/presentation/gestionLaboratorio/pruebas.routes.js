@@ -19,7 +19,5 @@ router.put('/:id', PruebasController.update);
 // Eliminar una prueba
 router.delete('/:id', PruebasController.delete);
 
-// Buscar pruebas por descripción
-router.get('/buscar/descripcion', PruebasController.searchByDescripcion);
 
 module.exports = router; 

@@ -339,13 +339,11 @@ const createTables = async () => {
 
     // TABLA DE PRUEBAS (GESTIÓN DE LABORATORIO)
     await client.query(`
-      CREATE TABLE IF NOT EXISTS vamPruebas (
-          vpruCodPru SMALLINT PRIMARY KEY,
-          vpruDescri VARCHAR(30) NOT NULL,
-          vpruCaract VARCHAR(250),
-          vpruCodNiv CHAR(2),
-          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      CREATE TABLE IF NOT EXISTS vampruebas (
+          vprucodpru serial primary key,
+          vprudescri varchar(30) not null,
+          vprucaract varchar(250),
+          vprucodniv char(2)
       )
     `);
 
@@ -398,6 +396,52 @@ const createTables = async () => {
           updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           CONSTRAINT fk_almacen_equipo FOREIGN KEY (vequCodEqu) REFERENCES vamEquAlm(vequCodEqu),
           CONSTRAINT uk_almacen_posicion UNIQUE (vequCodEqu, "valmNroF#", valmNroCol)
+      )
+    `);
+
+    // TABLA DE TIPO DE UNIDAD (GESTIÓN DE CONFIGURACIÓN)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS vamtipount (
+        vtutcodtut SMALLSERIAL PRIMARY KEY,
+        vtutdescri VARCHAR(30)
+      )
+    `);
+
+    // TABLA DE ANTICUERPOS (GESTIÓN DE CONFIGURACIÓN)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS vamanticue (
+        vantcodant SMALLSERIAL PRIMARY KEY, -- Clave primaria autoincrementable
+        vantdescri VARCHAR(30),
+        vantcaract VARCHAR(150)
+      )
+    `);
+
+    // TABLA DE REACTIVOS (GESTIÓN DE CONFIGURACIÓN)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS vamreactiv (
+        vreacodrea SMALLSERIAL PRIMARY KEY, -- Clave primaria autoincrementable
+        vreadescri VARCHAR(30),
+        vreacaract VARCHAR(50),
+        vreaingres SMALLINT,
+        vreasalida SMALLINT,
+        vreacantid SMALLINT
+      )
+    `);
+    
+    // TABLA DE UNIDADES DE TRANSFUSIÓN (GESTIÓN DE CONFIGURACIÓN)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS vamunitran (
+        vuntcoduni SMALLSERIAL PRIMARY KEY, -- Clave primaria autoincrementable
+        vuntnombre VARCHAR(50),
+        vuntdirecc VARCHAR(50),
+        vuntrespon VARCHAR(30),
+        vunttelefo CHAR(8),
+        vtutcodtut SMALLINT, -- Clave foránea
+        sconnrocta VARCHAR(25),
+        scondesccta VARCHAR(100),
+        CONSTRAINT fk_vamtipount
+            FOREIGN KEY (vtutcodtut)
+            REFERENCES vamtipount (vtutcodtut)
       )
     `);
 

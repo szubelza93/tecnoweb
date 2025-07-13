@@ -47,7 +47,11 @@ router.use('/citas', citaciRoutes);
 router.use('/citas-donantes', citaDonRoutes);
 
 // Rutas de gestión de tipos de centro
-const { vamtipocenRoutes, vamcentdonRoutes } = require('./gestionConfiguracion');
+const { vamtipocenRoutes, vamcentdonRoutes, vamtipountRoutes, vamunitranRoutes, vamanticueRoutes, vamreactivRoutes } = require('./gestionConfiguracion');
+router.use('/vamtipount', vamtipountRoutes);
+router.use('/vamunitran', vamunitranRoutes);
+router.use('/vamanticue', vamanticueRoutes);
+router.use('/vamreactiv', vamreactivRoutes);
 router.use('/vamtipocen', vamtipocenRoutes);
 router.use('/vamcentdon', vamcentdonRoutes);
 

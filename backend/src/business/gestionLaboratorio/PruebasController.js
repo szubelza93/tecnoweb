@@ -26,19 +26,18 @@ class PruebasController {
     }
 
     static async delete(req, res) {
-        const pruebaEliminada = await Pruebas.delete(req.params.id);
-        if (!pruebaEliminada) throw new NotFoundError('Prueba');
-        ResponseHelper.deleted(res, 'Prueba eliminada exitosamente.');
+        try {
+            const pruebaEliminada = await Pruebas.delete(req.params.id);
+            if (!pruebaEliminada) {
+                return ResponseHelper.notFound(res, 'Prueba');
+            }
+            ResponseHelper.deleted(res, 'Prueba eliminada exitosamente.');
+        } catch (error) {
+            ResponseHelper.error(res, 'Error al eliminar la prueba', 500, error.message);
+        }
     }
 
-    static async searchByDescripcion(req, res) {
-        const { descripcion } = req.query;
-        if (!descripcion) {
-            return ResponseHelper.badRequest(res, 'El parámetro descripcion es requerido');
-        }
-        const pruebas = await Pruebas.findByDescripcion(descripcion);
-        ResponseHelper.success(res, pruebas);
-    }
+
 }
 
 module.exports = PruebasController; 

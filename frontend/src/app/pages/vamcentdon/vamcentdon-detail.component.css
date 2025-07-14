@@ -1,0 +1,7 @@
+/* Estilos para la vista de detalle */
+.container { max-width: 430px; margin: 2.5rem auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 2.5rem 2rem; }
+h2 { color: #195e37; font-size: 1.35rem; margin-bottom: 1.5rem; }
+p { margin-bottom: 0.7rem; font-size: 1.08rem; }
+.error { color: #dc2626; margin-top: 1rem; text-align: center; }
+button { background: #15803d; color: #fff; border: none; border-radius: 5px; padding: 10px 0; width: 100%; font-weight: 600; margin-top: 1.2rem; transition: background 0.2s; }
+button:hover { background: #166534; }

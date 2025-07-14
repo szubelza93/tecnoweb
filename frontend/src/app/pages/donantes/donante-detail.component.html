@@ -93,9 +93,13 @@
           <label class="block text-sm font-medium text-gray-500">Teléfono Celular</label>
           <p class="mt-1 text-lg text-gray-900">{{ donante.vdonTelCel || 'No especificado' }}</p>
         </div>
-        <div *ngIf="hasValue(donante.vdonTelOfi)">
+        <div *ngIf="hasValue(donante.vdonTelDom)">
+          <label class="block text-sm font-medium text-gray-500">Teléfono Domicilio</label>
+          <p class="mt-1 text-lg text-gray-900">{{ donante.vdonTelDom }}</p>
+        </div>
+        <div *ngIf="hasValue(donante.vdonTelOff)">
           <label class="block text-sm font-medium text-gray-500">Teléfono Oficina</label>
-          <p class="mt-1 text-lg text-gray-900">{{ donante.vdonTelOfi }}</p>
+          <p class="mt-1 text-lg text-gray-900">{{ donante.vdonTelOff }}</p>
         </div>
         <div *ngIf="hasValue(donante.vdonEmail)">
           <label class="block text-sm font-medium text-gray-500">Email Principal</label>
@@ -105,14 +109,7 @@
             </a>
           </p>
         </div>
-        <div *ngIf="hasValue(donante.vdonEmail2)">
-          <label class="block text-sm font-medium text-gray-500">Email Secundario</label>
-          <p class="mt-1 text-lg text-gray-900">
-            <a href="mailto:{{ donante.vdonEmail2 }}" class="text-blue-600 hover:text-blue-800">
-              {{ donante.vdonEmail2 }}
-            </a>
-          </p>
-        </div>
+
       </div>
     </div>
 
@@ -127,6 +124,10 @@
         <div>
           <label class="block text-sm font-medium text-gray-500">Grado de Instrucción</label>
           <p class="mt-1 text-lg text-gray-900">{{ donante.grado_instruccion || 'No especificado' }}</p>
+        </div>
+        <div *ngIf="hasValue(donante.vdonTrabaj)">
+          <label class="block text-sm font-medium text-gray-500">Trabajo</label>
+          <p class="mt-1 text-lg text-gray-900">{{ donante.vdonTrabaj }}</p>
         </div>
         <div *ngIf="hasValue(donante.vdonCarneT)">
           <label class="block text-sm font-medium text-gray-500">Carné de Trabajo</label>

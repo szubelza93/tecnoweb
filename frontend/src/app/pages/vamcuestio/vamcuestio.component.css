@@ -1,0 +1,61 @@
+/* Estilos modernos para la tabla de cuestionarios */
+.container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 2rem 2.5rem;
+}
+h2 {
+  margin-bottom: 1.2rem;
+  color: #195e37;
+  font-size: 1.5rem;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+th {
+  background: #f3f4f6;
+  font-weight: 600;
+  color: #195e37;
+}
+tr:last-child td {
+  border-bottom: none;
+}
+/* Botón verde principal '+ Nuevo' */
+.nuevo-btn {
+  background: #15803d !important;
+  color: #fff !important;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(21,128,61,0.08);
+  cursor: pointer;
+  font-weight: 600;
+  padding: 10px 24px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.nuevo-btn:hover {
+  background: #166534 !important;
+}
+
+/* Botones de acción de la tabla */
+.accion-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  border-radius: 5px;
+}
+.accion-btn:focus {
+  outline: 2px solid #388e3c;
+}
+
+button:focus {
+  outline: 2px solid #388e3c;
+}

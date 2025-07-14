@@ -1,12 +1,13 @@
 <div class="container mx-auto p-4">
   <h2 class="text-2xl font-bold mb-4">Gestión de Refrigeradores</h2>
 
-  <div class="flex justify-between mb-4">
-    <input type="text" [(ngModel)]="searchTerm" (input)="buscarRefrigeradores()" placeholder="Buscar en cualquier campo..." class="border rounded px-3 py-2 w-1/2" />
-    <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" (click)="nuevoRefrigerador()">
-      + Nuevo
-    </button>
-  </div>
+  <div class="flex items-center gap-4 mb-4">
+  <input type="text" [(ngModel)]="searchTerm" (input)="buscarRefrigeradores()" placeholder="Buscar en cualquier campo..." class="border rounded px-3 py-2" style="flex-basis: 60%; min-width: 0;" />
+  <div style="flex:1"></div>
+  <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" (click)="nuevoRefrigerador()" style="flex-shrink:0;">
+    + Nuevo
+  </button>
+</div>
 
   <div *ngIf="loading" class="text-center my-4">Cargando...</div>
   <div *ngIf="error" class="text-red-500 my-4">{{ error }}</div>

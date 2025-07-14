@@ -12,30 +12,31 @@ const handleValidationErrors = (req, res, next) => {
 // Validaciones de Donante
 const validateDonante = [
   body('vdonCodDon').isInt({ min: 1 }).withMessage('El código del donante debe ser un entero positivo.'),
-  body('vdonPatern').optional().trim().isLength({ max: 50 }).withMessage('El apellido paterno no puede exceder 50 caracteres.'),
-  body('vdonMatern').optional().trim().isLength({ max: 50 }).withMessage('El apellido materno no puede exceder 50 caracteres.'),
+  body('vdonPatern').trim().notEmpty().isLength({ min: 2, max: 50 }).withMessage('El apellido paterno es requerido y debe tener entre 2 y 50 caracteres.'),
+  body('vdonMatern').trim().notEmpty().isLength({ min: 2, max: 50 }).withMessage('El apellido materno es requerido y debe tener entre 2 y 50 caracteres.'),
   body('vdonNombre').trim().notEmpty().isLength({ min: 2, max: 50 }).withMessage('El nombre es requerido y debe tener entre 2 y 50 caracteres.'),
-  body('vzonCodZon').optional().isInt({ min: 1 }).withMessage('El código de zona debe ser un entero positivo.'),
-  body('vdonDirecc').optional().trim().isLength({ max: 150 }).withMessage('La dirección no puede exceder 150 caracteres.'),
+  body('vzonCodZon').isInt({ min: 1 }).withMessage('El código de zona es requerido y debe ser un entero positivo.'),
+  body('vdonDirecc').trim().notEmpty().isLength({ max: 150 }).withMessage('La dirección es requerida y no puede exceder 150 caracteres.'),
   body('vdonDesDir').optional().trim().isLength({ max: 350 }).withMessage('La descripción de dirección no puede exceder 350 caracteres.'),
-  body('vtidCodTid').optional().isInt({ min: 1 }).withMessage('El código de tipo de documento debe ser un entero positivo.'),
-  body('vdonDocide').optional().trim().isLength({ max: 15 }).withMessage('El documento de identidad no puede exceder 15 caracteres.'),
-  body('vdonFecNac').optional().isISO8601().withMessage('La fecha de nacimiento debe ser una fecha válida.'),
-  body('vdonEdadDo').optional().isInt({ min: 18, max: 100 }).withMessage('La edad debe estar entre 18 y 100 años.'),
-  body('vdonEstCiv').optional().isIn(['S', 'C', 'D', 'V']).withMessage('Estado civil debe ser S, C, D o V.'),
-  body('vdonSexoDn').optional().isIn(['M', 'F']).withMessage('Sexo debe ser M o F.'),
+  body('vtidCodTid').isInt({ min: 1 }).withMessage('El código de tipo de documento es requerido y debe ser un entero positivo.'),
+  body('vdonDocide').trim().notEmpty().isLength({ min: 7, max: 8 }).withMessage('El documento de identidad es requerido y debe tener entre 7 y 8 caracteres.'),
+  body('vdonFecNac').isISO8601().withMessage('La fecha de nacimiento es requerida y debe ser una fecha válida.'),
+  body('vdonEdadDo').isInt({ min: 18, max: 100 }).withMessage('La edad es requerida y debe estar entre 18 y 100 años.'),
+  body('vdonEstCiv').isIn(['S', 'C', 'D', 'V']).withMessage('Estado civil es requerido y debe ser S, C, D o V.'),
+  body('vdonSexoDn').isIn(['M', 'F']).withMessage('Sexo es requerido y debe ser M o F.'),
   body('vdonTelDom').optional().matches(/^[0-9]{8}$/).withMessage('El teléfono de domicilio debe tener exactamente 8 dígitos.'),
   body('vdonTelOff').optional().matches(/^[0-9]{8}$/).withMessage('El teléfono de oficina debe tener exactamente 8 dígitos.'),
-  body('vdonTelCel').optional().matches(/^[0-9]{8}$/).withMessage('El teléfono celular debe tener exactamente 8 dígitos.'),
+  body('vdonTelCel').trim().notEmpty().matches(/^[0-9]{8}$/).withMessage('El teléfono celular es requerido y debe tener exactamente 8 dígitos.'),
   body('vdonEmail').optional().isEmail().withMessage('El email debe ser un email válido.'),
+  
   body('vdonTrabaj').optional().trim().isLength({ max: 150 }).withMessage('El trabajo no puede exceder 150 caracteres.'),
   body('vdonDirTra').optional().trim().isLength({ max: 150 }).withMessage('La dirección de trabajo no puede exceder 150 caracteres.'),
-  body('vdonCarneT').optional().isBoolean().withMessage('El campo carnet debe ser un valor booleano.'),
-  body('vocuCodOcu').optional().isInt({ min: 1 }).withMessage('El código de ocupación debe ser un entero positivo.'),
-  body('vgraCodGra').optional().isInt({ min: 1 }).withMessage('El código de grado debe ser un entero positivo.'),
-  body('vlugCodLug').optional().isInt({ min: 1 }).withMessage('El código de lugar debe ser un entero positivo.'),
+  body('vdonCarneT').optional().trim().isLength({ max: 20 }).withMessage('El carnet de trabajo no puede exceder 20 caracteres.'),
+  body('vocuCodOcu').isInt({ min: 1 }).withMessage('El código de ocupación es requerido y debe ser un entero positivo.'),
+  body('vgraCodGra').isInt({ min: 1 }).withMessage('El código de grado es requerido y debe ser un entero positivo.'),
+  body('vlugCodLug').isInt({ min: 1 }).withMessage('El código de lugar es requerido y debe ser un entero positivo.'),
   body('vcluCodClu').optional().isInt({ min: 1 }).withMessage('El código de club debe ser un entero positivo.'),
-  body('vresCodRes').optional().isInt({ min: 1 }).withMessage('El código de responsable debe ser un entero positivo.'),
+  body('vresCodRes').optional().trim().isLength({ max: 20 }).withMessage('El código de responsable no puede exceder 20 caracteres.'),
   body('vdonSwCita').optional().isBoolean().withMessage('El campo cita debe ser un valor booleano.'),
   handleValidationErrors
 ];
@@ -218,12 +219,11 @@ const validateCuesNro = [
 
 // Validaciones de Cuestionario
 const validateCuestio = [
-  body('vcueNroCue').isInt({ min: 1 }).withMessage('El número de cuestionario debe ser un entero positivo.'),
-  body('vcueNroPre').isInt({ min: 1 }).withMessage('El número de pregunta debe ser un entero positivo.'),
-  body('vcuePregun').trim().notEmpty().isLength({ min: 2, max: 250 }).withMessage('La pregunta debe tener entre 2 y 250 caracteres.'),
-  body('vcueOpcio1').optional().trim().isLength({ max: 10 }).withMessage('La opción 1 no puede exceder 10 caracteres.'),
-  body('vcueOpcio2').optional().trim().isLength({ max: 10 }).withMessage('La opción 2 no puede exceder 10 caracteres.'),
-  body('vcueRespue').optional().isLength({ min: 1, max: 1 }).withMessage('La respuesta debe ser un solo carácter.'),
+  body('vcuenrocue').isInt({ min: 1 }).withMessage('El número de cuestionario debe ser un entero positivo.'),
+  body('vcuepregun').trim().notEmpty().isLength({ min: 2, max: 250 }).withMessage('La pregunta debe tener entre 2 y 250 caracteres.'),
+  body('vcueopcio1').optional().trim().isLength({ max: 10 }).withMessage('La opción 1 no puede exceder 10 caracteres.'),
+  body('vcueopcio2').optional().trim().isLength({ max: 10 }).withMessage('La opción 2 no puede exceder 10 caracteres.'),
+  body('vcuerespue').optional().isLength({ min: 1, max: 1 }).withMessage('La respuesta debe ser un solo carácter.'),
   handleValidationErrors
 ];
 

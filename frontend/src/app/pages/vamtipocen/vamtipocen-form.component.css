@@ -1,0 +1,76 @@
+/* Estilos modernos para el formulario de tipo de centro */
+.container {
+  max-width: 500px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 2rem 2.5rem;
+}
+h2 {
+  margin-bottom: 1.2rem;
+  color: #195e37;
+  font-size: 1.5rem;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+label {
+  font-weight: 500;
+  color: #195e37;
+  margin-bottom: 0.3rem;
+}
+input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  background: #fafafa;
+  font-size: 1rem;
+}
+input:focus {
+  outline: none;
+  border-color: #388e3c;
+  background: #fff;
+}
+button[type="submit"] {
+  background: #388e3c;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background 0.2s;
+}
+button[type="submit"]:hover {
+  background: #256029;
+}
+button[type="button"] {
+  background: #e0e0e0;
+  color: #222;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background 0.2s;
+}
+button[type="button"]:hover {
+  background: #bdbdbd;
+}
+.error {
+  color: #e53935;
+  margin: 1rem 0;
+}
+.success {
+  color: #388e3c;
+  margin: 1rem 0;
+}
+small {
+  color: #e53935;
+}

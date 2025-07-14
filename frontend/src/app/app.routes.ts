@@ -57,6 +57,23 @@ export const routes: Routes = [
                 path: 'donantes/ver/:id',
                 loadComponent: () => import('./pages/donantes/donante-detail.component').then(m => m.DonanteDetailComponent)
             },
+            // Rutas del módulo de centros de donación (vamcentdon)
+            {
+                path: 'vamcentdon',
+                loadComponent: () => import('./pages/vamcentdon/vamcentdon.component').then(m => m.VamcentdonComponent)
+            },
+            {
+                path: 'vamcentdon/crear',
+                loadComponent: () => import('./pages/vamcentdon/vamcentdon-form.component').then(m => m.VamcentdonFormComponent)
+            },
+            {
+                path: 'vamcentdon/editar/:id',
+                loadComponent: () => import('./pages/vamcentdon/vamcentdon-form.component').then(m => m.VamcentdonFormComponent)
+            },
+            {
+                path: 'vamcentdon/detalle/:id',
+                loadComponent: () => import('./pages/vamcentdon/vamcentdon-detail.component').then(m => m.VamcentdonDetailComponent)
+            },
             // Rutas del módulo de cuestionarios-numeros
             {
                 path: 'cuestionarios-numeros',
@@ -69,6 +86,24 @@ export const routes: Routes = [
             {
                 path: 'cuestionarios-numeros/editar/:id',
                 loadComponent: () => import('./pages/cuestionarios-numeros/cuestionario-numero-form.component').then(m => m.CuestionarioNumeroFormComponent)
+            },
+
+            // Rutas del módulo de preguntas de cuestionario (vamcuestio)
+            {
+                path: 'vamcuestio',
+                loadComponent: () => import('./pages/vamcuestio/vamcuestio.component').then(m => m.VamcuestioComponent)
+            },
+            {
+                path: 'vamcuestio/crear',
+                loadComponent: () => import('./pages/vamcuestio/vamcuestio-form.component').then(m => m.VamcuestioFormComponent)
+            },
+            {
+                path: 'vamcuestio/editar/:id',
+                loadComponent: () => import('./pages/vamcuestio/vamcuestio-form.component').then(m => m.VamcuestioFormComponent)
+            },
+            {
+                path: 'vamcuestio/detalle/:id',
+                loadComponent: () => import('./pages/vamcuestio/vamcuestio-detail.component').then(m => m.VamcuestioDetailComponent)
             },
             {
                 path: 'cuestionarios-numeros/ver/:id',
@@ -193,6 +228,23 @@ export const routes: Routes = [
             {
                 path: 'vamobsequi/editar/:id',
                 loadComponent: () => import('./pages/vamobsequi/vamobsequi-form.component').then(m => m.VamobsequiFormComponent)
+            },
+            // Rutas del módulo de tipos de centro
+            {
+                path: 'vamtipocen',
+                loadComponent: () => import('./pages/vamtipocen/vamtipocen.component').then(m => m.VamtipocenComponent)
+            },
+            {
+                path: 'vamtipocen/crear',
+                loadComponent: () => import('./pages/vamtipocen/vamtipocen-form.component').then(m => m.VamtipocenFormComponent)
+            },
+            {
+                path: 'vamtipocen/editar/:id',
+                loadComponent: () => import('./pages/vamtipocen/vamtipocen-form.component').then(m => m.VamtipocenFormComponent)
+            },
+            {
+                path: 'vamtipocen/detalle/:id',
+                loadComponent: () => import('./pages/vamtipocen/vamtipocen-detail.component').then(m => m.VamtipocenDetailComponent)
             },
             // Rutas del módulo de refrigeradores
             {

@@ -6,9 +6,9 @@ yarn-debug.log*
 yarn-error.log*
 Backend-Vampi-Tecno/package-lock.json
 Backend-Vampi-Tecno/yarn.lock
+git
 
 # Variables de entorno
-Backend-Vampi-Tecno/.env
 Backend-Vampi-Tecno/.env.local
 Backend-Vampi-Tecno/.env.development.local
 Backend-Vampi-Tecno/.env.test.local
@@ -65,7 +65,7 @@ coverage/
 .yarn-integrity
 
 # Archivo de variables de entorno de dotenv
-.env
+# .env
 
 # Archivos de cache de parcel-bundler
 .cache

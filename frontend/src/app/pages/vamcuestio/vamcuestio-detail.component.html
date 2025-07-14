@@ -1,0 +1,12 @@
+<div class="container" *ngIf="cuestionario">
+  <h2>Detalle de Pregunta de Cuestionario</h2>
+  <p><strong>ID:</strong> {{ cuestionario.vcuenropre }}</p>
+  <p><strong>N° Cuestionario:</strong> {{ getNombreCuestionario(cuestionario.vcuenrocue) }}</p>
+  <p><strong>Pregunta:</strong> {{ cuestionario.vcuepregun }}</p>
+  <p><strong>Opción 1:</strong> {{ cuestionario.vcueopcio1 }}</p>
+  <p><strong>Opción 2:</strong> {{ cuestionario.vcueopcio2 }}</p>
+  <p><strong>Respuesta:</strong> {{ cuestionario.vcuerespue }}</p>
+  <button (click)="volver()">Volver</button>
+</div>
+<div *ngIf="loading">Cargando detalle...</div>
+<div *ngIf="error" class="error">{{ error }}</div>

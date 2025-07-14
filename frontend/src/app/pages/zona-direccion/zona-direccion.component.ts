@@ -53,14 +53,17 @@ export class ZonaDireccionComponent implements OnInit {
   }
 
   searchZonas(): void {
-    if (!this.searchTerm.trim()) {
+    const term = this.searchTerm.trim().toLowerCase();
+    if (!term) {
       this.filteredZonas = [...this.zonas];
       this.totalItems = this.zonas.length;
       this.currentPage = 1;
       return;
     }
     this.filteredZonas = this.zonas.filter(zona =>
-      zona.vzonDescr.toLowerCase().includes(this.searchTerm.toLowerCase())
+      Object.values(zona).some(val =>
+        val !== null && val !== undefined && val.toString().toLowerCase().includes(term)
+      )
     );
     this.totalItems = this.filteredZonas.length;
     this.currentPage = 1;

@@ -49,10 +49,11 @@ function mapDonanteFromBackend(d: any): Donante {
     vdonEdadDo: Number(d.vdonedaddo),
     vdonEstCiv: d.vdonestciv,
     vdonSexoDn: d.vdonsexodn,
-    vdonTelOfi: d.vdonteloff || '',
+    vdonTelDom: d.vdonteldom || '',
+    vdonTelOff: d.vdonteloff || '',
     vdonTelCel: d.vdontelcel,
     vdonEmail: d.vdonemail,
-    vdonEmail2: d.vdonemail2 || '',
+    vdonTrabaj: d.vdontrabaj || '',
     vdonDirTra: d.vdondirtra,
     vdonCarneT: d.vdoncarnet,
     vocuCodOcu: d.vocucodocu,
@@ -74,42 +75,44 @@ function mapDonanteFromBackend(d: any): Donante {
 
 // Nueva función para mapear desde el detalle formateado del backend al modelo Donante
 function mapDonanteFromBackendDetalle(d: any): Donante {
-  // d es el objeto formateado del backend (con id, nombreCompleto, documento, etc.)
-  // Se intentará reconstruir el objeto Donante lo mejor posible
+  // Separar nombre completo en partes
+  let vdonPatern = '';
+  let vdonMatern = '';
+  let vdonNombre = '';
+  if (d.nombreCompleto) {
+    const partes = d.nombreCompleto.trim().split(' ');
+    vdonPatern = partes[0] || '';
+    vdonMatern = partes[1] || '';
+    vdonNombre = partes.slice(2).join(' ') || '';
+  }
+
   return {
     vdonCodDon: d.id || '',
-    vdonPatern: d.nombreCompleto ? d.nombreCompleto.split(' ')[1] || '' : '',
-    vdonMatern: d.nombreCompleto ? d.nombreCompleto.split(' ')[2] || '' : '',
-    vdonNombre: d.nombreCompleto ? d.nombreCompleto.split(' ')[0] || '' : '',
+    vdonPatern,
+    vdonMatern,
+    vdonNombre,
     vzonCodZon: d.direccion?.zona || '',
     vdonDirecc: d.direccion?.direccion || '',
     vdonDesDir: d.direccion?.descripcion || '',
-    vtidCodTid: '',
+    vtidCodTid: d.informacionPersonal?.tipoDocumento || '',
     vdonDocide: d.documento || '',
     vdonFecNac: d.informacionPersonal?.fechaNacimiento || '',
-    vdonEdadDo: d.edad || d.informacionPersonal?.edad || 0,
+    vdonEdadDo: d.edad || '',
     vdonEstCiv: d.estadoCivil || d.informacionPersonal?.estadoCivil || '',
     vdonSexoDn: d.sexo || d.informacionPersonal?.sexo || '',
-    vdonTelOfi: d.contactos?.telefonoOficina || '',
-    vdonTelCel: d.telefono || d.contactos?.telefonoCelular || '',
-    vdonEmail: d.email || d.contactos?.email || '',
-    vdonEmail2: '',
+    vdonTelDom: d.contactos?.telefonoDomicilio || '',
+    vdonTelOff: d.contactos?.telefonoOficina || '',
+    vdonTelCel: d.contactos?.telefonoCelular || d.telefono || '',
+    vdonEmail: d.contactos?.email || d.email || '',
+    vdonTrabaj: d.informacionLaboral?.trabajo || '',
     vdonDirTra: d.informacionLaboral?.direccionTrabajo || '',
     vdonCarneT: d.informacionAdicional?.carnetTrabajo || '',
-    vocuCodOcu: '',
-    vgraCodGra: '',
-    vlugCodLug: '',
-    vcluCodClu: '',
+    vocuCodOcu: d.informacionLaboral?.ocupacion || '',
+    vgraCodGra: d.informacionLaboral?.gradoInstruccion || '',
+    vlugCodLug: d.informacionAdicional?.lugarNacimiento || '',
+    vcluCodClu: d.informacionAdicional?.clubDonantes || '',
     vresCodRes: d.informacionAdicional?.codigoReserva || '',
-    vdonSwCita: d.informacionAdicional?.cita || false,
-    created_at: d.created_at,
-    updated_at: d.updated_at,
-    tipo_documento: d.informacionPersonal?.tipoDocumento || '',
-    ocupacion: d.informacionLaboral?.ocupacion || '',
-    grado_instruccion: d.informacionLaboral?.gradoInstruccion || '',
-    lugar_nacimiento: d.informacionAdicional?.lugarNacimiento || '',
-    club_donantes: d.informacionAdicional?.clubDonantes || '',
-    zona_direccion: d.informacionAdicional?.zonaDireccion || ''
+    vdonSwCita: d.informacionAdicional?.cita || false
   };
 }
 
@@ -122,35 +125,43 @@ export class DonanteService {
   constructor(private http: HttpClient) { }
 
   // Operaciones CRUD principales
-  getAllDonantes(): Observable<any[]> {
+  getAllDonantes(): Observable<any> {
     return this.http.get<any>(this.baseUrl).pipe(
-      map(response => response.data.donantes)
+      map(response => {
+        console.log('Respuesta completa del backend:', response);
+        // Devolver la respuesta completa para que el componente pueda acceder a data.donantes
+        return response;
+      })
     );
   }
 
   getDonanteById(id: string): Observable<ApiResponse<Donante>> {
     return this.http.get<ApiResponse<any>>(`${this.baseUrl}/${id}`).pipe(
       map(response => {
-        // Si la respuesta ya viene formateada, intentar mapear los campos al modelo Donante
-        const d = response.data || {};
-        // Intentar extraer los campos originales si existen, si no, mapear desde el formateado
-        if (d.vdonCodDon || d.vdonPatern || d.vdonNombre) {
-          // Ya es formato Donante
-          return { ...response, data: d as Donante };
-        } else {
-          // Mapear desde el objeto formateado del backend
-          return { ...response, data: mapDonanteFromBackendDetalle(d) };
-        }
+        console.log('=== RESPUESTA DEL BACKEND - GET BY ID ===');
+        console.log('Respuesta completa:', response);
+        console.log('Datos del donante:', response.data);
+        
+        // El backend ahora devuelve los datos en formato plano
+        return { ...response, data: response.data as Donante };
       })
     );
   }
 
   createDonante(donante: Donante): Observable<ApiResponse<Donante>> {
+    console.log('=== SERVICIO - CREAR DONANTE ===');
+    console.log('URL:', this.baseUrl);
+    console.log('Datos a enviar:', donante);
+    
     return this.http.post<ApiResponse<any>>(this.baseUrl, donante).pipe(
-      map(response => ({
-        ...response,
-        data: response.data ? mapDonanteFromBackend(response.data) : {} as Donante
-      }))
+      map(response => {
+        console.log('=== RESPUESTA DEL BACKEND ===');
+        console.log('Respuesta completa:', response);
+        return {
+          ...response,
+          data: response.data as Donante
+        };
+      })
     );
   }
 
@@ -158,7 +169,7 @@ export class DonanteService {
     return this.http.put<ApiResponse<any>>(`${this.baseUrl}/${id}`, donante).pipe(
       map(response => ({
         ...response,
-        data: response.data ? mapDonanteFromBackend(response.data) : {} as Donante
+        data: response.data as Donante
       }))
     );
   }
@@ -167,13 +178,13 @@ export class DonanteService {
     return this.http.delete<ApiResponse<any>>(`${this.baseUrl}/${id}`);
   }
 
-  searchDonantesByNombre(nombre: string): Observable<ApiResponse<Donante[]>> {
+  searchDonantesByNombre(nombre: string): Observable<ApiResponse<any[]>> {
     const params = new HttpParams().set('nombre', nombre);
     return this.http.get<ApiResponse<any[]>>(buildApiUrl(API_CONFIG.DONANTES.SEARCH), { params }).pipe(
-      map(response => ({
-        ...response,
-        data: Array.isArray(response.data) ? response.data.map(mapDonanteFromBackend) : []
-      }))
+      map(response => {
+        console.log('Respuesta de búsqueda:', response);
+        return response;
+      })
     );
   }
 
@@ -202,5 +213,10 @@ export class DonanteService {
 
   getZonasDireccion(): Observable<ApiResponse<ZonaDireccion[]>> {
     return this.http.get<ApiResponse<ZonaDireccion[]>>(buildApiUrl(API_CONFIG.RELATED_DATA.ZONAS_DIRECCION));
+  }
+
+  // Obtener el siguiente código disponible
+  getNextCode(): Observable<ApiResponse<{nextCode: number}>> {
+    return this.http.get<ApiResponse<{nextCode: number}>>(`${this.baseUrl}/next-code`);
   }
 } 

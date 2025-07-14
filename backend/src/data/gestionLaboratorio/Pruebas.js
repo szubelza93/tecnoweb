@@ -4,60 +4,52 @@ class Pruebas {
 
   static async create(data) {
     const {
-      vpruCodPru, vpruDescri, vpruCaract, vpruCodNiv
+      vprudescri, vprucaract, vprucodniv
     } = data;
     
     const res = await pool.query(`
-      INSERT INTO vamPruebas (
-        vpruCodPru, vpruDescri, vpruCaract, vpruCodNiv
-      ) VALUES ($1, $2, $3, $4)
+      INSERT INTO vampruebas (
+         vprudescri, vprucaract, vprucodniv
+      ) VALUES ($1, $2, $3)
       RETURNING *
-    `, [vpruCodPru, vpruDescri, vpruCaract, vpruCodNiv]);
+    `, [ vprudescri, vprucaract, vprucodniv]);
     return res.rows[0];
   }
 
   static async findAll() {
     const res = await pool.query(`
-      SELECT * FROM vamPruebas
-      ORDER BY vpruCodPru DESC
+      SELECT * FROM vampruebas
+      ORDER BY vprucodpru DESC
     `);
     return res.rows;
   }
 
   static async findById(id) {
     const res = await pool.query(`
-      SELECT * FROM vamPruebas
-      WHERE vpruCodPru = $1
+      SELECT * FROM vampruebas 
+      WHERE vprucodpru = $1
     `, [id]);
     return res.rows[0];
   }
 
-  static async findByDescripcion(descripcion) {
-    const res = await pool.query(`
-      SELECT * FROM vamPruebas
-      WHERE vpruDescri ILIKE $1
-      ORDER BY vpruCodPru DESC
-    `, [`%${descripcion}%`]);
-    return res.rows;
-  }
+
 
   static async update(id, data) {
     const {
-      vpruDescri, vpruCaract, vpruCodNiv
+      vprudescri, vprucaract, vprucodniv
     } = data;
     
     const res = await pool.query(`
-      UPDATE vamPruebas SET
-        vpruDescri = $1, vpruCaract = $2, vpruCodNiv = $3,
-        updated_at = CURRENT_TIMESTAMP
-      WHERE vpruCodPru = $4
+      UPDATE vampruebas SET
+        vprudescri = $1, vprucaract = $2, vprucodniv = $3 
+      WHERE vprucodpru = $4
       RETURNING *
-    `, [vpruDescri, vpruCaract, vpruCodNiv, id]);
+    `, [ vprudescri, vprucaract, vprucodniv, id]);
     return res.rows[0];
   }
 
   static async delete(id) {
-    const res = await pool.query('DELETE FROM vamPruebas WHERE vpruCodPru = $1 RETURNING *', [id]);
+    const res = await pool.query('DELETE FROM vampruebas WHERE vprucodpru = $1 RETURNING *', [id]);
     return res.rows[0];
   }
 

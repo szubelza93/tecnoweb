@@ -1,0 +1,13 @@
+<div class="container">
+  <h2>Detalle de Centro de Donante</h2>
+  <div *ngIf="centro">
+    <p><strong>ID:</strong> {{ centro.vcencodcen }}</p>
+    <p><strong>Nombre:</strong> {{ centro.vcennombre }}</p>
+    <p><strong>Dirección:</strong> {{ centro.vcendirecc }}</p>
+    <p><strong>Teléfono:</strong> {{ centro.vcentelefo }}</p>
+    <p><strong>Tipo de Centro:</strong> {{ getNombreTipo(centro.vtcecodtce) }}</p>
+  </div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="loading">Cargando...</div>
+  <button (click)="volver()">Volver</button>
+</div>

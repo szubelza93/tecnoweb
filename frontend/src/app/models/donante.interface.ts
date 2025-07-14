@@ -12,10 +12,11 @@ export interface Donante {
   vdonEdadDo: number;
   vdonEstCiv: string;
   vdonSexoDn: string;
-  vdonTelOfi: string;
+  vdonTelDom: string;
+  vdonTelOff: string;
   vdonTelCel: string;
   vdonEmail: string;
-  vdonEmail2: string;
+  vdonTrabaj: string;
   vdonDirTra: string;
   vdonCarneT: string;
   vocuCodOcu: string;

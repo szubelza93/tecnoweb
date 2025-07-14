@@ -134,10 +134,11 @@ class DonanteController {
                 vdonEdadDo: donante.vdonedaddo,
                 vdonEstCiv: donante.vdonestciv,
                 vdonSexoDn: donante.vdonsexodn,
-                vdonTelOfi: donante.vdonteloff,
+                vdonTelDom: donante.vdonteldom,
+                vdonTelOff: donante.vdonteloff,
                 vdonTelCel: donante.vdontelcel,
                 vdonEmail: donante.vdonemail,
-                vdonEmail2: donante.vdonemail2,
+                vdonTrabaj: donante.vdontrabaj,
                 vdonDirTra: donante.vdondirtra,
                 vdonCarneT: donante.vdoncarnet,
                 vocuCodOcu: donante.vocucodocu,
@@ -281,10 +282,10 @@ class DonanteController {
                 vdonEdadDo: nuevoDonante.vdonedaddo,
                 vdonEstCiv: nuevoDonante.vdonestciv,
                 vdonSexoDn: nuevoDonante.vdonsexodn,
-                vdonTelOfi: nuevoDonante.vdonteloff,
+                vdonTelOff: nuevoDonante.vdonteloff,
                 vdonTelCel: nuevoDonante.vdontelcel,
                 vdonEmail: nuevoDonante.vdonemail,
-                vdonEmail2: nuevoDonante.vdonemail2,
+                vdonTrabaj: nuevoDonante.vdontrabaj,
                 vdonDirTra: nuevoDonante.vdondirtra,
                 vdonCarneT: nuevoDonante.vdoncarnet,
                 vocuCodOcu: nuevoDonante.vocucodocu,
@@ -320,14 +321,18 @@ class DonanteController {
             console.log('ID:', id);
             console.log('Datos recibidos:', data);
             
-            if (!id || isNaN(id)) {
-                throw new ValidationError('ID de donante inválido');
-            }
-            
-            // Verificar que el donante existe
+            // Verificar que el donante existe y obtener sus datos actuales
             const existingDonante = await Donante.findById(id);
             if (!existingDonante) {
                 throw new NotFoundError('Donante');
+            }
+            
+            console.log('=== DONANTE EXISTENTE ===');
+            console.log('Datos del donante existente:', existingDonante);
+            console.log('Campos disponibles:', Object.keys(existingDonante));
+            
+            if (!id || isNaN(id)) {
+                throw new ValidationError('ID de donante inválido');
             }
             
             // Validar edad mínima si se está actualizando
@@ -341,16 +346,16 @@ class DonanteController {
             }
             
             // Validar documento único si se está actualizando
-            if (data.vdonDocide && data.vdonDocide !== existingDonante.vdonDocide) {
-                const existingDocument = await Donante.findByDocument(data.vdonDocide);
+            if (data.vdonDocide && data.vdonDocide !== existingDonante.vdondocide) {
+                const existingDocument = await Donante.findByDocumentExcludingId(data.vdonDocide, id);
                 if (existingDocument) {
                     throw new ValidationError('Ya existe un donante con este documento de identidad');
                 }
             }
             
             // Validar email único si se está actualizando
-            if (data.vdonEmail && data.vdonEmail !== existingDonante.vdonEmail) {
-                const existingEmail = await Donante.findByEmail(data.vdonEmail);
+            if (data.vdonEmail && data.vdonEmail !== existingDonante.vdonemail) {
+                const existingEmail = await Donante.findByEmailExcludingId(data.vdonEmail, id);
                 if (existingEmail) {
                     throw new ValidationError('Ya existe un donante con este email');
                 }
@@ -421,10 +426,10 @@ class DonanteController {
                 vdonEdadDo: donanteActualizado.vdonedaddo,
                 vdonEstCiv: donanteActualizado.vdonestciv,
                 vdonSexoDn: donanteActualizado.vdonsexodn,
-                vdonTelOfi: donanteActualizado.vdonteloff,
+                vdonTelOff: donanteActualizado.vdonteloff,
                 vdonTelCel: donanteActualizado.vdontelcel,
                 vdonEmail: donanteActualizado.vdonemail,
-                vdonEmail2: donanteActualizado.vdonemail2,
+                vdonTrabaj: donanteActualizado.vdontrabaj,
                 vdonDirTra: donanteActualizado.vdondirtra,
                 vdonCarneT: donanteActualizado.vdoncarnet,
                 vocuCodOcu: donanteActualizado.vocucodocu,

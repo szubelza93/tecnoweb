@@ -70,10 +70,26 @@ class Donante {
         return res.rows[0];
     }
 
+    static async findByDocumentExcludingId(document, excludeId) {
+        const res = await pool.query(
+            'SELECT vdonCodDon FROM vamDonante WHERE vdonDocide = $1 AND vdonCodDon != $2',
+            [document, excludeId]
+        );
+        return res.rows[0];
+    }
+
     static async findByEmail(email) {
         const res = await pool.query(
             'SELECT vdonCodDon FROM vamDonante WHERE vdonEmail = $1',
             [email]
+        );
+        return res.rows[0];
+    }
+
+    static async findByEmailExcludingId(email, excludeId) {
+        const res = await pool.query(
+            'SELECT vdonCodDon FROM vamDonante WHERE vdonEmail = $1 AND vdonCodDon != $2',
+            [email, excludeId]
         );
         return res.rows[0];
     }

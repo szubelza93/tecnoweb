@@ -28,7 +28,7 @@ const validateDonante = [
   body('vdonTelOff').optional().matches(/^[0-9]{8}$/).withMessage('El teléfono de oficina debe tener exactamente 8 dígitos.'),
   body('vdonTelCel').trim().notEmpty().matches(/^[0-9]{8}$/).withMessage('El teléfono celular es requerido y debe tener exactamente 8 dígitos.'),
   body('vdonEmail').optional().isEmail().withMessage('El email debe ser un email válido.'),
-  body('vdonEmail2').optional().isEmail().withMessage('El email secundario debe ser un email válido.'),
+  
   body('vdonTrabaj').optional().trim().isLength({ max: 150 }).withMessage('El trabajo no puede exceder 150 caracteres.'),
   body('vdonDirTra').optional().trim().isLength({ max: 150 }).withMessage('La dirección de trabajo no puede exceder 150 caracteres.'),
   body('vdonCarneT').optional().trim().isLength({ max: 20 }).withMessage('El carnet de trabajo no puede exceder 20 caracteres.'),

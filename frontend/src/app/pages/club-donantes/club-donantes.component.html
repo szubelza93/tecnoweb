@@ -22,14 +22,14 @@
   <div *ngIf="!showForm">
     <div class="table-container">
       <table *ngIf="paginatedClubes.length > 0">
-        <thead>
+        <thead class="!bg-green-600">
           <tr>
-            <th>Código</th>
-            <th>Descripción</th>
-            <th>Dirección</th>
-            <th>Teléfono</th>
-            <th>Representante</th>
-            <th>Acciones</th>
+            <th class="text-white !bg-green-600">Código</th>
+            <th class="text-white !bg-green-600">Descripción</th>
+            <th class="text-white !bg-green-600">Dirección</th>
+            <th class="text-white !bg-green-600">Teléfono</th>
+            <th class="text-white !bg-green-600">Representante</th>
+            <th class="text-white !bg-green-600">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -40,12 +40,22 @@
             <td>{{ club.vcluTelefo || '-' }}</td>
             <td>{{ club.vcluRepRes || '-' }}</td>
             <td>
-              <button class="btn-icon" (click)="editClub(club)" title="Editar">
-                <i class="fa fa-edit"></i>
-              </button>
-              <button class="btn-icon delete" (click)="deleteClub(club)" title="Eliminar">
-                <i class="fa fa-trash"></i>
-              </button>
+              <div class="flex gap-2">
+                <button 
+                  (click)="editClub(club)"
+                  class="text-yellow-600 hover:text-yellow-900 transition duration-200">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                  </svg>
+                </button>
+                <button 
+                  (click)="deleteClub(club)"
+                  class="text-red-600 hover:text-red-900 transition duration-200">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                  </svg>
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>

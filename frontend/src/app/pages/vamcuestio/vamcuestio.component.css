@@ -1,6 +1,5 @@
 /* Estilos modernos para la tabla de cuestionarios */
 .container {
-  max-width: 1000px;
   margin: 2rem auto;
   background: #fff;
   border-radius: 10px;
@@ -17,14 +16,16 @@ table {
   border-collapse: collapse;
 }
 th, td {
-  padding: 0.75rem 1rem;
+  /* padding: 0.75rem 1rem; */
   border-bottom: 1px solid #e5e7eb;
 }
+/*
 th {
   background: #f3f4f6;
   font-weight: 600;
   color: #195e37;
 }
+*/
 tr:last-child td {
   border-bottom: none;
 }

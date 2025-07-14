@@ -93,10 +93,12 @@ th, td {
   border-bottom: 1px solid #dee2e6;
 }
 
+/*
 th {
   background-color: #f8f9fa;
   font-weight: 600;
 }
+*/
 
 tr:hover {
   background-color: #f8f9fa;

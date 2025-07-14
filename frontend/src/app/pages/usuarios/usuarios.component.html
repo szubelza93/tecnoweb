@@ -1,6 +1,7 @@
 
 
-<div class="p-10 bg-no-repeat bg-cover" style="background-image: url('assets/fondo-dashboard.png'); background-size: 60%; background-position: top center;">
+<div class="p-10" style="position: relative;">
+  <!-- Eliminar el logo de la gobernación y cualquier logo del banco de sangre de la vista -->
   <!-- Success and error messages -->
   <br/>
   @if (success) {
@@ -25,6 +26,17 @@
     </button>
   </div>
 
+  <!-- Buscador de usuarios -->
+  <div class="flex justify-end mb-4">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (input)="searchUsuarios()"
+      placeholder="Buscar usuario..."
+      class="border border-green-300 rounded-lg px-3 py-2 w-72 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400 text-sm"
+    />
+  </div>
+
   <!-- Users table -->
   <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden">
     <div class="relative bg-clip-border rounded-xl overflow-hidden bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-between p-6">
@@ -34,7 +46,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" aria-hidden="true" class="h-4 w-4 text-green-500">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path>
           </svg>
-          <strong>{{ usuarios?.length || 0 }}</strong> usuarios registrados
+          <strong>{{ filteredUsuarios.length || 0 }}</strong> usuarios registrados
         </p>
       </div>
     </div>
@@ -79,7 +91,7 @@
               </td>
             </tr>
           } @else {
-            <tr *ngFor="let usuario of usuarios; let i = index; trackBy: trackUsuarioId" [ngClass]="{ 'bg-green-50': i % 2 === 1, 'bg-white': i % 2 === 0, 'hover:bg-green-100': true }">
+            <tr *ngFor="let usuario of filteredUsuarios; let i = index; trackBy: trackUsuarioId" [ngClass]="{ 'bg-green-50': i % 2 === 1, 'bg-white': i % 2 === 0, 'hover:bg-green-100': true }">
               <td class="py-3 px-6 border-b border-green-gray-50">
                 <div class="w-10 h-10 rounded-full overflow-hidden border border-gray-200">
                   <img
@@ -261,7 +273,7 @@
           <!-- Preview of current or selected image -->
           <div class="w-20 h-20 rounded-full overflow-hidden border border-blue-gray-200">
             <img
-              [src]="imagePreview || (userForm.get('photo_path')?.value ? getFullImageUrl(userForm.get('photo_path')?.value) : 'assets/logo.png')"
+              [src]="imagePreview || (userForm.get('photo_path')?.value ? getFullImageUrl(userForm.get('photo_path')?.value) : '')"
               alt="Preview"
               class="w-full h-full object-cover">
           </div>
@@ -433,5 +445,9 @@
         </div>
       </div>
     }
+  </div>
+  <!-- Logo de la gobernación justo debajo del label Home, separado del título principal -->
+  <div style="position: absolute; left: 2.5rem; top: 1.5rem; z-index: 10;">
+    <img src="assets/gobernacion.png" alt="Gobernación SCZ" style="height: 60px; width: auto;" />
   </div>
 </div>

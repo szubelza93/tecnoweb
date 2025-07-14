@@ -267,6 +267,26 @@ export const routes: Routes = [
                 path: 'vamobsequi/ver/:id',
                 loadComponent: () => import('./pages/vamobsequi/vamobsequi-detail.component').then(m => m.VamobsequiDetailComponent)
             },
+            {
+                path: 'extraccion',
+                loadComponent: () => import('./pages/blank/blank.component').then(m => m.BlankComponent)
+            },
+            {
+                path: 'laboratorio',
+                loadComponent: () => import('./pages/blank/blank.component').then(m => m.BlankComponent)
+            },
+            {
+                path: 'produccion',
+                loadComponent: () => import('./pages/blank/blank.component').then(m => m.BlankComponent)
+            },
+            {
+                path: 'distribucion',
+                loadComponent: () => import('./pages/blank/blank.component').then(m => m.BlankComponent)
+            },
+            {
+                path: 'unidad-movil',
+                loadComponent: () => import('./pages/blank/blank.component').then(m => m.BlankComponent)
+            },
 
             {
                 path: '',

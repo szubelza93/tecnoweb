@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, DatePipe],
+  imports: [CommonModule, ReactiveFormsModule, DatePipe, FormsModule],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css'
 })
 export class UsuariosComponent implements OnInit {
   usuarios: Usuario[] | null = null;
+  filteredUsuarios: Usuario[] = [];
+  searchTerm: string = '';
   error: string | null = null;
   isLoading = false;
   success: string | null = null;
@@ -63,6 +65,7 @@ export class UsuariosComponent implements OnInit {
         // Check if resp.data exists and has usuarios property
         if (resp.data && resp.data.usuarios && Array.isArray(resp.data.usuarios)) {
           this.usuarios = resp.data.usuarios;
+          this.filteredUsuarios = [...this.usuarios];
         } else {
           // If resp.data.usuarios is not an array, set usuarios to empty array
           console.error('Error: resp.data.usuarios is not an array', resp.data);
@@ -83,6 +86,19 @@ export class UsuariosComponent implements OnInit {
         this.isLoading = false;
       },
     });
+  }
+
+  searchUsuarios(): void {
+    const term = this.searchTerm.trim().toLowerCase();
+    if (!term) {
+      this.filteredUsuarios = this.usuarios ? [...this.usuarios] : [];
+      return;
+    }
+    this.filteredUsuarios = (this.usuarios || []).filter(usuario =>
+      Object.values(usuario).some(val =>
+        val !== null && val !== undefined && val.toString().toLowerCase().includes(term)
+      )
+    );
   }
 
   // Create a new user

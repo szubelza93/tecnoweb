@@ -13,5 +13,5 @@ import { NgIf } from '@angular/common';
   styleUrl: './layout.component.css'
 })
 export default class LayoutComponent {
-  sidebarVisible = true;
+  // Limpiar sidebarVisible y toggleSidebar si ya no se usan
 }

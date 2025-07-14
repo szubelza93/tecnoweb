@@ -3,7 +3,6 @@
 h2 { margin-bottom: 1.2rem; color: #195e37; font-size: 1.5rem; }
 table { width: 100%; border-collapse: collapse; }
 th, td { padding: 0.75rem 1rem; border-bottom: 1px solid #e5e7eb; }
-th { background: #f3f4f6; font-weight: 600; color: #195e37; }
 tr:last-child td { border-bottom: none; }
 .nuevo-btn { background: #15803d !important; color: #fff !important; border: none; border-radius: 5px; box-shadow: 0 2px 6px rgba(21,128,61,0.08); cursor: pointer; font-weight: 600; padding: 10px 24px; transition: background 0.2s, box-shadow 0.2s; }
 .nuevo-btn:hover { background: #166534 !important; }

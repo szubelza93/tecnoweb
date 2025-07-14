@@ -1,1 +1,16 @@
-<router-outlet />
+<!-- Authentication validation screen -->
+@if (isLoading) {
+  <div class="fixed inset-0 flex items-center justify-center bg-white">
+    <div class="flex flex-col items-center text-center max-w-md mx-auto p-6">
+      <h2 class="text-2xl font-bold text-green-800 mb-2">Banco de Sangre Regional</h2>
+      <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-800 mb-4"></div>
+      <h3 class="text-xl font-semibold text-gray-800 mb-2">Validando autenticación</h3>
+      <p class="text-gray-600 mb-2">Por favor espere mientras verificamos su identidad...</p>
+      <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+        <div class="bg-green-800 h-2.5 rounded-full animate-pulse"></div>
+      </div>
+    </div>
+  </div>
+} @else {
+  <router-outlet />
+}

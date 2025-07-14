@@ -1,16 +1,28 @@
 import { Routes } from '@angular/router';
 import { VamTipoDonComponent } from './pages/vamTipoDon/vamTipoDon.component';
 import { VamTipoDonFormComponent } from './pages/vamTipoDon/vamTipoDon-form.component';
+import { LoginComponent } from './pages/login/login.component';
+import { loginGuard } from './guards/login.guard';
+import { authGuard } from './guards/auth.guard';
+import { RegisterComponent } from './pages/register/register.component';
 
 export const routes: Routes = [
     {
-    path: 'login',
-    loadComponent: () =>
-      import('./pages/login/login.component').then(m => m.LoginComponent),
+        path: 'login',
+        loadComponent: () =>
+          import('./pages/login/login.component').then(m => m.LoginComponent),
+        canActivate: [loginGuard]
+    },
+    {
+        path: 'register',
+        loadComponent: () =>
+          import('./pages/register/register.component').then(m => m.RegisterComponent),
+        canActivate: [loginGuard]
     },
     {
         path: '',
         loadComponent: () => import('./shared/components/layout/layout.component'),
+        canActivate: [authGuard],
         children: [
             {
                 path: 'dashboard',
@@ -165,6 +177,11 @@ export const routes: Routes = [
                 path: 'zona-direccion',
                 loadComponent: () => import('./pages/zona-direccion/zona-direccion.component').then(m => m.ZonaDireccionComponent)
             },
+            // Rutas del módulo de usuarios
+            {
+                path: 'usuarios',
+                loadComponent: () => import('./pages/usuarios/usuarios.component').then(m => m.UsuariosComponent)
+            },
             {
                 path: 'vamobsequi',
                 loadComponent: () => import('./pages/vamobsequi/vamobsequi.component').then(m => m.VamobsequiComponent)
@@ -198,16 +215,15 @@ export const routes: Routes = [
                 path: 'vamobsequi/ver/:id',
                 loadComponent: () => import('./pages/vamobsequi/vamobsequi-detail.component').then(m => m.VamobsequiDetailComponent)
             },
+
             {
                 path: '',
                 redirectTo: 'dashboard',
                 pathMatch: 'full'
             }
 
+
         ]
     },
-    {
-        path: '**',
-        redirectTo: 'dashboard'
-    }
+  { path: '**', redirectTo: 'dashboard' }
 ];

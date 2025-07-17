@@ -16,6 +16,9 @@ export class DonanteDetailComponent implements OnInit {
   loading = false;
   error = '';
 
+  // Variable para controlar la visibilidad del modal de donación
+  modalDonacionAbierto = false;
+
   constructor(
     private donanteService: DonanteService,
     private route: ActivatedRoute,
@@ -84,6 +87,14 @@ export class DonanteDetailComponent implements OnInit {
         }
       });
     }
+  }
+
+  abrirModalDonacion() {
+    this.modalDonacionAbierto = true;
+  }
+
+  cerrarModalDonacion() {
+    this.modalDonacionAbierto = false;
   }
 
   // Utilidades

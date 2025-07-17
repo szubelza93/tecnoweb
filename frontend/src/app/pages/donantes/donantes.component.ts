@@ -24,6 +24,9 @@ export class DonantesComponent implements OnInit {
   itemsPerPage = 10;
   totalItems = 0;
 
+  // Variable para controlar la visibilidad del modal de donación
+  modalDonacionAbierto = false;
+
   constructor(
     private donanteService: DonanteService,
     private router: Router
@@ -67,11 +70,29 @@ export class DonantesComponent implements OnInit {
       this.currentPage = 1;
       return;
     }
+    
     this.filteredDonantes = this.donantes.filter(donante =>
-      Object.values(donante).some(val =>
-        val !== null && val !== undefined && val.toString().toLowerCase().includes(term)
-      )
+      // Buscar en campos principales
+      donante.nombreCompleto?.toLowerCase().includes(term) ||
+      donante.documento?.toLowerCase().includes(term) ||
+      donante.email?.toLowerCase().includes(term) ||
+      donante.telefono?.toLowerCase().includes(term) ||
+      donante.ocupacion?.toLowerCase().includes(term) ||
+      donante.gradoInstruccion?.toLowerCase().includes(term) ||
+      donante.lugarNacimiento?.toLowerCase().includes(term) ||
+      donante.clubDonantes?.toLowerCase().includes(term) ||
+      donante.zonaDireccion?.toLowerCase().includes(term) ||
+      // Buscar en campos anidados
+      donante.direccion?.zona?.toLowerCase().includes(term) ||
+      donante.direccion?.direccion?.toLowerCase().includes(term) ||
+      donante.contactos?.telefonoDomicilio?.toLowerCase().includes(term) ||
+      donante.contactos?.telefonoOficina?.toLowerCase().includes(term) ||
+      donante.contactos?.telefonoCelular?.toLowerCase().includes(term) ||
+      donante.informacionLaboral?.trabajo?.toLowerCase().includes(term) ||
+      // Buscar por ID
+      donante.id?.toString().includes(term)
     );
+    
     this.totalItems = this.filteredDonantes.length;
     this.currentPage = 1;
   }
@@ -173,5 +194,14 @@ export class DonantesComponent implements OnInit {
 
   getMax(a: number, b: number): number {
     return Math.max(a, b);
+  }
+
+  nuevaDonacion(donante: any) {
+    this.modalDonacionAbierto = true;
+    // Aquí puedes guardar el donante seleccionado si lo necesitas
+  }
+
+  cerrarModalDonacion() {
+    this.modalDonacionAbierto = false;
   }
 } 
